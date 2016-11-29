@@ -39,7 +39,7 @@
             }
         };
         ajax.send(null);
-        location.href="../../../Admin/blog.php";
+        location.reload();
     }
 
     function Confirm(id_blog) {

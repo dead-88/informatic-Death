@@ -68,4 +68,3 @@ function EnterRunReg(e) {
         goReg();
     }
 }
-
