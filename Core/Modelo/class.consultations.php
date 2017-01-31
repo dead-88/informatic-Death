@@ -80,7 +80,7 @@
             $rows = null;
             $modelo = new Conection();
             $connect = $modelo->get_conection();
-            $query = "SELECT id_users,users,password,email,ip_user,date_registry FROM users";
+            $query = "SELECT id_users,users,email,ip_user,date_registry FROM users";
             $stm = $connect->prepare($query);
             $stm->execute();
             while ($result = $stm->fetch()){
@@ -93,7 +93,7 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT id_conversations,user_name,message,ip_users,date_message,users FROM conversation,users where conversation.user_name = users.users ORDER BY id_conversations";
+            $query = "SELECT conversation.id_conversations,conversation.date_message,conversation.user_name,conversation.message,users.users,admin.user_admin FROM conversation,admin,users WHERE conversation.user_name = users.users ORDER  BY id_conversations";
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch()){
@@ -102,11 +102,24 @@
             return $rows;
         }
 
-        public function viewNUmberConversations(){
+        public function viewConversationsAdmin(){
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT COUNT(id_conversations)  FROM conversation";
+            $query = "SELECT conversation.id_conversations,conversation.user_name,admin.user_admin,conversation.message FROM conversation,admin WHERE conversation.user_name = admin.user_admin ORDER BY conversation.id_conversations ";
+            $stm = $connect->prepare($query);
+            $stm->execute();
+            while($result = $stm->fetch()){
+                $rows[]=$result;
+            }
+            return $rows;
+        }
+
+        public function viewConversationsId(){
+            $rows = null;
+            $model = new Conection();
+            $connect = $model->get_conection();
+            $query = "SELECT COUNT(id_conversations) FROM conversation";
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch()){

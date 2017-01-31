@@ -15,8 +15,6 @@
     $row = $stm->rowCount();
 //    var_dump($row);
     if($row == 0){
-        $user = htmlentities(addslashes($_POST['user']));
-        $email = htmlentities(addslashes($_POST['email']));
         $pass = htmlentities(addslashes($_POST['pass']));
         $pass_sha1 = sha1($pass);
         $ip_users = $_SERVER['REMOTE_ADDR'];
