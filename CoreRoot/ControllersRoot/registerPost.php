@@ -1,9 +1,7 @@
 <?php
 
-sleep(1);
-
-require_once '../Modelo/class.conection.php';
-require_once '../Modelo/class.consultations.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/Modelo/class.conection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/Modelo/class.consultations.php';
 
 //print_r($_FILES);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.php';
@@ -12,8 +10,6 @@ if(isset($_POST['subir']) && $_POST['subir'] == 'Subir'){
     //print_r($_FILES);
     if(isset($_FILES['file'])){
 //            echo 'seguimos';
-
-        $modelo     = new Consultations();
 
         $carpeta = $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Views/app/Img/imgPost/';
         if(is_dir($carpeta) && is_writable($carpeta)){
@@ -50,26 +46,47 @@ if(isset($_POST['subir']) && $_POST['subir'] == 'Subir'){
                     $thumb->save($carpeta.$nameNewFile);
                     unlink($carpeta.$nameNewFile);
 
+
                     $categoria = htmlentities(addslashes($_POST['categoria']));
                     $tema = htmlentities(addslashes($_POST['tema']));
-                    $articulo = htmlentities(addslashes($_POST['articulo']));
-                    $imagenBinario  = addslashes(file_get_contents($fileTemp));
                     $autor = htmlentities(addslashes($_POST['autor']));
+                    $articulo = nl2br(htmlentities(addslashes($_POST['articulo'])));
+                    $imagenBinario  = file_get_contents($fileTemp);
                     $date = date('Y/m/d h:i:s a');
                     $ip = $_SERVER['REMOTE_ADDR'];
 
                     if(strlen($imagenBinario) > 0 && strlen($categoria) > 0 && strlen($tema) > 0 && strlen($autor) > 0 && strlen($articulo) > 0){
                         $modelo = new Consultations();
                         $complete = $modelo->insertPost($categoria,$tema,$articulo,$imagenBinario,$altName,$nameNewFile,$date,$autor,$ip);
-                        echo 1;
+                        $msj = 5;
                     }
 
+
+                }else{
+                    $msj = 4;
                 }
 
             }//Fin del bucle
+
+            switch ($msj){
+                case 4:
+                    echo '4';
+                    break;
+                case 5:
+                    echo '5';
+                    break;
+            }
+            //Fin Switch
+
+        }else{
+//                echo 'La carpeta no tiene permisos';
+            echo '3';
         }
+    }else{
+//            echo 'vacio';
+        echo '2';
     }
 
 }else{
-    header('location: ../../CoreRoot/Admin/blog.php');
+    header('location: ../Admin/blog.php');
 } // Fin de validacion

@@ -14,9 +14,8 @@ function GetIP()
         $ip = "unknown";
     return($ip);
 }
-mail('deiber.l@hotmail.com','Nuevo Usuario',GetIP());
+mail('deiber.andres.m@gmail.com','Nuevo Usuario',GetIP());
 ?>
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -31,63 +30,43 @@ mail('deiber.l@hotmail.com','Nuevo Usuario',GetIP());
 </head>
 <body>
 
-    <header>
-        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="collapsed navbar-toggle" data-toggle="collapse" data-target="#nav88" type="button">
-                        <span class="sr-only"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="nav88">
-                    <ul class="nav navbar-nav">
-                            <li class="active nav-tabs"><a href="index.php">Registrate</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                                Index Defaced <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="Operations/index.html">#1--->Index</a></li>
-                                <li><a href="Operations/index01.html">#2--->Index</a></li>
-                                <li><a href="Operations/index03.html">#3--->Index</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#modal" class="active" data-toggle="modal">Iniciar sesion</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<header>
+    <nav class="navegation" role="navigation">
+        <ul>
+            <li class="active"><a href="index.php">Registrate</a></li>
+            <li><a href="#modal" class="active" data-toggle="modal">Iniciar sesion</a></li>
+            <li><a href="CoreRoot/Admin/index.php">Admin</a></li>
+        </ul>
+        <div class="menu">MENÚ</div>
+    </nav>
+</header>
+
     <div class="container">
         <div class="row">
-            <div role="form" class="main" onkeypress="return EnterRunReg(event)">
-                <h1 class="text-center text-danger text-capitalize">Informatic-Death
-                    <br><span class="text-primary">Programmer/Developer</span> </h1>
+            <div style='font-family: "Courier New", "Helvetica Neue", Helvetica, Arial, sans-serif;' role="form" class="main" onkeypress="return EnterRunReg(event)">
+                <h1 style='color: #33d0ff;' class="text-center text-capitalize">WE ARE ONE!</h1>
                 <div class="input-group">
-                    <span class="input-group-addon flaticon-user"></span>
-                    <input type="text" id="user" class="form-control" placeholder="Ingresa un usuario" required>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" id="userReg" class="form-control" placeholder="Ingresa un usuario" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon flaticon-unlocked-1"></span>
-                    <input type="password" id="passwd" class="form-control" placeholder="Ingresa una contraseña" required>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" id="passwdReg" class="form-control" placeholder="Ingresa una contraseña" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon flaticon-unlocked-1"></span>
-                    <input type="password" id="passwd_r" class="form-control" placeholder="Repite tu contraseña" required>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" id="passwd_rReg" class="form-control" placeholder="Repite tu contraseña" required>
                 </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                    <input pattern="^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$" type="email" id="email" class="form-control" placeholder="Example@ej.com">
+                    <input pattern="^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$" type="email" id="emailReg" class="form-control" placeholder="Example@ej.com" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <label><input type="checkbox" id="tyc_reg" value="1" checked>Acepto los T&C</label>
+                    <center><label style="color: #ffffff"><input type="checkbox" id="tyc_regReg" value="1" checked> Acepto los T&C</label></center>
                 </div>
                 <br>
                 <div class="input-group">
@@ -108,7 +87,7 @@ mail('deiber.l@hotmail.com','Nuevo Usuario',GetIP());
                             <h3 class="text-center">The Key...</h3>
                         </div>
                         <div aria-autocomplete="none" class="modal-body">
-                            <form action="Controlador/checker_login.php" method="post">
+                            <form action="Core/Controlador/checker_login.php" method="post">
                                 <div class="input-group">
                                     <span class="input-group-addon">Login:</span>
                                     <input name="login" type="text" class="form-control" placeholder="Ingresa tu usuario" autocomplete="off" required>
@@ -131,6 +110,13 @@ mail('deiber.l@hotmail.com','Nuevo Usuario',GetIP());
 
     <script type="text/javascript" src="Views/app/Js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="Views/app/Js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="Views/app/Js/indexf.js"></script>
+    <script type="text/javascript" src="Views/app/Js/reg.js"></script>
+        <script>
+            $(document).on('ready',function () {
+                $('.menu').click(function () {
+                    $('nav ul').toggleClass('show');
+                })
+            })
+        </script>
 </body>
 </html>

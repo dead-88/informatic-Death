@@ -1,0 +1,256 @@
+ul{
+    list-style: none;
+}
+
+/*Perfil de usuarios*/
+
+.vistaUsers{
+    width: 250px;
+    overflow: auto;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    color: #0c0c0c;
+    padding: 20px;
+    position: relative;
+}
+
+.vistaUsers > p{
+    font-family: "Courier New", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.text-act{
+    color: #30d624;
+}
+
+input[type="text"],input[type="password"]{
+    outline: none;
+    border: 1px dotted #f0f0f0;
+    color: #f0f0f0;
+    padding: 2px;
+    background-color: #1e1e1e;
+    text-align: center;
+    font-family: "Courier New", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.imgPhoto{
+    width: 100px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 5px 10px #ffffff, 3px 15px 15px #000
+}
+/*Fin perfil usuario*/
+
+.link{
+    width: 250px;
+    height: 180px;
+    background: rgb(255, 255, 255) url("../Img/default.jpg");
+    background-size: cover;
+    background-position: center;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #060606;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+}
+
+.cerrar-photo{
+    width: 30px;
+    position: relative;
+    top: 0;
+    left: 100px;
+}
+
+.viewPhoto{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    cursor: pointer;
+    position: absolute;
+    padding: 0;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.post-content{
+    overflow: auto;
+    padding: 10px;
+}
+
+.text-date{
+    width: 400px;
+    clear: both;
+}
+
+.text-date ol li{
+    margin-top: 10px;
+    display: block;
+    padding: 9px;
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.text-date ol li > label{
+    display: block;
+    float: left;
+    margin-top: -22px;
+    height: 14px;
+    padding: 2px 5px;
+    color: #2aabd2;
+    font-size: 14px;
+    font-family: "Bitstream Vera Sans",sans-serif,Courier;
+}
+
+.text-date ol li > span{
+    background-color: #f3f3f3;
+    display: block;
+    padding: 3px;
+    margin: 0 -9px -9px -9px;
+    text-align: center;
+    color: #000;
+    font-family: Courier,sans-serif,Time;
+    font-size: 15px;
+    cursor: default;
+}
+
+.form-style{
+    width: 400px;
+}
+
+.form-style ul li{
+    margin-top: 10px;
+    display: block;
+    padding: 9px;
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.form-style ul li > label{
+    display: block;
+    float: left;
+    margin-top: -22px;
+    height: 14px;
+    padding: 2px 5px;
+    color: #2aabd2;
+    font-size: 14px;
+    font-family: "Bitstream Vera Sans",sans-serif,Courier;
+}
+
+input[type="text"],input[type="password"],input[type="email"]{
+    width: 100%;
+    display: block;
+    outline: none;
+    border: none;
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+    padding: 0;
+    font-family: Courier,sans-serif;
+}
+
+input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus{
+    box-shadow: inset 5px 0 10px #b8f4f9;
+}
+
+.form-style ul li > span{
+    background-color: #f3f3f3;
+    display: block;
+    padding: 3px;
+    margin: 0 -9px -9px -9px;
+    text-align: center;
+    color: #000;
+    font-family: Courier,sans-serif,Time;
+    font-size: 15px;
+    cursor: default;
+}
+
+/*BARRA PROGRESO*/
+.progress {
+    position:relative;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 1px; border-radius: 3px;
+
+}
+
+.bar {
+    color: #0c0c0c;
+    background: rgba(235,233,249,1);
+    background: -moz-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -o-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -ms-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: linear-gradient(to right, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebe9f9', endColorstr='#c1bfea', GradientType=1 );
+    width:0%; height:20px;
+    border-radius: 3px;
+}
+
+.percent {
+    position:absolute;
+    display:inline-block;
+    top:3px; left:48%;
+    color: #0c0c0c;
+}
+/*FIN BARRA PROGRESO*/
+
+/** Media Query **/
+@media screen and (max-width: 767px){
+
+    .link{
+        cursor: pointer;
+        color: #060606;
+        background: rgb(255, 255, 255) url("../Img/default.jpg");
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        height: 180px;
+        width: 250px;
+    }
+
+    .text-act{
+        color: #30d624;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .text-date{
+        text-align: center;
+    }
+
+    .form-style{
+        width: 300px;
+    }
+
+    .text-date{
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 527px){
+    .post-content{
+        width: 250px;
+        overflow: auto;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .form-style{
+        width: 250px;
+    }
+
+    .text-date{
+        width: 250px;
+    }
+}
+/** End Media Query **/

@@ -12,40 +12,37 @@
             $stm->bindParam(':email', $email);
             $stm->bindParam(':ip_user', $ip);
             $stm->bindParam(':date_registry', $date);
-            if(!$stm){
-                echo "Error al crear registro ";
-            }else{
-                $stm->execute();
-            }
+            $stm->execute();
         }
 
-        public function insertMessage($userMessage,$message,$ip_user,$date)
+        public function insertMessage($idUser,$userMessage,$message,$ip_user,$date)
         {
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "INSERT INTO conversation(user_name,message,ip_users,date_message)VALUES (:user_name,:message,:ip_users,:date_message)";
+            $query = "INSERT INTO conversation(id_users,user_name,message,ip_users,date_message)VALUES (:id_users,:user_name,:message,:ip_users,:date_message)";
             $stm = $connect->prepare($query);
+            $stm->bindParam(':id_users',$idUser);
             $stm->bindParam(':user_name',$userMessage);
             $stm->bindParam(':message',$message);
             $stm->bindParam(':ip_users',$ip_user);
             $stm->bindParam(':date_message',$date);
-            if(!$stm){
-                echo "Error al crear registro ";
-            }else{
-                $stm->execute();
-            }
+            $stm->execute();
+
         }
 
-        public function insertPost($title,$article,$img,$date,$autor,$ip){
+        public function insertPost($categoria,$tema,$article,$img,$alt,$nameIMg,$date,$autor,$ip){
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "INSERT INTO post(title,article,img,date,autor,ip)VALUES (:title,:article,:img,:date,:autor,:ip)";
+            $query = "INSERT INTO post(categoria,tema,article,img,alt,nameImg,date,autor,ip)VALUES (:categoria,:tema,:article,:img,:alt,:nameImg,:date,:autor,:ip)";
             $stm = $connect->prepare($query);
+            $stm->bindParam(':categoria',$categoria);
+            $stm->bindParam(':tema',$tema);
+            $stm->bindParam(':article',$article);
             $stm->bindParam(':img',$img);
-            $stm->bindParam(':title',$title);
+            $stm->bindParam(':alt',$alt);
+            $stm->bindParam(':nameImg',$nameIMg);
             $stm->bindParam(':date',$date);
             $stm->bindParam(':autor',$autor);
-            $stm->bindParam(':article',$article);
             $stm->bindParam(':ip',$ip);
             $stm->execute();
         }
@@ -54,10 +51,10 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT id_blog,title,article,img,date,autor,ip FROM post";
+            $query = "SELECT * FROM post";
             $stm = $connect->prepare($query);
             $stm->execute();
-            while($result = $stm->fetch()){
+            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[]=$result;
             }
             return $rows;
@@ -80,7 +77,7 @@
             $rows = null;
             $modelo = new Conection();
             $connect = $modelo->get_conection();
-            $query = "SELECT id_users,users,email,ip_user,date_registry FROM users";
+            $query = "SELECT id_users,users,email,ip_user,date_registry,foto_user FROM users";
             $stm = $connect->prepare($query);
             $stm->execute();
             while ($result = $stm->fetch()){
@@ -93,10 +90,10 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT conversation.id_conversations,conversation.date_message,conversation.user_name,conversation.message,users.users,admin.user_admin FROM conversation,admin,users WHERE conversation.user_name = users.users ORDER  BY id_conversations";
+            $query = "SELECT conversation.id_conversations,conversation.date_message,conversation.user_name,conversation.message,users.users,users.foto_user FROM conversation,users WHERE conversation.user_name = users.users ORDER BY conversation.id_conversations";
             $stm = $connect->prepare($query);
             $stm->execute();
-            while($result = $stm->fetch()){
+            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[]=$result;
             }
             return $rows;
@@ -106,10 +103,10 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT conversation.id_conversations,conversation.user_name,admin.user_admin,conversation.message FROM conversation,admin WHERE conversation.user_name = admin.user_admin ORDER BY conversation.id_conversations ";
+            $query = "SELECT conversation.id_conversations,conversation.date_message,conversation.user_name,admin.user_admin,conversation.message FROM conversation,admin WHERE conversation.user_name = admin.user_admin ORDER BY conversation.id_conversations";
             $stm = $connect->prepare($query);
             $stm->execute();
-            while($result = $stm->fetch()){
+            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[]=$result;
             }
             return $rows;
@@ -123,22 +120,7 @@
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch()){
-                $rows[]=$result;
-            }
-            return $rows;
-        }
-
-        public function search($id_blog){
-            $rows = null;
-            $model = new Conection();
-            $connect = $model->get_conection();
-            $title = "%".$id_blog."%";
-            $query = "SELECT id_blog,title,article,img,date,autor,ip FROM post WHERE title LIKE :title";
-            $stm = $connect->prepare($query);
-            $stm->bindParam(':title', $title);
-            $stm->execute();
-            while($result = $stm->fetch()){
-                $rows[]=$result;
+                $rows[] = $result;
             }
             return $rows;
         }
@@ -159,5 +141,19 @@
             $stm = $connect->prepare($query);
             $stm->bindParam(':id_conversations',$id);
             $stm->execute();
+        }
+
+        public function updateUsers($campo,$valor,$id_user){
+            $model = new Conection();
+            $connect = $model->get_conection();
+            $query = "UPDATE users SET $campo = :valor WHERE id_users = :id_users";
+            $stm = $connect->prepare($query);
+            $stm->bindParam(':valor',$valor);
+            $stm->bindParam(':id_users',$id_user);
+            $stm->execute();
+        }
+
+        public function link($msj){
+            $msj = preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/i','<a href="\0">\0</a>',$msj);
         }
     }

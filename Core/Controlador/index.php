@@ -5,10 +5,10 @@
 
 session_start();
 if(!isset($_SESSION['root'])){
-header('location:../index.php');
+header('location: ../../index.php');
 }else{
 $modelo = new Consultations();
-$conversations = $modelo->view();
+$conversations = $modelo->viewConversations();
 if(isset($conversations)){
 foreach($conversations as $conversation){}
 }

@@ -1,34 +1,27 @@
 <?php
-    require_once '../Modelo/class.conection.php';
-    require_once '../Modelo/class.consultations.php';
-    require_once '../Controlador/loadArticlesRoot.php';
+    require_once '../../Core/Modelo/class.conection.php';
+    require_once '../../Core/Modelo/class.consultations.php';
 
 session_start();
-if(!isset($_SESSION['root'])){
-    header('location:../index.php');
-}else{
-    $modelo = new Consultations();
-    $conversations = $modelo->viewUsers();
-    if(isset($conversations)){
-        foreach($conversations as $conversation){}
-    }
+$modelo = new Consultations();
+$conection = new Conection();
+$connect = $conection->get_conection();
 
-    $modelo = new Consultations();
-    $view = $modelo->viewAdmin();
-    if(isset($view)){
-        foreach($view as $views){}
-    }
-}
 if(!isset($_SESSION['root'])){
-    header('location:../index.php');
+    header('location: index.php');
 }else{
-    $modelo = new Consultations();
+    $admin = $connect->prepare("SELECT id_admin,user_admin,email,ip,date FROM admin WHERE id_admin = :uiadm");
+    $admin->execute(array(":uiadm"=>$_SESSION['root']));
+    $adminView = $admin->fetch(PDO::FETCH_ASSOC);
+
+    $conversations = $modelo->viewUsers();
     $rowspost = $modelo->viewPost();
-    if(isset($rowspost)){
+
+    if(isset($conversations) AND isset($rowspost)){
+        foreach($conversations as $conversation){}
         foreach($rowspost as $rows){}
     }
 }
-
 ?>
 <!doctype html>
 <html lang="es">
@@ -36,10 +29,10 @@ if(!isset($_SESSION['root'])){
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Developers Hacking</title>
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/blog.css">
+    <title>informatic-Death Hacking</title>
+    <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
 </head>
 <body>
 
@@ -53,7 +46,7 @@ if(!isset($_SESSION['root'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="blog.php" class="nav-tabs navbar-brand">Futúros Hackers </a>
+                <a href="blog.php" class="nav-tabs navbar-brand">WE ARE ONE</a>
             </div>
 
             <!-- Inicio del menu -->
@@ -75,20 +68,11 @@ if(!isset($_SESSION['root'])){
                             Configuración <span class="glyphicon glyphicon-console"></span>
                         </a>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li><a href="../Core/Controlador/close.php" class="text-danger">Cerrar sesion</a></li>
                             <li><a href="#">My account</a></li>
+                            <li><a href="../../Core/Controlador/close.php" class="text-danger">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
-                <form method="get" class="navbar-form navbar-collapse" role="search">
-                    <div class="form-group">
-                        <input type="text" value="" class="form-control" name="search" id="valor" placeholder="Buscar...">
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    <div class="resultados" id="resultados"></div>
-                </form>
             </div>
         </div>
     </nav>
@@ -96,20 +80,19 @@ if(!isset($_SESSION['root'])){
 
 <section class="jumbotron">
     <div class="container">
-        <h1 class="titulo text-capitalize"><span class="glyphicon glyphicon-user"></span><?php echo $views['user_admin'] ?></h1>
+        <h1 class="titulo text-capitalize"><?php echo $adminView['user_admin']; ?></h1><br><br>
         <p>Panel De Administración <span>Bienvenido/a</span></p>
-        <p class="text-right">My IP Global [---> <?php echo $views['ip'] ?> <---]</p>
     </div>
 </section>
 
-    <?php
-
-    if(isset($_GET['search'])){
-        search($_GET['search']);
-    }else{
-        viewPostAdmin();
-    }
-    ?>
+<section class="main container">
+    <div class="form">
+        <form action="" method="post" name="search_form" id="search_form">
+            <input type="text" name="searchForm" id="searchForm" placeholder="Buscar...">
+        </form>
+        <div id="result"></div>
+    </div>
+</section>
 
 <section class="main container">
     <div class="row">
@@ -118,33 +101,63 @@ if(!isset($_SESSION['root'])){
 
             <article class="post clearfix">
                 <br>
-                <form action="../Core/Controlador/registerPost.php" method="post">
-                    <div class="input-group">
-                        <span class="input-group-addon">Agregar Imagen Al Articulo: </span>
-                        <input type="file" class="form-control" id="img" name="img" required>
-                    </div>
-
-                    <h2 class="post-title">
-                        <div class="input-group">
-                            <span class="input-group-addon">Agregar Título De Post: </span>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Title Here..." required>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--BARRA DE PROGRESO-->
+                        <div class="progress">
+                            <div class="bar"></div >
+                            <div class="percent">0%</div>
                         </div>
-                    </h2>
-                    <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Agregar Nombre Del Autor: </span>
-                        <input type="text" class="form-control" id="autor" name="autor" placeholder="Example: Dead_*88" required>
+                        <!--FIN BARRA DE PROGRESO-->
+                        <div class="col-md-8">
+                            <form role="form" id="formularioPhoto" method="post" action="../ControllersRoot/registerPost.php">
+                                <div id="container">
+                                    <ul class="photos thumb pull-right">
+                                        <li>
+                                            <center>Imagen Post</center>
+                                            <input type="file" id="imgPost" name="file[]" required>
+                                            <div id="photo-1" class="link"></div>
+                                            <div id="cerrar-photo-1" class="cerrar-photo"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Categoria: </span>
+                                    <input type="text" class="form-control" name="categoria" id="categoria" placeholder="Categoria Here..." required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tema: </span>
+                                    <input type="text" class="form-control" name="tema" id="tema" placeholder="Title Here..." required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nombre Del Autor: </span>
+                                    <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: Dead_*88" required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Articulo: </span>
+                                    <textarea id="articulo" class="form-control" name="articulo" required></textarea>
+                                </div>
+                                <br>
+                                <center>
+                                    <div class="boton">
+                                        <input type="hidden" id="subir" name="subir" value="Subir">
+                                        <input type="submit" id="uploadbtn" class="uploadbtn btn btn-primary btn-sm" value="Enviar">
+                                    </div>
+                                </center>
+                                <br>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="msj"></div>
+                            <div id="resultado"></div>
+                            <div id="responseError"></div>
+                        </div>
                     </div>
-                    <p>
-                    <div class="input-group">
-                        <span class="input-group-addon">Agregar Descripción Del Post: </span>
-                        <textarea name="description" id="description" class="form-control" required></textarea>
-                    </div>
-                    </p>
-                    <div class="input-group">
-                        <input type="submit" class="form-control" id="submit" value="Enviar">
-                    </div>
-                </form>
+                </div>
             </article>
 
                 <div class="row">
@@ -161,7 +174,7 @@ if(!isset($_SESSION['root'])){
                 </div>
                 <div class="hidden">
                     <label for="user" class="text-center">Usuario:</label>
-                    <input type="text" class="form-control" id="user" name="user" value="<?php echo $_SESSION['root'] ?>" required>
+                    <input type="text" class="form-control" id="userConvers" name="userConvers" value="<?php echo $adminView['user_admin']; ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="message" class="text-center">Mesagge:</label>
@@ -197,21 +210,7 @@ if(!isset($_SESSION['root'])){
             <h4 class="text-center">Videos</h4>
             <div class="list-group list-video">
                 <h4 class="text-center">Introducción a la pagina</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Creación de un phishing (Faceebok Fake)</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
-                <h4 class="text-center">Video de risa</h4>
-                <video width="245px" controls src="../Videos/¡INTENTA%20NO%20REIR%20CON%20ESTE%20VIDEO!%20-%20Los%20Mejores%20Videos%20De%20Risa%202016%20-%20FAILS.MP4"></video>
+                <video src="#"></video>
             </div>
         </aside>
 
@@ -238,21 +237,23 @@ if(!isset($_SESSION['root'])){
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
-                <p>Copyright &COPY; Create By Dead_*88 || Unknown88</p>
+                <p>Copyright &COPY; Create By Informatic-Death °-° Dead_*88</p>
             </div>
             <div class="col-xs-6">
                 <ul class="list-inline text-right">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Categorias</a></li>
-                    <li><a href="#">Cursos</a></li>
+                    <li><a href="blog.php">Inicio</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="../Views/app/Js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="../Views/app/Js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../Views/app/Js/indexr.js"></script>
-<script type="text/javascript" src="../Views/app/Js/ajax.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/jquery.form.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/regMessRoot.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/ajax.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/registerPost.js"></script>
+<script src="../../Views/app/Js/searchRoot.js"></script>
 </body>
 </html>

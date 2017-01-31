@@ -6,5 +6,5 @@
         $id = $_GET['id_blog'];
         $modelo = new Consultations();
         $result = $modelo->delete($id);
-        header('location:../Admin/blog.php');
+        header('location: ../../CoreRoot/Admin/blog.php');
     }

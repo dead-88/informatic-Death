@@ -6,5 +6,5 @@ if(isset($_GET['id_conversations'])){
     $id = $_GET['id_conversations'];
     $modelo = new Consultations();
     $result = $modelo->deletemsj($id);
-    header('location:../Admin/blog.php');
+    header('location: ../../CoreRoot/Admin/blog.php');
 }

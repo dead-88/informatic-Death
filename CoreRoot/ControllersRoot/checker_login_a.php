@@ -1,31 +1,34 @@
 <?php
 
-    require_once '../Modelo/class.conection.php';
+    require_once '../../Core/Modelo/class.conection.php';
 
+    session_start();
+    $modelo     = new Conection();
+    $connect    = $modelo->get_conection();
+    $login      = htmlentities(addslashes($_POST['login']));
+    $pass       = htmlentities(addslashes($_POST['passwd']));
+    $passS      = sha1($pass);
     try{
-        $modelo = new Conection();
-        $connect = $modelo->get_conection();
-        $query = "SELECT id_admin,user_admin,password,ip FROM admin WHERE user_admin = :login && password = :passwd";
-        $stm = $connect->prepare($query);
-        $login = htmlentities(addslashes($_POST['login']));
-        $pass = htmlentities(addslashes($_POST['passwd']));
-        $passS = sha1($pass);
-        $stm->bindValue(':login', $login);
-        $stm->bindValue(':passwd', $passS);
-        $stm->execute();
-        $rows = $stm->rowCount();
-        if($rows !=0){
-            session_start();
-            $_SESSION['root'] = $_POST['login'];
-            $entrada = date('Y/m/d h:i:s');
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $query = "INSERT INTO logs(entrada_users,user,ip) VALUES ('$entrada','$login','$ip')";
-            $stm = $connect->prepare($query);
-            $stm->execute();
-            // var_dump($stm);
-            header('location:../Admin/blog.php');
+        $stm    = $connect->prepare("SELECT id_admin,user_admin,password,ip FROM admin WHERE user_admin = :login");
+        $stm->execute(array(":login"=>$login));
+        $row    = $stm->fetch(PDO::FETCH_ASSOC);
+        $count  = $stm->rowCount();
+
+        if($row['password'] == $passS){
+            if($count != 0){
+                $_SESSION['root'] = $row['id_admin'];
+                $entrada = date('Y/m/d h:i:s');
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $query = "INSERT INTO logs(entrada_users,user,ip) VALUES ('$entrada','$login','$ip')";
+                $stm = $connect->prepare($query);
+                $stm->execute();
+                // var_dump($stm);
+                header('location: ../Admin/blog.php');
+            }else{
+                header('location: ../Admin/index.php');
+            }
         }else{
-            header('location:../Admin/index.php');
+            header('location: ../Admin/index.php');
         }
 
     }catch(Exception $r){

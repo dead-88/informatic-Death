@@ -19,7 +19,7 @@ $(document).on("ready",function () {
 $(document).on("ready",function(){
     registerMessages();
     $.ajaxSetup({"cache":false});
-    setInterval("loadOldMessages()",1000)
+    // setInterval("loadOldMessages()",1000)
 });
 
 var registerMessages = function () {
@@ -28,20 +28,19 @@ var registerMessages = function () {
         var frm = $("#formChat").serialize();
         $.ajax({
             type: "POST",
-            url: "../Controlador/register.php",
+            url: "../../Core/Controlador/registerMsj.php",
             data: frm
         }).done(function (info) {
             $("#message").val("");
             var altura = $("#formChat").prop("scrollHeight");
             $("#formChat ").scrollTop(altura);
-            console.log(info);
         })
     });
 };
 var loadOldMessages = function () {
     $.ajax({
         type: "POST",
-        url: "Core/Controlador/loadconversationsroot.php"
+        url: "../ControllersRoot/loadConversationsRoot.php"
     }).done(function(info) {
         $("#conversation").html(info);
         $("#conversation p:last-child").css({"background-color": "#c5c5c5",

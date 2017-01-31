@@ -1,145 +1,42 @@
-<?php
-require_once '../Modelo/class.conection.php';
-require_once '../Modelo/class.consultations.php';
-require_once '../Controlador/loadArticles.php';
-
-session_start();
-$consult = new Consultations();
-$conection = new Conection();
-$connect = $conection->get_conection();
-
-if(!isset($_SESSION['usuario'])){
-    header('location:../index.php');
-}else{
-    $conversations = $consult->viewConversations();
-    if(isset($conversations)){
-        foreach($conversations as $conversation){}
-    }
-
-    $conversationsId = $consult->viewConversationsId();
-    if(isset($conversationsId)){
-        foreach($conversationsId as $MessageId){}
-    }
-
-    $rowspost = $consult->viewPost();
-    if(isset($rowspost)){
-        foreach($rowspost as $rows){}
-    }
-
-    $stm = $connect->prepare("SELECT * FROM users WHERE id_users = :uid");
-    $stm->execute(array(":uid"=>$_SESSION['usuario']));
-    $user = $stm->fetch(PDO::FETCH_ASSOC);
-}
-
-?>
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Informatic-Death</title>
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="../Views/app/Css/blog.css">
-    <link rel="stylesheet" href="../Views/app/Css/font/flaticon.css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-
-<header>
-    <nav class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-fm">
-                    <span class="sr-only"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#Welcome" class="nav-tabs navbar-brand">We Are One</a>
-            </div>
-
-            <!-- Inicio del menu -->
-            <div class="collapse navbar-collapse" id="navegacion-fm">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.php">Inicio</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            Herramientas <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Windows x86 x64</a></li>
-                            <li><a href="#">Linux x86 x64</a></li>
-                        </ul>
-                        <li class="dropdown">
-                            <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
-                                Configuración<span class="flaticon-settings-4"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left" role="menu">
-                                <li><a href="#" class="pull-right">My account<span class="flaticon-user"></span></a></li>
-                                <li><a href="../Controlador/close.php" class="pull-right">Sign Out <span class="flaticon-power"></span></a></li>
-                            </ul>
-                        </li>
-                    </li>
-                </ul>
-
-                <form class="navbar-form navbar-collapse" role="form">
-                    <div class="form-group">
-                        <input name="search" type="text" class="form-control" placeholder="Buscar...">
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
-</header>
-
+<?php require_once '../Include/header.php';?>
 <section class="jumbotron">
     <div class="container">
         <h2 class="titulo text-capitalize">
-            <img src="../Views/app/Img/default.jpg" alt="default" class="thumb pull-left img-circle">
-            <?php echo $user['users'];?>
+            <?php
+                if($user['foto_user'] == null){
+                    echo '<img src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="thumb pull-left">';
+                }else{
+                    echo '<img src="data:image/*;base64,'.base64_encode($user['foto_user']).'" alt="Error" class="thumb pull-left">';
+                }
+                echo $user['users'];
+            ?>
         </h2>
-        <p class="text-left">Comparte tú <span>conocimiento.!</span></p>
+        <p class="text-left">Acercate más! <span>Te mostrare algo.</span></p>
     </div>
     <div class="clearfix"></div>
 </section>
 
 <section class="main container">
-    <?php
-
-    if(isset($_GET['search'])){
-        search($_GET['search']);
-    }else{
-        viewPost();
-    }
-    ?>
+    <div class="form">
+        <form action="" method="post" name="search_form" id="search_form">
+            <input type="text" name="searchForm" id="searchForm" placeholder="Buscar...">
+        </form>
+        <div id="result"></div>
+    </div>
 </section>
-
-    <center>
-        <nav>
-            <div class="center-block">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;<span class="sr-only">Anterior</span></a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;<span class="sr-only">Siguiente</span></a></li>
-                </ul>
-            </div>
-        </nav>
-    </center>
 
 <section class="main container">
     <div class="row">
         <section class="posts col-md-9">
             <div class="row">
-                <h1 class="well text-center text-danger">Conversación De Hackers...!</h1>
-                <p class="flaticon-document"> Comentariós: <?php if(isset($MessageId)){echo $MessageId[0];}; ?></p>
-                <form id="formChat" role="form">
+                <h1 class="well text-center text-danger">Conversations...!</h1>
+                <p class="flaticon-document"> Comentariós:
+                    <?php
+                        if(isset($MessageId)){
+                            echo $MessageId[0];
+                        }
+                    ?></p>
+                <form id="formChat" role="form" method="post">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
@@ -148,20 +45,20 @@ if(!isset($_SESSION['usuario'])){
                         </div>
                     </div>
             </div>
-            <div class="hidden">
-                <label for="user" class="text-center">Usuario:</label>
-                <input type="text" class="form-control" id="user" name="userConvers" value="<?php if(isset($user['users'])){echo $user['users'];}?>" required>
-            </div>
-            <div class="form-group">
-                <label for="message" class="text-center">Message:</label>
-                <textarea name="message" id="message" placeholder="Enter message..." class="form-control" role="textbox" required></textarea>
-            </div>
-            <input type="submit" class="btn btn-primary" id="send">
-            </form>
+                    <div class="hidden">
+                        <input type="hidden" id="idUser" name="idUser" value="<?php if(isset($user['id_users'])){echo $user['id_users'];};?>">
+                        <input type="hidden" id="userConvers" name="userConvers" value="<?php if(isset($user['users'])){echo $user['users'];}?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="text-center">Message:</label>
+                        <textarea name="message" id="message" placeholder="Enter message..." class="form-control" role="textbox" required></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary" id="send">
+                </form>
         </section>
 
         <aside class="col-md-3 hidden-xs hidden-sm">
-            <h4 class="text-center">Proximós cursos esperalos...</h4>
+            <h4 class="text-center">Cursos gratís...</h4>
             <div class="list-group">
                 <a href="#" class="list-group-item">Diseño Web</a>
                 <a href="#view" class="list-group-item view">Php</a>
@@ -171,7 +68,6 @@ if(!isset($_SESSION['usuario'])){
                     <p class="text-justify">Te enseñare a crear un CRUD orientado a objetos desde cero con  MYSQL y PHP (CRUD with PDO)</p>
                 </div>
                 <a href="#" class="list-group-item">JavaScript</a>
-                <a href="#" class="list-group-item">Css</a>
                 <a href="#" class="list-group-item">Css3</a>
                 <a href="#" class="list-group-item">Html5</a>
                 <a href="#" class="list-group-item">JQuery</a>
@@ -191,25 +87,4 @@ if(!isset($_SESSION['usuario'])){
 
 </section>
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="color-footer col-xs-6">
-                <p>Copyright &COPY; <?php echo date("Y"); ?> Create By Dead_*88 & InformaticDeath</p>
-            </div>
-            <div class="col-xs-6">
-                <ul class="list-inline text-right">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Categorias</a></li>
-                    <li><a href="#">Cursos</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-<script type="text/javascript" src="../Views/app/Js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="../Views/app/Js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../Views/app/Js/index.js"></script>
-<script type="text/javascript" src="../Views/app/Js/ajax.js"></script>
-</body>
-</html>
+<?php require_once '../Include/footer.php'?>

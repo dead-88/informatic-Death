@@ -9,30 +9,16 @@
                 xmlhttp = false;
             }
         }
-        if(!xmlhttp && typeof  XMLHttpRequest!='undefined'){
+        if(!xmlhttp && typeof  XMLHttpRequest != 'undefined'){
             xmlhttp = new XMLHttpRequest();
         }
         return xmlhttp;
     }
 
-    // function Buscar() {
-    //     q = document.getElementById('valor').value;
-    //     c = document.getElementById('resultados');
-    //     ajax = Consultations();
-    //
-    //     ajax.open("GET","../Controlador/search.php?id_blog="+q);
-    //     ajax.onreadystatechange = function () {
-    //         if(ajax.readyState == 4){
-    //             c.innerHTML = ajax.responseText;
-    //         }
-    //     };
-    //     ajax.send(null)
-    // }
-
     function Delete(id_blog) {
         ajax = Consultations();
 
-        ajax.open("GET","../Controlador/delete.php?id_blog="+id_blog);
+        ajax.open("GET","../../Core/Controlador/delete.php?id_blog="+id_blog);
         ajax.onreadystatechange = function () {
             if(ajax.readyState == 4){
                 c.innerHTML = ajax.responseText;
@@ -54,7 +40,7 @@
     function DeleteMensaje(id_conversations) {
         ajax = Consultations();
 
-        ajax.open("GET","../Controlador/deletemsj.php?id_conversations="+id_conversations);
+        ajax.open("GET","../../Core/Controlador/deletemsj.php?id_conversations="+id_conversations);
         ajax.onreadystatechange = function () {
             if(ajax.readyState == 4){
                 c.innerHTML = ajax.responseText;
