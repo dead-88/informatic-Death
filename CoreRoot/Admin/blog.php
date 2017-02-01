@@ -114,10 +114,11 @@ if(!isset($_SESSION['root'])){
                                 <div id="container">
                                     <ul class="photos thumb pull-right">
                                         <li>
-                                            <center>Imagen Post</center>
+                                            <center>Imagen Post
                                             <input type="file" id="imgPost" name="file[]" required>
                                             <div id="photo-1" class="link"></div>
                                             <div id="cerrar-photo-1" class="cerrar-photo"></div>
+                                            </center>
                                         </li>
                                     </ul>
                                 </div>
@@ -133,7 +134,7 @@ if(!isset($_SESSION['root'])){
                                 </div>
                                 <br>
                                 <div class="input-group">
-                                    <span class="input-group-addon">Nombre Del Autor: </span>
+                                    <span class="input-group-addon">Autor: </span>
                                     <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: Dead_*88" required>
                                 </div>
                                 <br>
@@ -185,7 +186,7 @@ if(!isset($_SESSION['root'])){
 
         </section>
         <aside class="col-md-3 hidden-xs hidden-sm">
-            <h4 class="text-center">Proximós cursos esperalos...</h4>
+            <h4 class="text-center">Especialisaté En...!</h4>
             <div class="list-group">
                 <a href="#" class="list-group-item">Diseño Web</a>
                 <a href="#view" class="list-group-item view">Php</a>
@@ -195,7 +196,6 @@ if(!isset($_SESSION['root'])){
                     <p class="text-justify">Te enseñare a crear un CRUD orientado a objetos desde cero con  MYSQL y PHP (CRUD with PDO)</p>
                 </div>
                 <a href="#" class="list-group-item">JavaScript</a>
-                <a href="#" class="list-group-item">Css</a>
                 <a href="#" class="list-group-item">Css3</a>
                 <a href="#" class="list-group-item">Html5</a>
                 <a href="#" class="list-group-item">JQuery</a>

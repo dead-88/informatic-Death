@@ -41,41 +41,6 @@ input[type="text"],input[type="password"]{
 }
 /*Fin perfil usuario*/
 
-.link{
-    width: 250px;
-    height: 180px;
-    background: rgb(255, 255, 255) url("../Img/default.jpg");
-    background-size: cover;
-    background-position: center;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #060606;
-    vertical-align: middle;
-    position: relative;
-    display: inline-block;
-}
-
-.cerrar-photo{
-    width: 30px;
-    position: relative;
-    top: 0;
-    left: 100px;
-}
-
-.viewPhoto{
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    cursor: pointer;
-    position: absolute;
-    padding: 0;
-    -webkit-border-radius: 7px;
-    -moz-border-radius: 7px;
-    border-radius: 7px;
-}
-
 .post-content{
     overflow: auto;
     padding: 10px;

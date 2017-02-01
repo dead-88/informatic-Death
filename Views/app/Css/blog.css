@@ -9,6 +9,10 @@ body,html{
 
 }
 
+ul{
+  list-style: none;
+}
+
 /*--- HEADER --- */
 .navbar-default{
   background-image: url("../Img/803701665_122051.jpg");
@@ -40,7 +44,7 @@ body,html{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 260px 0 260px; }
+  padding: 240px 0 240px; }
 
 .jumbotron p{
   font-size: 25px;
@@ -98,7 +102,7 @@ body,html{
   }
 
 .jumbotron .titulo img{
-  width: 15%;
+  width: 50%;
   margin-right: 20px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -204,8 +208,79 @@ body,html{
   .jumbotron h2{
     font-size: 20px;
   }
+
+  .link{
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 469px){
+  .jumbotron {
+    background-image: url("../Img/Anonymous-hackers.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0 100px; }
+
+  .jumbotron .titulo{
+    opacity: .88;
+    color: #131313;
+    width: 250px;
+    /*background-color: #e7e5c4;*/
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    letter-spacing: .15em;
+  }
+
+  .jumbotron .titulo img{
+    width: 50%;
+    margin-left: 40px;
+  }
+
+  .jumbotron h2{
+    font-size: 20px;
+  }
 }
 /*FIN MEDIA QUERI*/
+
+.link{
+  width: 150px;
+  height: 150px;
+  background: rgb(255, 255, 255) url("../Img/default.jpg");
+  background-size: cover;
+  background-position: center;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #060606;
+  vertical-align: middle;
+  position: relative;
+  display: inline-block;
+}
+
+.cerrar-photo{
+  width: 30px;
+  position: relative;
+  top: 0;
+  left: 100px;
+}
+
+.viewPhoto{
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  cursor: pointer;
+  position: absolute;
+  padding: 0;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+
 
 /*--- BOX COMMENT --- */
 .modal, .fade {

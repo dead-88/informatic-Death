@@ -36,7 +36,7 @@ header nav ul{
 
 header nav ul li{
   display: inline-block;
-  width: 33%;
+  width: 32%;
   text-align: center;
 }
 
@@ -67,7 +67,7 @@ header nav ul li a:active{
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;
-  background-color: rgba(32, 191, 196, 0.74);
+  background-color: rgba(3, 20, 20, 0.98);
 }
 /** End Header Disign **/
 
@@ -81,10 +81,11 @@ header nav ul li a:active{
   .main > div {
     width: 300px;
     margin-left: 20%; }
-    .main div input[type="password"],input[type="email"],input[type="text"],input[type="password"]
-    {
+    .main div input[type="password"],input[type="email"],input[type="text"]{
       background: #000000;
-      color: #ffffff; }
+      color: #ffffff;
+      border-bottom: 2px solid #b8f4f9;
+    }
 
 @media screen and (max-width: 767px){
   .main{
@@ -142,7 +143,7 @@ header nav ul li a:active{
 footer {
   width: 100%;
   bottom: 0;
-  position: absolute;
+  position: relative;
   clear: both;
   margin: 10px auto;
 }
