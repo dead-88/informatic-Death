@@ -18,7 +18,7 @@
     function Delete(id_blog) {
         ajax = Consultations();
 
-        ajax.open("GET","../../Core/Controlador/delete.php?id_blog="+id_blog);
+        ajax.open("GET","../ControllersRoot/delete.php?id_blog="+id_blog);
         ajax.onreadystatechange = function () {
             if(ajax.readyState == 4){
                 c.innerHTML = ajax.responseText;
@@ -29,9 +29,31 @@
     }
 
     function Confirm(id_blog) {
-        c = confirm('¿Realmente Deseas Eliminar Este Articulo?');
+        c = confirm('¿Realmente Deseas Eliminar Este Post?');
         if(c){
             Delete(id_blog);
+        }else {
+            return false;
+        }
+    }
+
+    function DeleteUser(id_blog) {
+        ajax = Consultations();
+
+        ajax.open("GET","../ControllersRoot/deleteUser.php?id_users="+id_blog);
+        ajax.onreadystatechange = function () {
+            if(ajax.readyState == 4){
+                c.innerHTML = ajax.responseText;
+            }
+        };
+        ajax.send(null);
+        location.reload();
+    }
+
+    function ConfirmUser(id_blog) {
+        c = confirm('¿Realmente Deseas Eliminar Este Usuario?');
+        if(c){
+            DeleteUser(id_blog);
         }else {
             return false;
         }
@@ -40,7 +62,7 @@
     function DeleteMensaje(id_conversations) {
         ajax = Consultations();
 
-        ajax.open("GET","../../Core/Controlador/deletemsj.php?id_conversations="+id_conversations);
+        ajax.open("GET","../ControllersRoot/deletemsj.php?id_conversations="+id_conversations);
         ajax.onreadystatechange = function () {
             if(ajax.readyState == 4){
                 c.innerHTML = ajax.responseText;
@@ -53,6 +75,27 @@
         c = confirm('¿Realmente Deseas Eliminar Este Mensaje?');
         if(c){
             DeleteMensaje(id_conversations);
+        }else {
+            return false;
+        }
+    }
+
+    function DeleteMensajeUser(id_conversations) {
+        ajax = Consultations();
+
+        ajax.open("GET","../../CoreRoot/ControllersRoot/deletemsj.php?id_conversations="+id_conversations);
+        ajax.onreadystatechange = function () {
+            if(ajax.readyState == 4){
+                c.innerHTML = ajax.responseText;
+            }
+        };
+        ajax.send(null)
+    }
+
+    function ConfirmmsjUser(id_conversations) {
+        c = confirm('¿Realmente Deseas Eliminar Este Mensaje?');
+        if(c){
+            DeleteMensajeUser(id_conversations);
         }else {
             return false;
         }

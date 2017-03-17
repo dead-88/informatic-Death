@@ -47,5 +47,5 @@
             echo '</section>';
             echo '</div>';
         }while($row = $stm->fetch(PDO::FETCH_ASSOC));
-    }elseif ($count > 0 && $search == '') echo '<h2 class="text-capitalize text-danger"><center>Que estas búscando?</center></h2>';
+    }elseif ($count >= 0 && $search == '') echo '<h2 class="text-capitalize text-danger"><center>Que estas búscando?</center></h2>';
     else echo '<center>No se encontro la búsqueda</center>';

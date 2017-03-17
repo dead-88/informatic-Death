@@ -1,25 +1,12 @@
-// $(document).ready(pagination(1));
-$(document).on("ready",function () {
-    var element = $(".obj");
-    $(".view").click(function () {
-        element.slideToggle("slow");
-    });
-
-    var elementtwo = $(".objtwo");
-    $(".viewtwo").click(function () {
-        elementtwo.slideToggle("slow");
-    })
-
-    var elementtree = $(".objtree");
-    $(".viewtree").click(function () {
-        elementtree.slideToggle("slow");
-    })
-});
-
 $(document).on("ready",function(){
     registerMessages();
     $.ajaxSetup({"cache":false});
-    // setInterval("loadOldMessages()",1000)
+    timer = setInterval("loadOldMessages()",1000);
+    $("#formChat").mouseover(function () {
+        clearInterval(timer);
+    }).mouseout(function () {
+        timer = setInterval("loadOldMessages()",1000);
+    });
 });
 
 var registerMessages = function () {

@@ -9,7 +9,7 @@
     $pass       = htmlentities(addslashes($_POST['passwd']));
     $passS      = sha1($pass);
     try{
-        $stm    = $connect->prepare("SELECT id_admin,user_admin,password,ip FROM admin WHERE user_admin = :login");
+        $stm    = $connect->prepare("SELECT id_admin,user_admin,password FROM admin WHERE user_admin = :login");
         $stm->execute(array(":login"=>$login));
         $row    = $stm->fetch(PDO::FETCH_ASSOC);
         $count  = $stm->rowCount();
@@ -17,9 +17,8 @@
         if($row['password'] == $passS){
             if($count != 0){
                 $_SESSION['root'] = $row['id_admin'];
-                $entrada = date('Y/m/d h:i:s');
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $query = "INSERT INTO logs(entrada_users,user,ip) VALUES ('$entrada','$login','$ip')";
+                $entrada = date('Y/m/d h:i:s a');
+                $query = "INSERT INTO logs(entrada_users,user) VALUES ('$entrada','$login')";
                 $stm = $connect->prepare($query);
                 $stm->execute();
                 // var_dump($stm);

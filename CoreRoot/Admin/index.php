@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Hacking and more on Dead_*88</title>
+    <title>Admin Informatic-Death</title>
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/index.css">
@@ -20,8 +20,8 @@
 </header>
 <div class="container">
     <div class="row">
-        <form class="main" action="../ControllersRoot/checker_login_a.php" method="post">
-            <h1 class="text-center text-primary text-capitalize">Inicio De Sesion</h1>
+        <form class="main" action="../ControllersRoot/checker_login_a.php" method="post" autocomplete="off">
+            <h1 class="text-center text-primary">WELCOME ADMIN</h1>
             <div class="input-group">
                 <span class="input-group-addon">Usuario:</span>
                 <input type="text" name="login" class="form-control" placeholder="Ingresa tú usuario" required>
@@ -39,7 +39,7 @@
 <footer>
     <div class="container">
         <div class="row">
-            <p class="text-danger">Si Eres Un Pentester O Fanatico Al Hacking Te Reomendamos Que No Intentes Acceder, Sin Acceso Autoriazo A Este Panel De Control</p>
+            <p class="text-danger">Si eres un pentester o fanatico al hacking, cracking te reomendamos que NO intentes acceder sin acceso autoriazo a este panel de administración, Este acceso es monitorizado & no nos interesa si usas PROXYS, VPN, TOR, WHOANIX seras bloqueado por el Firewall, NO intentes hacer fuerza bruta, o DDoS. gracías por su atención.</p>
         </div>
     </div>
 </footer>

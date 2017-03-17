@@ -1,17 +1,17 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/Modelo/class.conection.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/Modelo/class.consultations.php';
+require_once '../../Core/Modelo/class.conection.php';
+require_once '../../Core/Modelo/class.consultations.php';
 
 //print_r($_FILES);
-require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.php';
+require_once '../../Core/library/resize.php';
 if(isset($_POST['subir']) && $_POST['subir'] == 'Subir'){
 
     //print_r($_FILES);
     if(isset($_FILES['file'])){
 //            echo 'seguimos';
 
-        $carpeta = $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Views/app/Img/imgPost/';
+        $carpeta = '../../Views/app/Img/imgPost/';
         if(is_dir($carpeta) && is_writable($carpeta)){
             $result = count($_FILES['file']['name']);
             $endExtension = array('jpg','gif','png','jpeg');
@@ -46,18 +46,16 @@ if(isset($_POST['subir']) && $_POST['subir'] == 'Subir'){
                     $thumb->save($carpeta.$nameNewFile);
                     unlink($carpeta.$nameNewFile);
 
-
                     $categoria = htmlentities(addslashes($_POST['categoria']));
                     $tema = htmlentities(addslashes($_POST['tema']));
                     $autor = htmlentities(addslashes($_POST['autor']));
                     $articulo = nl2br(htmlentities(addslashes($_POST['articulo'])));
                     $imagenBinario  = file_get_contents($fileTemp);
                     $date = date('Y/m/d h:i:s a');
-                    $ip = $_SERVER['REMOTE_ADDR'];
 
                     if(strlen($imagenBinario) > 0 && strlen($categoria) > 0 && strlen($tema) > 0 && strlen($autor) > 0 && strlen($articulo) > 0){
                         $modelo = new Consultations();
-                        $complete = $modelo->insertPost($categoria,$tema,$articulo,$imagenBinario,$altName,$nameNewFile,$date,$autor,$ip);
+                        $complete = $modelo->insertPost($categoria,$tema,$articulo,$imagenBinario,$altName,$nameNewFile,$date,$autor);
                         $msj = 5;
                     }
 

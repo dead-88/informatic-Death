@@ -48,11 +48,11 @@ $(document).ready(function () {
         beforeSend: function() {
             status.empty();
             var percentVal = '0%';
-            bar.width(percentVal)
+            bar.width(percentVal);
             percent.html(percentVal);
         },uploadProgress: function(event, position, total, percentComplete) {
             var percentVal = percentComplete + '%';
-            bar.width(percentVal)
+            bar.width(percentVal);
             percent.html(percentVal);
         },complete: function(data) {
             // alert(data.responseText);

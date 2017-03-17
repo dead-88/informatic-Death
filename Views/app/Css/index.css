@@ -3,7 +3,10 @@
   padding: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
 
 body {
   background-image: url("../Img/3924908-code-wallpapers.jpg");
@@ -22,15 +25,17 @@ header{
 }
 
 header nav{
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  background-color: rgba(15, 15, 15, 0.55);
 }
 
 header nav ul{
   list-style: none;
-  transition: max-height .45s;
+  -webkit-transition: max-height 2s;
+  -moz-transition: max-height 2s;
+  -o-transition: max-height 2s;
+  transition: max-height 2s;
   overflow: hidden;
 }
 
@@ -38,6 +43,9 @@ header nav ul li{
   display: inline-block;
   width: 32%;
   text-align: center;
+  font-family: "Bookman Old Style", "Courier New", "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  border-bottom: 2px solid #1BA2A7;
+
 }
 
 header nav ul li a{
@@ -47,16 +55,16 @@ header nav ul li a{
   display: block;
 }
 
-header nav ul li a:hover{
+header nav ul li a:hover, a:active, a:focus{
   text-decoration: none;
-  background-color: #0f0f0f;
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
   color: #2aabd2;
-}
-
-header nav ul li a:active{
-  text-decoration: none;
-  background-color: #343434;
-  color: #2aabd2;
+  outline: none;
+  border: none;
 }
 
 .menu{
@@ -67,7 +75,6 @@ header nav ul li a:active{
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;
-  background-color: rgba(3, 20, 20, 0.98);
 }
 /** End Header Disign **/
 
@@ -87,10 +94,44 @@ header nav ul li a:active{
       border-bottom: 2px solid #b8f4f9;
     }
 
+.modal, .fade {
+  background-color: rgba(0, 0, 0, 0.7); }
+
+footer {
+  width: 100%;
+  bottom: 0;
+  position: relative;
+  clear: both;
+  margin: 10px auto;
+}
+  footer p {
+    text-align: center;
+    font-weight: bold;
+    color: #2aabd2;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px; }
+  .class{
+    width: 100%;
+    background-color: rgba(0,0,0,.5);
+    margin: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .span{
+    color: #ef111b;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+  }
+
+/*Media Query*/
+
 @media screen and (max-width: 767px){
+
   .main{
     width: 400px;
-    padding-top: 100px;
+    padding-top: 40px;
   }
 
   .main h1{
@@ -111,6 +152,7 @@ header nav ul li a:active{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
+    border-bottom: none;
   }
 
   .menu{
@@ -122,9 +164,14 @@ header nav ul li a:active{
   }
 }
 @media screen and (max-width: 427px){
+
+  header nav ul li{
+    border-bottom: none;
+  }
+
   .main{
     width: auto;
-    padding-top: 100px;
+    padding-top: 50px;
   }
 
   .main h1{
@@ -137,36 +184,4 @@ header nav ul li a:active{
   }
 }
 
-.modal, .fade {
-  background-color: rgba(0, 0, 0, 0.7); }
-
-footer {
-  width: 100%;
-  bottom: 0;
-  position: relative;
-  clear: both;
-  margin: 10px auto;
-}
-  footer p {
-    text-align: center;
-    font-weight: bold;
-    color: #2aabd2;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px; }
-  .glyphicon-refresh{
-    display: none;
-  }
-  .class{
-    width: 100%;
-    background-color: rgba(0,0,0,.5);
-    margin: 30px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .span{
-    color: #ef111b;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    text-align: center;
-  }
+/*End Media QUERY*/

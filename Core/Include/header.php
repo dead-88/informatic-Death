@@ -1,44 +1,33 @@
 <?php
 require_once '../Modelo/class.conection.php';
 require_once '../Modelo/class.consultations.php';
+require_once '../Controlador/loadArticles.php';
 
 session_start();
-
 $consult = new Consultations();
 $conection = new Conection();
 $connect = $conection->get_conection();
 
-
-
 if(!isset($_SESSION['usuario'])){
     header('location: ../../index.php');
 }else{
-    // Array del usuario que ingreso
+
+    // Ver el registro completo del usuario que ingreso.
     $stm = $connect->prepare("SELECT * FROM users WHERE id_users = :uid");
     $stm->execute(array(":uid"=>$_SESSION['usuario']));
     $user = $stm->fetch(PDO::FETCH_ASSOC);
+    // Fin registros
 
-    $conversations = $consult->viewConversations();
-    $rowspost = $consult->viewPost();
-    $conversationsId = $consult->viewConversationsId();
-
-    //Ver los mensajes de cada usuario
-    $usersIdMsj = $user['users'];
-    $idMessage = $connect->prepare("SELECT COUNT(message) FROM conversation WHERE user_name = '$usersIdMsj'");
-    $idMessage->execute();
-    $idMsj = $idMessage->fetch(PDO::FETCH_ASSOC);
-
-
-    if(isset($idMsj)){
-        foreach ($idMsj as $idMsjs){}
-    }
+    $conversations  = $consult->viewConversations();
+    $conversationsA = $consult->viewConversationsAdmin();
+    $rowspost       = $consult->viewPost();
+    $idPost         = count($rowspost);
+    $MessageId      = count($conversations);
+    $MessageIdA     = count($conversationsA);
+    $maxMesj        = $MessageId + $MessageIdA;
 
     if(isset($conversations)){
         foreach($conversations as $conversation){}
-    }
-
-    if(isset($conversationsId)){
-        foreach($conversationsId as $MessageId){}
     }
 
     if(isset($rowspost)){
@@ -51,7 +40,8 @@ if(!isset($_SESSION['usuario'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Informatic-Death</title>
+    <link rel="icon" href="../../Views/app/Img/Informatic_Death_122051.jpg" style="icon: auto;align-self: baseline;">
+    <title>Team Informatic-Death</title>
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
@@ -82,13 +72,13 @@ if(!isset($_SESSION['usuario'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#Welcome" class="nav-tabs navbar-brand">We Are One</a>
+                <a href="#Welcome" class="nav-tabs navbar-brand">We Are One!</a>
             </div>
 
             <!-- Inicio del menu -->
             <div class="collapse navbar-collapse" id="navegacion-fm">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.php">Inicio</a></li>
+                    <li><a href="index.php">Inicio</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Herramientas <span class="caret"></span>
@@ -97,15 +87,15 @@ if(!isset($_SESSION['usuario'])){
                             <li><a href="#">Windows x86 x64</a></li>
                             <li><a href="#">Linux x86 x64</a></li>
                         </ul>
-                    <li class="dropdown">
-                        <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
-                            Configuración<span class="flaticon-settings-4"></span>
-                        </a>
-                        <ul class="dropdown-menu pull-left" role="menu">
-                            <li><a href="perfil.php" class="pull-right">Mí Cuenta<span class="flaticon-user"></span></a></li>
-                            <li><a href="../Controlador/close.php" class="pull-right">Logout<span class="flaticon-power"></span></a></li>
-                        </ul>
-                    </li>
+                        <li class="dropdown">
+                            <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
+                                Configuración<span class="flaticon-settings-4"></span>
+                            </a>
+                            <ul class="dropdown-menu pull-left" role="menu">
+                                <li><a href="perfil.php" class="pull-right">Mí Cuenta<span class="flaticon-user"></span></a></li>
+                                <li><a href="../Controlador/close.php" class="pull-right">Logout<span class="flaticon-power"></span></a></li>
+                            </ul>
+                        </li>
                     </li>
                 </ul>
             </div>

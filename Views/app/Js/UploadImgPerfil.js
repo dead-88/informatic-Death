@@ -48,33 +48,43 @@ $(document).ready(function () {
         beforeSend: function() {
             status.empty();
             var percentVal = '0%';
-            bar.width(percentVal)
+            bar.width(percentVal);
             percent.html(percentVal);
         },uploadProgress: function(event, position, total, percentComplete) {
             var percentVal = percentComplete + '%';
-            bar.width(percentVal)
+            bar.width(percentVal);
             percent.html(percentVal);
         },complete: function(data) {
-            // alert(data.responseText);
+            //alert(data.responseText);
             if(data.responseText == 1){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-danger"><p><strong>ERROR!</strong>El usuario ya existe.</p></div>');
-            }else if(data.responseText == 2){
-                status.html("");
-                status.append('<div class="alert alert-dismissible alert-warning"><p><strong>ERROR!</strong>La carpeta no tiene Permisos</p></div>');
+                status.append('<div class="alert alert-dismissible alert-danger"><p><strong>ERROR!</strong> El usuario ya existe.</p></div>');
             }else if(data.responseText == 3){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-warning"><p><strong>ERROR!</strong>La carpeta no tiene Permisos</p></div>');
+                status.append('<div class="alert alert-dismissible alert-warning"><p><strong>ERROR!</strong> La carpeta no tiene Permisos</p></div>');
             }else if(data.responseText == 4){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-info"><p>Extensiones permitidas JPG, GIF, PNG</p></div>');
+                status.append('<div class="alert alert-dismissible alert-info"><p>Solo Se Permiten Las Extensiones JPG, GIF, PNG</p></div>');
             }else if(data.responseText == 5){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-success"><strong>Carga completa!</strong></div>');
+                status.append('<div class="alert alert-dismissible alert-success"><strong>Actualización completa.</strong></div>');
+                location.reload();
+            }else if(data.responseText == 6){
+                status.html("");
+                status.append('<div class="alert alert-dismissible alert-danger"><h4>ERROR!</h4><p><strong> Las contraseñas no coinciden.</strong></p></div>');
+            }
+            else if(data.responseText == 7){
+                status.html("");
+                status.append('<div class="alert alert-dismissible alert-success"><h4><strong>Enviado</strong></h4><p> Revisa tú E-Mail..</p></div>');
                 location.reload();
             }
+            else if(data.responseText == 8){
+                status.html("");
+                status.append('<div class="alert alert-dismissible alert-danger"><h4><strong>ERROR!</strong></h4><p> No se pudo enviar las credenciales a tú correo.</p></div>');
+                location.reload();
+            }
+
         }
     });
-
     // FIN JQUERY UPLOAD
 });

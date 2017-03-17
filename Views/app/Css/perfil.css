@@ -5,13 +5,18 @@ ul{
 /*Perfil de usuarios*/
 
 .vistaUsers{
-    width: 250px;
+    width: 270px;
     overflow: auto;
     margin: 0 auto;
     background-color: #f0f0f0;
     color: #0c0c0c;
     padding: 20px;
     position: relative;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -webkit-box-shadow: 4px 5px 10px #000;
+    -moz-box-shadow: 4px 5px 10px #000;
+    box-shadow: 4px 3px 5px #c1c1c1,4px 3px 5px #000, inset 4px 3px 5px #1e1e1e,inset 4px 3px 5px #000, 4px 3px 5px #c1c1c1;
 }
 
 .vistaUsers > p{
@@ -20,16 +25,6 @@ ul{
 
 .text-act{
     color: #30d624;
-}
-
-input[type="text"],input[type="password"]{
-    outline: none;
-    border: 1px dotted #f0f0f0;
-    color: #f0f0f0;
-    padding: 2px;
-    background-color: #1e1e1e;
-    text-align: center;
-    font-family: "Courier New", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .imgPhoto{
@@ -41,6 +36,29 @@ input[type="text"],input[type="password"]{
 }
 /*Fin perfil usuario*/
 
+.link{
+    background: rgb(255, 255, 255) url("../Img/userPerf.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 4px 5px 10px #000,inset 4px 5px 10px #fff,inset 4px 5px 10px #fff,4px 3px 7px #c1c1c1;
+    border: 3px outset #1BA2A7;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #0e0e0e;
+    font-family: "Courier New", "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    font-size: 15px;
+    font-weight: 700;
+    height: 180px;
+    line-height: 50px;
+    overflow: hidden;
+    text-align: center;
+    width: 200px;
+    -moz-border-radius: 50%;
+    -moz-box-shadow: 4px 5px 10px #000;
+    -webkit-border-radius: 50%;
+    -webkit-box-shadow: 4px 5px 10px #000;
+}
+
 .post-content{
     overflow: auto;
     padding: 10px;
@@ -49,6 +67,7 @@ input[type="text"],input[type="password"]{
 .text-date{
     width: 400px;
     clear: both;
+    margin: 0 auto;
 }
 
 .text-date ol li{
@@ -84,8 +103,13 @@ input[type="text"],input[type="password"]{
     cursor: default;
 }
 
+#container{
+    margin-left: 260px;
+}
+
 .form-style{
     width: 400px;
+    margin: 0 auto;
 }
 
 .form-style ul li{
@@ -110,6 +134,9 @@ input[type="text"],input[type="password"]{
 }
 
 input[type="text"],input[type="password"],input[type="email"]{
+    color: #f0f0f0;
+    background-color: #1e1e1e;
+    text-align: center;
     width: 100%;
     display: block;
     outline: none;
@@ -155,7 +182,8 @@ input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus{
     background: -ms-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
     background: linear-gradient(to right, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebe9f9', endColorstr='#c1bfea', GradientType=1 );
-    width:0%; height:20px;
+    width: 0;
+    height: 20px;
     border-radius: 3px;
 }
 
@@ -173,14 +201,14 @@ input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus{
     .link{
         cursor: pointer;
         color: #060606;
-        background: rgb(255, 255, 255) url("../Img/default.jpg");
-        background-size: cover;
+        background: rgb(255, 255, 255) url("../Img/icon.png");
+        background-size: contain;
         background-position: center;
-        border-radius: 8px;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         height: 180px;
-        width: 250px;
+        width: 200px;
     }
 
     .text-act{
@@ -200,9 +228,15 @@ input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus{
     .text-date{
         width: 300px;
     }
+
+    #container{
+        width: 200px;
+        margin: 0 auto;
+    }
 }
 
 @media screen and (max-width: 527px){
+
     .post-content{
         width: 250px;
         overflow: auto;

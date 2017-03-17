@@ -26,7 +26,7 @@ if($count > 0 && $search != ''){
     echo '<h2><center>Resultado de la búsqueda.</center></h2>';
     do {
         echo '<div class="row">
-<center><span style="cursor: pointer" class="btn btn-danger" onclick="Confirm('.$row['id_blog'].');">Eliminar Post</span></center>
+                <center><span style="cursor: pointer" class="btn btn-danger" onclick="Confirm('.$row['id_blog'].');">Eliminar Post</span></center>
                      <section class="posts col-md-9"> 
                         <article class="post clearfix">';
         echo '<h1 style="text-transform: capitalize; padding-left: 10px; border-left: #ff0000 3px solid;background-color: #0f0f0f;" class="post-fecha">'.$row['categoria'].'</h1>';
@@ -46,5 +46,5 @@ if($count > 0 && $search != ''){
         echo '</section>';
         echo '</div>';
     }while($row = $stm->fetch(PDO::FETCH_ASSOC));
-}elseif ($count > 0 && $search == '') echo '<h2 class="text-capitalize text-danger"><center>Que estas búscando?</center></h2>';
-else echo '<center>No se encontro la búsqueda</center>';
+}elseif ($count >= 0 && $search == '') echo '<h2 class="text-capitalize text-danger"><center>Que estas búscando?</center></h2>';
+else echo '<center>No se encontro la búsqueda.</center>';

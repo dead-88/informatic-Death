@@ -1,21 +1,29 @@
 <?php
     require_once '../../Core/Modelo/class.conection.php';
     require_once '../../Core/Modelo/class.consultations.php';
+    require_once '../ControllersRoot/loadArticlesRoot.php';
 
 session_start();
+//Hacer uns instancia de la clase Consultas
 $modelo = new Consultations();
+//Hacer Instancia de la clase Conection
 $conection = new Conection();
+//Obtener funcion de la clase Conection
 $connect = $conection->get_conection();
-
+//Restringir Acceso a usuario que quieren saltar el paso de login
 if(!isset($_SESSION['root'])){
     header('location: index.php');
 }else{
-    $admin = $connect->prepare("SELECT id_admin,user_admin,email,ip,date FROM admin WHERE id_admin = :uiadm");
+    //Hacer un array Fetch De los usuarios que ingresaron para obtener todos sus registros
+    $admin = $connect->prepare("SELECT id_admin,user_admin FROM admin WHERE id_admin = :uiadm");
     $admin->execute(array(":uiadm"=>$_SESSION['root']));
     $adminView = $admin->fetch(PDO::FETCH_ASSOC);
 
-    $conversations = $modelo->viewUsers();
-    $rowspost = $modelo->viewPost();
+    //Obtener Funcion de la clase Consultations
+    $conversations  = $modelo->viewUsers();
+    $rowspost       = $modelo->viewPost();
+    $userId         = count($conversations);
+    $articleId      = count($rowspost);
 
     if(isset($conversations) AND isset($rowspost)){
         foreach($conversations as $conversation){}
@@ -33,6 +41,7 @@ if(!isset($_SESSION['root'])){
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
+    <link rel="stylesheet" type="text/css" href="../../Views/app/Css/font/flaticon.css">
 </head>
 <body>
 
@@ -59,16 +68,14 @@ if(!isset($_SESSION['root'])){
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Windows x86 & x64</a></li>
-                            <li><a href="#">Mac</a></li>
                             <li><a href="#">Linux x86 & x64</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="btn-nw dropdown-toggle pull-right" data-toggle="dropdown" role="button">
-                            Configuración <span class="glyphicon glyphicon-console"></span>
+                        <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
+                            Configuración <span class="flaticon-settings-4"></span>
                         </a>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li><a href="#">My account</a></li>
+                        <ul class="dropdown-menu" role="menu">
                             <li><a href="../../Core/Controlador/close.php" class="text-danger">Logout</a></li>
                         </ul>
                     </li>
@@ -77,20 +84,34 @@ if(!isset($_SESSION['root'])){
         </div>
     </nav>
 </header>
-
-<section class="jumbotron">
-    <div class="container">
-        <h1 class="titulo text-capitalize"><?php echo $adminView['user_admin']; ?></h1><br><br>
-        <p>Panel De Administración <span>Bienvenido/a</span></p>
-    </div>
-</section>
-
+<br><br><br>
 <section class="main container">
     <div class="form">
         <form action="" method="post" name="search_form" id="search_form">
             <input type="text" name="searchForm" id="searchForm" placeholder="Buscar...">
         </form>
         <div id="result"></div>
+    </div>
+</section>
+
+<section class="main container">
+    <h1 style="cursor: pointer;text-align: center;" href="#view" class="post-fecha post-h1 viewOne">Ver Usuarios
+        [<?php
+        if(isset($userId)){
+            echo $userId;
+        }
+        ?>]</h1>
+    <div class="objOne">
+        <?php viewUsers();?>
+    </div>
+    <h1 style="cursor: pointer;text-align: center;" href="#view" class="post-fecha post-h1 viewTwo">Ver Articulos
+        [<?php
+        if(isset($articleId)){
+            echo $articleId;
+        }
+        ?>]</h1>
+    <div class="objTwo">
+        <?php viewPostAdmin();?>
     </div>
 </section>
 
@@ -135,12 +156,14 @@ if(!isset($_SESSION['root'])){
                                 <br>
                                 <div class="input-group">
                                     <span class="input-group-addon">Autor: </span>
-                                    <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: Dead_*88" required>
+                                    <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: informatic-Death" required>
                                 </div>
                                 <br>
                                 <div class="input-group">
                                     <span class="input-group-addon">Articulo: </span>
-                                    <textarea id="articulo" class="form-control" name="articulo" required></textarea>
+                                    <label for="textarea">
+                                        <textarea id="articulo" class="form-control" name="articulo" required></textarea>
+                                    </label>
                                 </div>
                                 <br>
                                 <center>
@@ -173,40 +196,20 @@ if(!isset($_SESSION['root'])){
                             </div>
                         </div>
                 </div>
-                <div class="hidden">
-                    <label for="user" class="text-center">Usuario:</label>
-                    <input type="text" class="form-control" id="userConvers" name="userConvers" value="<?php echo $adminView['user_admin']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="message" class="text-center">Mesagge:</label>
-                    <textarea name="message" id="message" placeholder="Enter message..." class="form-control" role="textbox" required></textarea>
-                </div>
-                <input type="submit" class="btn btn-primary" id="send">
-                </form>
+                        <div class="hidden">
+                            <label for="user" class="text-center">Usuario:</label>
+                            <input type="hidden" id="idUser" name="idUser" value="<?php if(isset($adminView['id_admin'])){echo $adminView['id_admin'];};?>" required>
+                            <input type="text" class="form-control" id="userConvers" name="userConvers" value="<?php  if(isset($adminView['user_admin'])){echo $adminView['user_admin'];}; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="text-center">Mesagge:</label>
+                            <textarea name="message" id="message" placeholder="Enter message..." class="form-control" role="textbox" required></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-primary" id="send">
+                    </form>
 
         </section>
         <aside class="col-md-3 hidden-xs hidden-sm">
-            <h4 class="text-center">Especialisaté En...!</h4>
-            <div class="list-group">
-                <a href="#" class="list-group-item">Diseño Web</a>
-                <a href="#view" class="list-group-item view">Php</a>
-                <div class="obj">
-                    Quieres aprender Php en pocos pasos? facil, solo tienes que darle <a href="#">ME GUSTA</a> y subscribirse en
-                    nuestro canál de <a href="#">YouTube.</a>
-                    <p class="text-justify">Te enseñare a crear un CRUD orientado a objetos desde cero con  MYSQL y PHP (CRUD with PDO)</p>
-                </div>
-                <a href="#" class="list-group-item">JavaScript</a>
-                <a href="#" class="list-group-item">Css3</a>
-                <a href="#" class="list-group-item">Html5</a>
-                <a href="#" class="list-group-item">JQuery</a>
-                <a href="#" class="list-group-item view">MySql + SQL</a>
-            </div>
-            <h4 class="text-center">Noticias Recientes</h4>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Inicia tu proyecto</h4>
-                <p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consectetur eius, iusto qui soluta voluptate. Amet dolorem eaque enim labore minima nam neque quaerat reprehenderit, voluptatum? Ad autem excepturi nam.</p>
-            </a>
-
             <h4 class="text-center">Videos</h4>
             <div class="list-group list-video">
                 <h4 class="text-center">Introducción a la pagina</h4>
@@ -237,7 +240,7 @@ if(!isset($_SESSION['root'])){
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
-                <p>Copyright &COPY; Create By Informatic-Death °-° Dead_*88</p>
+                <p>Copyright &COPY; Created By Dead_*88 & BL0CK_LT3 Team informatic-Death</p>
             </div>
             <div class="col-xs-6">
                 <ul class="list-inline text-right">
@@ -255,5 +258,6 @@ if(!isset($_SESSION['root'])){
 <script type="text/javascript" src="../../Views/app/Js/ajax.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/registerPost.js"></script>
 <script src="../../Views/app/Js/searchRoot.js"></script>
+<script src="../../Views/app/Js/diseños.js"></script>
 </body>
 </html>
