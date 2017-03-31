@@ -21,7 +21,8 @@
         $date       = date('Y/m/d h:i:s a');
         $modelo     = new Consultations();
         $result     = $modelo->insertUsersRegistrys($user,$pass_sha1,$email,$date);
-            mail($email,'informatic-Death','<h1>Hola<h1><strong> '.$user. '</strong>, Una recomendación, evita el mal úso de la información que recopiles aquí. Gracias por su atención.<br><br><strong>Usuario:</strong> '.$user.'<br><strong>Contraseña:</strong> '.$pass);
+        $HTML       = '<h1>Hola<h1><strong> '.$user. '</strong>, Una recomendación, evita el mal úso de la información que recopiles aquí. Gracias por su atención.<br><br><strong>Usuario:</strong> '.$user.'<br><strong>Contraseña:</strong> '.$pass;
+            mail($email,'informatic-Free',$HTML);
         $HTML = 1;
     }else{
         if(strtolower($rows['users']) == strtolower($user)){

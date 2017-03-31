@@ -1,7 +1,7 @@
 <?php
     require_once '../../Core/Modelo/class.conection.php';
     require_once '../../Core/Modelo/class.consultations.php';
-    require_once '../ControllersRoot/loadArticlesRoot.php';
+    include '../ControllersRoot/loadArticlesRoot.php';
 
 session_start();
 //Hacer uns instancia de la clase Consultas
@@ -37,7 +37,7 @@ if(!isset($_SESSION['root'])){
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>informatic-Death Hacking</title>
+    <title>informatic-Free ADMIN</title>
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
@@ -62,15 +62,6 @@ if(!isset($_SESSION['root'])){
             <div class="collapse navbar-collapse" id="navegacion-fm">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="blog.php">Inicio</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            Herramientas <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Windows x86 & x64</a></li>
-                            <li><a href="#">Linux x86 & x64</a></li>
-                        </ul>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
                             Configuración <span class="flaticon-settings-4"></span>
@@ -240,7 +231,7 @@ if(!isset($_SESSION['root'])){
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
-                <p>Copyright &COPY; Created By Dead_*88 & BL0CK_LT3 Team informatic-Death</p>
+                <p>Copyright &COPY; Created By Dead_*88 & BL0CK_LT3 Team informatic-Free</p>
             </div>
             <div class="col-xs-6">
                 <ul class="list-inline text-right">
@@ -258,6 +249,6 @@ if(!isset($_SESSION['root'])){
 <script type="text/javascript" src="../../Views/app/Js/ajax.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/registerPost.js"></script>
 <script src="../../Views/app/Js/searchRoot.js"></script>
-<script src="../../Views/app/Js/diseños.js"></script>
+<script src="../../Views/app/Js/disenos.js"></script>
 </body>
 </html>

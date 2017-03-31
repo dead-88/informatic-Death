@@ -2,9 +2,9 @@
 
 sleep(1);
 
-require_once '../Modelo/class.conection.php';
-require_once '../Modelo/class.consultations.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.php';
+include '../Modelo/class.conection.php';
+include '../Modelo/class.consultations.php';
+include '../../Core/library/resize.php';
 
                                     // UPLOAD DE IMAGEN PARA USERS
     session_start();
@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.
         //print_r($_FILES);
         if(isset($_FILES['file'])){
 //            echo 'seguimos';
-            $carpeta = $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Views/app/Img/ImgUsers/';
+            $carpeta = '../../Views/app/Img/ImgUsers/';
             if(is_dir($carpeta) && is_writable($carpeta)){
                 $result = count($_FILES['file']['name']);
                 $endExtension = array('jpg','gif','png','jpeg');
@@ -102,6 +102,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.
                                             $subj   = 'Cambios realizados';
                                             $body   = 'Has solicitado cambios en tu cuenta: <br>'.'Nuevo usuario: '.$userNew.'<br>'.'Nueva clave: '.$passNew;
 
+                                            function getHeaders($from_addres){
+                                                return "From: $from_addres\rReply-To: $from_addres\rReturn-path:$from_addres";
+                                            }
+
                                             $header = getHeaders($from);
                                             $result = mail($to, $subj,$body,$header);
                                             if($result){
@@ -109,10 +113,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/informatic-Death/Core/library/resize.
                                                 echo '5';
                                             }else{
                                                 echo '8';
-                                            }
-
-                                            function getHeaders($from_addres){
-                                                return "From: $from_addres\rReply-To: $from_addres\rReturn-path:$from_addres";
                                             }
                                             //Fin envio
                                         }else{

@@ -74,7 +74,20 @@
             $rows = null;
             $modelo = new Conection();
             $connect = $modelo->get_conection();
-            $query = "SELECT id_users,rango,users,password,email,date_registry,foto_user,name_foto,alt_foto,online FROM users";
+            $query = "SELECT id_users,rango,users,email,date_registry,date_update,foto_user,name_foto,alt_foto,online,block FROM users";
+            $stm = $connect->prepare($query);
+            $stm->execute();
+            while ($result = $stm->fetch(PDO::FETCH_ASSOC)){
+                $rows[] = $result;
+            }
+            return $rows;
+        }
+
+        public function viewUsersOnline(){
+            $rows = null;
+            $modelo = new Conection();
+            $connect = $modelo->get_conection();
+            $query = "SELECT id_users,rango,users,email,date_registry,date_update,foto_user,name_foto,alt_foto,online,block FROM users WHERE online = '1'";
             $stm = $connect->prepare($query);
             $stm->execute();
             while ($result = $stm->fetch(PDO::FETCH_ASSOC)){
@@ -87,7 +100,7 @@
             $rows = null;
             $modelo = new Conection();
             $connect = $modelo->get_conection();
-            $query = "SELECT id_users,rango,users,email,date_registry,foto_user,name_foto,alt_foto,online FROM users WHERE id_users = :id_users";
+            $query = "SELECT id_users,rango,users,email,date_registry,foto_user,name_foto,alt_foto,online,block FROM users WHERE id_users = :id_users";
             $stm = $connect->prepare($query);
             $stm->bindParam(':id_users', $id_users);
             $stm->execute();
@@ -98,13 +111,12 @@
         }
 
         public function viewConversations(){
-            $rows = null;
-            $model = new Conection();
-            $connect = $model->get_conection();
-            $query = "SELECT conversation.id_conversations,conversation.id_users,conversation.date_message,conversation.user_name,conversation.message,users.users,users.foto_user,users.online,users.rango FROM conversation,users WHERE conversation.user_name = users.users ORDER BY conversation.id_conversations";
-            $stm = $connect->prepare($query);
-            $stm->execute();
-            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
+            $rows       = null;
+            $model      = new Conection();
+            $connect    = $model->get_conection();
+            $query      = $connect->prepare("SELECT conversation.id_conversations,conversation.id_users,conversation.date_message,conversation.user_name,conversation.message,users.users,users.foto_user,users.online,users.rango,users.block FROM conversation,users WHERE conversation.user_name = users.users ORDER BY conversation.id_conversations");
+            $query->execute();
+            while($result = $query->fetch(PDO::FETCH_ASSOC)){
                 $rows[]=$result;
             }
             return $rows;

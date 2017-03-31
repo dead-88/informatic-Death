@@ -1,7 +1,7 @@
 //UPLOAD IMAGEN PERFIL
 
 $(document).ready(function () {
-    var wrapper = $("<div/>").css({height:0,width: 0,'overflow': 'hidden'});
+    var wrapper     = $("<div/>").css({height:0,width: 0,'overflow': 'hidden'});
     var  fileInput1 = $("#archivo1").wrap(wrapper);
 
     $("#photo-1").on("click",function () {
@@ -72,6 +72,7 @@ $(document).ready(function () {
             }else if(data.responseText == 6){
                 status.html("");
                 status.append('<div class="alert alert-dismissible alert-danger"><h4>ERROR!</h4><p><strong> Las contraseñas no coinciden.</strong></p></div>');
+                location.reload();
             }
             else if(data.responseText == 7){
                 status.html("");

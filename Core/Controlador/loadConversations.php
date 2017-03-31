@@ -25,7 +25,7 @@ require_once '../Modelo/class.consultations.php';
         foreach($conversations as $conversation){
             $targets = $modelo->link($conversation['message']);
             // Si el usuario que escribio es el mismo que ingreso, se vera la vista en la parte derecha
-            if($conversation['id_users'] == $_SESSION['usuario']){
+            if($conversation['id_users'] == isset($_SESSION['usuario'])){
                 if($conversation['foto_user'] == null){
                     echo '<img style="width: 50px;margin-left:10px; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="thumb pull-right">';
 

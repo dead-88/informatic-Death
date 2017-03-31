@@ -1,11 +1,12 @@
 $(document).on("ready",function(){
+    var timer;
     registerMessages();
     $.ajaxSetup({"cache":false});
-    timer = setInterval("loadOldMessages()",1000);
+    // timer = setInterval("loadOldMessages()",1000);
     $("#conversation").mouseover(function () {
         clearInterval(timer);
     }).mouseout(function () {
-        timer = setInterval("loadOldMessages()",1000);
+        // timer = setInterval("loadOldMessages()",1000);
     });
 });
 

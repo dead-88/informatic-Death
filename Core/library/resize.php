@@ -22,7 +22,7 @@ $thumbs_quality="75";  // [OPTIONAL] set quality for jpeg only (0 - 100) (worst 
 $d = opendir(".");
 while (false !== ($file = readdir($d))) {
     if ( filetype($file) == 'file' ){
-        $type = ereg_replace(".*\.(.*)$","\\1",$file);
+        $type = preg_replace("/[0-9]{2}/","\\1",$file);
         if ( preg_match("/^(png|gif|jpg|jpeg)$/i",$type) ) {
             if ( !file_exists  ($thumbs_folder."/".$file) ) {
                 echo "Resizing: ".$file."<br>";

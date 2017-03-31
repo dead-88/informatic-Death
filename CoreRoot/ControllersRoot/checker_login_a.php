@@ -1,13 +1,15 @@
 <?php
 
     require_once '../../Core/Modelo/class.conection.php';
+    require_once '../../Core/Modelo/class.consultations.php';
 
     session_start();
     $modelo     = new Conection();
-    $connect    = $modelo->get_conection();
+    $consult    = new Consultations();
     $login      = htmlentities(addslashes($_POST['login']));
+    $connect    = $modelo->get_conection();
     $pass       = htmlentities(addslashes($_POST['passwd']));
-    $passS      = sha1($pass);
+    $passS      = $consult->Encrypt($pass);
     try{
         $stm    = $connect->prepare("SELECT id_admin,user_admin,password FROM admin WHERE user_admin = :login");
         $stm->execute(array(":login"=>$login));

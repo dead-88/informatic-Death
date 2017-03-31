@@ -1,15 +1,14 @@
-<?php require_once '../Include/header.php';?>
+<?php include '../Include/header.php';?>
 <section class="jumbotron">
     <div class="container">
         <h2 class="titulo text-capitalize">
             <?php
-                if(null == $user['foto_user']){
-                    echo '<img src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error" class="thumb pull-left">';
-                }else{
+                if(isset($user['foto_user']) == null || isset($user['foto_user']) == ''){
                     echo '<img src="data:image/*;base64,'.base64_encode($user['foto_user']).'" alt="Error" class="thumb pull-left">';
-//                    echo '<img src="../../Views/app/Img/ImgUsers/'.$user['alt_foto'].'.jpg" alt="Error" class="thumb pull-left">';
+                }else{
+                    echo '<img src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error" class="thumb pull-left">';
                 }
-                echo $user['users'];
+                if(isset($user['users'])){echo $user['users'];}
             ?>
         </h2>
         <p class="text-left">Acercate más! <span>Te mostrare algo.</span></p>
@@ -24,6 +23,69 @@
         </form>
         <div id="result"></div>
     </div>
+    <article class="post clearfix">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <!--BARRA DE PROGRESO-->
+                <div class="progress">
+                    <div class="bar"></div >
+                    <div class="percent">0%</div>
+                </div>
+                <!--FIN BARRA DE PROGRESO-->
+                <div class="col-md-8">
+                    <form role="form" id="formularioPhoto" method="post" action="../ControllersRoot/registerPost.php">
+                        <div id="container">
+                            <ul class="photos thumb pull-right">
+                                <li>
+                                    <center>Imagen Post
+                                        <input type="file" id="imgPost" name="file[]" required>
+                                        <div id="photo-1" class="link"></div>
+                                        <div id="cerrar-photo-1" class="cerrar-photo"></div>
+                                    </center>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Categoria: </span>
+                            <input type="text" class="form-control" name="categoria" id="categoria" placeholder="Categoria Here..." required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tema: </span>
+                            <input type="text" class="form-control" name="tema" id="tema" placeholder="Title Here..." required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Autor: </span>
+                            <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: informatic-Death" required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Articulo: </span>
+                            <label for="textarea">
+                                <textarea id="articulo" class="form-control" name="articulo" required></textarea>
+                            </label>
+                        </div>
+                        <br>
+                        <center>
+                            <div class="boton">
+                                <input type="hidden" id="subir" name="subir" value="Subir">
+                                <input type="submit" id="uploadbtn" class="uploadbtn btn btn-primary btn-sm" value="Enviar">
+                            </div>
+                        </center>
+                        <br>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="msj"></div>
+                    <div id="resultado"></div>
+                    <div id="responseError"></div>
+                </div>
+            </div>
+        </div>
+    </article>
     <h1 style="cursor: pointer;text-align: center;" href="#view" class="post-fecha post-h1 viewEight">Ver Articulos
         [<?php
         if(isset($idPost)){
@@ -38,7 +100,62 @@
 
 <section class="main container">
     <div class="row">
-        <aside class="col-md-3 hidden-xs hidden-sm">
+        <aside class="col-md-3 hidden-xs hidden-sm users_online">
+            <h4 class="text-center">Usuarios Online!</h4>
+            <div class="list-group">
+                <?php
+                    foreach($allUsersOnline as $usersOn){
+                        for ($i = 1; $i <= $usersCount; $i++){
+                    }
+                ?>
+                    <a href="#Users" data-target="#<?php if(isset($usersOn)){echo $usersOn['id_users'];} ?>" data-toggle="modal" class="list-group-item">
+                        <?php
+                            echo $usersOn['users'];
+                        ?>
+                        <img class="pull-right" src="../../Views/app/Img/connect.png" alt="ErrorConnect">
+                    </a>
+<!--                        MODAL DE USUARIOS ONLINE-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="modal fade" id="<?php if(isset($usersOn)){echo $usersOn['id_users'];} ?>">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&cross;</button>
+<!--                                                <h3 class="text-center">DETALLES DEL USUARIO --><?php //echo strtoupper($usersOn['users']);?><!--</h3>-->
+                                            </div>
+                                            <div aria-autocomplete="none" class="modal-body">
+                                                <div>
+                                                    <div class="card">
+                                                        <div class="card-up">
+                                                            <center><h2>PERFÍL DE <?php echo strtoupper($usersOn['users']);?></h2></center>
+                                                        </div>
+                                                        <div class="avatar">
+                                                            <?php
+                                                                if(null == $usersOn['foto_user']){
+                                                                    echo '<img class="img-circle" src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error">';
+                                                                }else{
+                                                                    echo '<img class="img-circle" src="data:image/*;base64,'.base64_encode($usersOn['foto_user']).'" alt="Error">';
+                                                                }
+                                                            ?>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <p>Se registro en el</p>
+                                                            <p class="post-fecha"><?php echo $usersOn['date_registry']?></p>
+                                                            <hr>
+                                                            <h4>Enviale un mensaje.</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<!--                        FIN MODAL USUARIOS ONLINE-->
+                 <? } ?>
+            </div>
             <h4 class="text-center">Espéra los cursos gratís!...</h4>
             <div class="list-group">
                 <a href="#view" class="list-group-item viewOne">Diseño Web</a>
@@ -125,7 +242,6 @@
                 </form>
         </section>
     </div>
-
 </section>
 
 <?php require_once '../Include/footer.php'?>

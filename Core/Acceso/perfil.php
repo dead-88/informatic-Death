@@ -1,5 +1,5 @@
 <?php
-    require_once '../Include/header.php';
+    include '../Include/header.php';
 
     //Ver todos mis mensajes enviados.
     $usersIdMsj = $user['users'];
@@ -162,4 +162,4 @@
             </section>
         </div>
     </section>
-<?php require_once '../Include/footer.php'?>
+<?php include '../Include/footer.php'?>

@@ -1,6 +1,6 @@
 <?php
 require_once 'Core/Modelo/class.conection.php';
-mail('informatic.death@gmail.com','Nuevo Usuario',GetIP());
+mail('deiber.andres.m@gmail.com','Nuevo Usuario',GetIP());
 
 session_start();
 if(isset($_SESSION['usuario'])){
@@ -8,18 +8,18 @@ if(isset($_SESSION['usuario'])){
 }
 
 $connection = new Conection();
-$connect = $connection->get_conection();
+$connect    = $connection->get_conection();
 
-$ip = GetIP();
-$query = "SELECT ip, TIMEDIFF(NOW(), fecha), fecha, num_votos FROM contador WHERE ip='$ip'";
-$stm = $connect->prepare($query);
+$ip         = GetIP();
+$query      = "SELECT ip, TIMEDIFF(NOW(), fecha), fecha, num_votos FROM contador WHERE ip='$ip'";
+$stm        = $connect->prepare($query);
 $stm->execute();
-$rows = $stm->fetch(PDO::FETCH_ASSOC);
-$tiempo = $rows['fecha'];
+$rows       = $stm->fetch(PDO::FETCH_ASSOC);
+$tiempo     = $rows['fecha'];
 $numVisitas = $rows['num_votos'];
-$horasT = substr($tiempo,0,2);
+$horasT     = substr($tiempo,0,2);
 $tiempoRest = 5;
-$count = $stm->rowCount();
+$count      = $stm->rowCount();
 
 if($count === 0){
     $query = $connect->prepare("INSERT INTO contador(ip, num_votos, fecha) VALUES('$ip', 1, NOW())");

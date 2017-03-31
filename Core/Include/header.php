@@ -21,6 +21,8 @@ if(!isset($_SESSION['usuario'])){
     $conversations  = $consult->viewConversations();
     $conversationsA = $consult->viewConversationsAdmin();
     $rowspost       = $consult->viewPost();
+    $allUsersOnline = $consult->viewUsersOnline();
+    $usersCount     = count($allUsersOnline);
     $idPost         = count($rowspost);
     $MessageId      = count($conversations);
     $MessageIdA     = count($conversationsA);
@@ -47,6 +49,7 @@ if(!isset($_SESSION['usuario'])){
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/perfil.css">
     <link rel="stylesheet" href="../../Views/app/Css/font/flaticon.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../../Views/app/Css/usuarios.css">
 </head>
 <script>
     var time;
@@ -80,22 +83,13 @@ if(!isset($_SESSION['usuario'])){
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Inicio</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            Herramientas <span class="caret"></span>
+                        <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
+                            Configuración<span class="flaticon-settings-4"></span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Windows x86 x64</a></li>
-                            <li><a href="#">Linux x86 x64</a></li>
+                        <ul class="dropdown-menu pull-left" role="menu">
+                            <li><a href="perfil.php" class="pull-right">Mí Cuenta<span class="flaticon-user"></span></a></li>
+                            <li><a href="../Controlador/close.php" class="pull-right">Logout<span class="flaticon-power"></span></a></li>
                         </ul>
-                        <li class="dropdown">
-                            <a href="#" class="btn-nw dropdown-toggle" data-toggle="dropdown" role="button">
-                                Configuración<span class="flaticon-settings-4"></span>
-                            </a>
-                            <ul class="dropdown-menu pull-left" role="menu">
-                                <li><a href="perfil.php" class="pull-right">Mí Cuenta<span class="flaticon-user"></span></a></li>
-                                <li><a href="../Controlador/close.php" class="pull-right">Logout<span class="flaticon-power"></span></a></li>
-                            </ul>
-                        </li>
                     </li>
                 </ul>
             </div>
