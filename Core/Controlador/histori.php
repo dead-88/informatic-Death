@@ -10,11 +10,11 @@
         $consultas  = new Consultations();
         $connect    = $connection->get_conection();
 
-        $message    = array();
+        $messages    = array();
         $id_conver  = (int)htmlentities(addslashes($_POST['conversacion']));
         $online     = (int)htmlentities(addslashes($_POST['online']));
 
-        $pegaConv   = $connect->prepare("SELECT * FROM `messages` WHERE(`id_de` = ? AND `id_para` = ?) OR (`id_de` = ? AND `id_para` = ?) ORDER BY `id` DESC LIMIT 10");
+        $pegaConv   = $connect->prepare("SELECT * FROM `messages` WHERE (`id_de` = ? AND `id_para` = ?) OR (`id_de` = ? AND `id_para` = ?) ORDER BY `id` DESC LIMIT 10");
         $pegaConv->execute(array($online,$id_conver,$id_conver, $online));
 
         while($row = $pegaConv->fetch()){
@@ -56,7 +56,7 @@
                 '<img class="img-rounded" src="../../Views/app/Img/Emoticons/persons-0037_medium.png" width="18"/>',//NoLike
                 '<img class="img-rounded" src="../../Views/app/Img/Emoticons/persons-0030_medium.png" width="18"/>',//GanasDellorar
                 '<img class="img-rounded" src="../../Views/app/Img/Emoticons/loltongue.png" width="18"/>',          //SacarLengüa
-                '<img class="img-rounded" src="../../Views/app/Img/Emoticons/dontsee.png" width="18"/>',            //Desepcion
+                '<img class="img-rounded" src="../../Views/app/Img/Emoticons/dontsee.png" width="18"/>'             //Desepcion
             );
             $msg            = str_replace($emotions, $imgs, htmlentities(addslashes($row['message'])));
             $linkHttp       = $consultas->link($msg);
@@ -69,5 +69,5 @@
                 'janela_de' => $janela_de
             );
         }
-        die(json_encode($messages));
+        die( json_encode($messages) );
     }

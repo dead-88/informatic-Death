@@ -10,6 +10,7 @@ require_once '../Modelo/class.consultations.php';
     $connect            = $conection->get_conection();
     $conversations      = $modelo->viewConversations();
     $conversationsAdmin = $modelo->viewConversationsAdmin();
+    $ahora              = date('Y-m-d H:i:s');
 
     echo "<p class='text-center'>".date('Y/F/l-d h:i:s A')."</p>";
 
@@ -29,19 +30,19 @@ require_once '../Modelo/class.consultations.php';
                 if($conversation['foto_user'] == null){
                     echo '<img style="width: 50px;margin-left:10px; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="thumb pull-right">';
 
-                    if($conversation['online'] == 1){
-                        echo '<img class="pull-right" src="../../Views/app/Img/connect.png">';
-                    }else{
+                    if($ahora >= $conversation['limite']){
                         echo '<img class="pull-right" src="../../Views/app/Img/disconnect.png">';
+                    }else{
+                        echo '<img class="pull-right" src="../../Views/app/Img/connect.png">';
                     }
 
                 }else{
                     echo '<img style="width: 50px;margin-left:10px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" class="pull-right" src="data:image/*;base64,'.base64_encode($conversation['foto_user']).'">';
 
-                    if($conversation['online'] == 1){
-                        echo '<img class="pull-right" src="../../Views/app/Img/connect.png">';
-                    }else{
+                    if($ahora >= $conversation['limite']){
                         echo '<img class="pull-right" src="../../Views/app/Img/disconnect.png">';
+                    }else{
+                        echo '<img class="pull-right" src="../../Views/app/Img/connect.png">';
                     }
 
                 }
@@ -53,24 +54,26 @@ require_once '../Modelo/class.consultations.php';
                       </h3>";
                 echo "<span style='font-size: 12px;' class='pull-right'>".strtoupper($conversation['date_message'])."</span><br>";
                 echo "<p class='postRight'>".nl2br($targets)."</p>";
+                var_dump($ahora);
+                var_dump($conversation['limite']);
 
             }else{//Si No se vera la vista en la parte izquierda
                 if($conversation['foto_user'] == null){// si el usuario no tiene foto se vera una cargada por el serviror
                     echo '<img style="width: 50px;margin-right:10px; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="thumb pull-left">';
 
-                    if($conversation['online'] == 1){
-                        echo '<img class="pull-left" src="../../Views/app/Img/connect.png">';
-                    }else{
+                    if($ahora >= $conversation['limite']){
                         echo '<img class="pull-left" src="../../Views/app/Img/disconnect.png">';
+                    }else{
+                        echo '<img class="pull-left" src="../../Views/app/Img/connect.png">';
                     }
 
                 }else{// si tiene foto, se carga en la pagina web
                     echo '<img style="width: 50px;margin-right:10px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" class="pull-left" src="data:image/*;base64,'.base64_encode($conversation['foto_user']).'">';
 
-                    if($conversation['online'] == 1){
-                        echo '<img class="pull-left" src="../../Views/app/Img/connect.png">';
-                    }else{
+                    if($ahora >= $conversation['limite']){
                         echo '<img class="pull-left" src="../../Views/app/Img/disconnect.png">';
+                    }else{
+                        echo '<img class="pull-left" src="../../Views/app/Img/connect.png">';
                     }
 
                 }

@@ -101,7 +101,7 @@
 <section class="main container">
     <div class="row">
         <aside class="col-md-3 hidden-xs hidden-sm users_online">
-            <h4 class="text-center">Usuarios Online!</h4>
+            <h4 class="text-center">Usuarios!</h4>
             <div class="list-group">
                 <?php
                     foreach($allUsersOnline as $usersOn){
@@ -111,8 +111,8 @@
                     <a href="#Users" data-target="#<?php if(isset($usersOn)){echo $usersOn['id_users'];} ?>" data-toggle="modal" class="list-group-item">
                         <?php
                             echo $usersOn['users'];
+                            echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/ImgUsers/thumb_'.$usersOn['name_foto'].'" alt="ErrorConnect">';
                         ?>
-                        <img class="pull-right" src="../../Views/app/Img/connect.png" alt="ErrorConnect">
                     </a>
 <!--                        MODAL DE USUARIOS ONLINE-->
                         <div class="container">
@@ -143,7 +143,7 @@
                                                             <p>Se registro en el</p>
                                                             <p class="post-fecha"><?php echo $usersOn['date_registry']?></p>
                                                             <hr>
-                                                            <h4>Enviale un mensaje.</h4>
+                                                            <h4>Enviale un mensaje. <a href="Usuarios.php?id_users=<?php echo $usersOn['id_users'];?>">Aquí</a></h4>
                                                         </div>
                                                     </div>
                                                 </div>

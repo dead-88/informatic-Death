@@ -7,7 +7,7 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="../../Views/app/Js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/jquery.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/jquery.form.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/regMess.js"></script>

@@ -20,10 +20,10 @@
     $insertSalida = $connect->prepare("UPDATE logs set salida_users = '$dateSalida' WHERE id = '$id'");
     $insertSalida->execute();
 
-    //Actualizar el online a 0 para off line
-    $queryTwo   = "UPDATE users set online = '0' WHERE id_users = '".$online."';";
-    $stmTwo     = $connect->prepare($queryTwo);
-    $stmTwo->execute();
+//    Actualizar el online a 0 para off line
+//    $queryTwo   = "UPDATE users set online = '0' WHERE id_users = '".$online."';";
+//    $stmTwo     = $connect->prepare($queryTwo);
+//    $stmTwo->execute();
     session_unset();
     session_destroy();
      header('location: ../../index.php');

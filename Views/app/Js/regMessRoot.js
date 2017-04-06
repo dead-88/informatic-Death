@@ -1,4 +1,5 @@
 $(document).on("ready",function(){
+    var timer;
     registerMessages();
     $.ajaxSetup({"cache":false});
     timer = setInterval("loadOldMessages()",1000);
@@ -21,6 +22,7 @@ var registerMessages = function () {
             $("#message").val("");
             var altura = $("#formChat").prop("scrollHeight");
             $("#formChat ").scrollTop(altura);
+            //console.log(info);
         })
     });
 };

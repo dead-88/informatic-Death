@@ -4,18 +4,18 @@ require_once '../Modelo/class.consultations.php';
 require_once '../Controlador/loadArticles.php';
 
 session_start();
-$consult = new Consultations();
-$conection = new Conection();
-$connect = $conection->get_conection();
+$consult    = new Consultations();
+$conection  = new Conection();
+$connect    = $conection->get_conection();
 
-if(!isset($_SESSION['usuario'])){
+if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
     header('location: ../../index.php');
 }else{
 
     // Ver el registro completo del usuario que ingreso.
-    $stm = $connect->prepare("SELECT * FROM users WHERE id_users = :uid");
-    $stm->execute(array(":uid"=>$_SESSION['usuario']));
-    $user = $stm->fetch(PDO::FETCH_ASSOC);
+    $stm = $connect->prepare("SELECT * FROM `users` WHERE `users` = ?");
+    $stm->execute(array($_SESSION['usuario']));
+    $user = $stm->fetch();
     // Fin registros
 
     $conversations  = $consult->viewConversations();

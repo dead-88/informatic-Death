@@ -15,8 +15,8 @@ jQuery(function(){
         var pixels      = (270+5) * janelas;
         var style       = 'float:none;position:absolute;bottom:0;left:' + pixels + 'px';
 
-        var splitDados  = id.split(':');
-        var id_user     = Number(splitDados[1]);
+        var splitdatos  = id.split(':');
+        var id_user     = Number(splitdatos[1]);
 
         var janela  = '<div class="windows" id="janela_'+id_user+'" style="'+ style +'">';
             janela  += '<div class="header_windows"><a href="#" class="close">x</a><span class="name">' + name +'</span><span id="'+ id_user +'" class="'+ status +'"></span></div>';
@@ -40,15 +40,47 @@ jQuery(function(){
                         }else{
                             jQuery('#janela_'+msg.janela_de+' .message ul').append('<li id="'+ msg.id +'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+ msg.name_foto +'" alt="Error"/></div><p>'+ msg.message +'</p></li>')
                         }
-                        // console.log(msg.var)
+                        //console.log(msg)
                     }
                 });
                 [].reverse.call(jQuery('#janela_'+id_conversation+' .message li')).appendTo(jQuery('#janela_'+id_conversation+' .message ul'));
-                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 270}, '500');
+                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 320}, '500');
             }
         });
     }
 
+    var aviso = 0;
+    jQuery('body').on('mouseover', '.message', function(){
+        var esta        = jQuery(this);
+        var altura      = jQuery(this).scrollTop();
+        var janela      = jQuery(this).parent().parent().attr('id');
+        var idConvers  = janela.split('_');
+        idConvers      = Number(idConvers[1]);
+
+        var primera     = Number(jQuery(this).find('li:eq(0)').attr('id'));
+        if(altura == 0 && aviso == 0){
+            aviso = 1;
+            jQuery.ajax({
+                type: 'POST',
+                url: '../Controlador/loadMas.php',
+                data: {loadMas: 'si', topid: primera, convers: idConvers, online: userOnline},
+                dataType: 'json',
+                success: function(result){
+                    jQuery.each(result, function(i, msg){
+                        if(jQuery('#janela_'+msg.janela_de).length > 0){
+                            if(userOnline == msg.id_de){
+                                jQuery('#janela_'+msg.janela_de+' .message ul').prepend('<li id="'+msg.id+'" class="eu"><p>'+msg.message+'</p></li>');
+                            }else{
+                                jQuery('#janela_'+msg.janela_de+' .message ul').prepend('<li id="'+msg.id+'"><div class="imgSmall"><img src="fotos/'+msg.name_foto+'" /></div><p>'+msg.message+'</p></li>');
+                            }
+                        }
+                    });
+                    jQuery('#janela_'+idConvers+' .message').animate({scrollTop: 30}, '500');
+                    aviso = 0;
+                }
+            });
+        }
+    });
     jQuery('body').on('click', '#users_online a', function () {
         var id = jQuery(this).attr('id');
         jQuery(this).removeClass('conectado');
@@ -120,30 +152,29 @@ jQuery(function(){
         });
     });
 
-    function verify(timestamp,lastid,user){
+    function verify(timestamp, lastid, user){
         var t;
         jQuery.ajax({
-            type    : "GET",
-            data    : "timestamp="+timestamp+"&lastid="+lastid+"&user="+user,
-            url     : "../Controlador/stream.php",
+            type: 'GET',
+            data: 'timestamp='+timestamp+'&lastid='+lastid+'&user='+user,
+            url: '../Controlador/stream.php',
             dataType: 'json',
-            success : function(result){
-                // console.log(result);
+            success: function(result){
                 clearInterval(t);
                 if(result.status == 'result' || result.status == 'vacio'){
                     t = setTimeout(function(){
                         verify(result.timestamp, result.lastid, userOnline);
                     },1000);
-                    // console.log(result.status);
+
                     if(result.status == 'result'){
-                        jQuery.each(result.datos, function (i, msg) {
+                        jQuery.each(result.datos, function(i, msg){
                             if(msg.id_para == userOnline){
                                 jQuery.playSound('../Sound/leido');
                             }
+
                             if(jQuery('#janela_'+msg.janela_de).length == 0 && msg.id_para == userOnline){
                                 jQuery('#users_online #'+msg.janela_de+' .conectado').click();
                                 clickiado.push(msg.janela_de);
-                                // console.log(msg.janela_de);
                             }
 
                             if(!in_array(msg.janela_de, clickiado)){
@@ -153,34 +184,33 @@ jQuery(function(){
                                     }else{
                                         jQuery('#janela_'+msg.janela_de+' .message ul').append('<li id="'+msg.id+'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+msg.name_foto+'"/></div><p>'+msg.message+'</p></li>');
                                     }
-                                    // console.log();
                                 }
                             }
                         });
-                        jQuery(".message").animate({scrollTop: 270}, '500');
-                        console.log(clickiado);
+                        jQuery('.message').animate({scrollTop: 320}, '500');
+                        //console.log(clickiado);
                     }
                     clickiado = [];
                     jQuery('#users_online ul').html('');
-                    jQuery.each(result.users, function (i, user) {
-                        var agghtml = '<li id="'+user.id+'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+user.name_foto+'"/></div>';
-                        agghtml += '<a href="#" id="'+userOnline+':'+user.id+'" class="conectado">'+user.user+'</a>';
-                        agghtml += '<span id="'+user.id+'"><img class="status" src="../../Views/app/Img/'+user.status+'.png"/></span></li>';
+                    jQuery.each(result.users, function(i, user){
+                        var incluir = '<li id="'+user.id+'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+user.name_foto+'" border="0"/></div>';
+                        incluir += '<a href="#" id="'+userOnline+':'+user.id+'" class="conectado">'+user.user+'</a>';
+                        incluir += '<span id="'+user.id+'" class="status '+user.status+'"></span></li>';
                         jQuery('span#'+user.id).attr('class', 'status '+user.status);
-                        jQuery('#users_online ul').append(agghtml);
+                        jQuery('#users_online ul').append(incluir);
                     });
                 }else if(result.status == 'error'){
-                    alert("Actualize la pagina");
+                    alert('Recarga la pagina');
                 }
             },
-            error   : function (result) {
+            error: function(result){
                 clearInterval(t);
                 t = setTimeout(function(){
                     verify(result.timestamp, result.lastid, userOnline);
                 },15000);
-                // console.log(result.lastid);
             }
         });
     }
+
     verify(0,0,userOnline);
 });

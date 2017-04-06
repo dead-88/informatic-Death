@@ -86,33 +86,86 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
         </section>
         <section class="col-md-9">
             <span class="user_online" id="<?php if(isset($user['id_users'])){echo $user['id_users'];}?>"></span>
+            <?php
+                if(isset($_POST['select']) && $_POST['select'] == 'block'){
+                    $bloquear = $_POST['block'];
+                    if($user['block'] == ''){
+                        $bloquear   = implode(',', $bloquear);
+                    }else{
+                        $blockMas   = implode(',', $bloquear);
+                        $bloquear   = $user['block'].','.$blockMas;
+                    }
+                    $updateBlock    = $connect->prepare("UPDATE `users` SET `block` = ? WHERE `id_users` = ?");
+                    if($updateBlock->execute(array($bloquear, $_SESSION['id_user']))){
+                        echo '<h2>Usuarios bloqueados</h2>';
+                    }
+                }
+
+                if(isset($_POST['select']) && $_POST['select'] == 'desblock'){
+                    $blockArray = explode(',', $user['block']);
+                    $desblock   = $_POST['desblock'];
+
+                    foreach($desblock as $indice => $val){
+                        if(in_array($val, $blockArray)){
+                            $indiceLans = array_search($val, $blockArray);
+                            unset($blockArray[$indiceLans]);
+                        }
+                    }
+                    $newBlock = implode(',', $blockArray);
+                    $updateBlock = $connect->prepare("UPDATE `users` SET `block` = ? WHERE `id_users` = ?");
+                    if($updateBlock->execute(array($newBlock, $_SESSION['id_user']))){
+                        echo '<h2>Usuarios desbloqueados</h2>';
+                    }
+                }
+            ?>
             <form action="" method="post" enctype="multipart/form-data">
+                <?php
+                    $bloqueados = $user['block'];
+                    $persBlock  = $connect->prepare("SELECT * FROM `users` WHERE `id_users` IN($bloqueados)");
+                    $persBlock->execute();
+                    while($block = $persBlock->fetch()){
+                        echo '<input type="checkbox" name="desblock[]" value="'.$block['id_users'].'"/>'.utf8_encode($block['users']).'<br/>';
+                    }
+                ?>
                 <input type="hidden" name="select" value="desblock"/>
                 <input type="submit" value="Desblock"/>
             </form>
             <form action="" method="post" enctype="multipart/form-data">
+                <?php
+                    $arrayBlock = explode(',', $bloqueados);
+                    $usersDesbl = $connect->prepare("SELECT * FROM `users` WHERE `id_users` != ?");
+                    $usersDesbl->execute(array($_SESSION['id_user']));
+                    while($desblo = $usersDesbl->fetch()){
+                        if(!in_array($desblo['id_users'], $arrayBlock)){
+                            echo '<input type="checkbox" name="block[]" value="'.$desblo['id_users'].'"/>'.utf8_encode($desblo['users']).'<br/>';
+                        }
+                    }
+                ?>
                 <input type="hidden" name="select" value="block"/>
-                <input type="submit" value="Block"/>
+                <input type="submit" value="Bloquear"/>
             </form>
             <aside id="users_online">
                 <ul>
                     <?php
                     $pegaUsuarios = $connect->prepare("SELECT * FROM `users` WHERE `id_users` != ?");
-                    $pegaUsuarios->execute(array($_SESSION['usuario']));
+                    $pegaUsuarios->execute(array($_SESSION['id_user']));
 
                     while($row  = $pegaUsuarios->fetch()){
                         $foto   = ($row['name_foto'] == null) ? 'default.jpg' : $row['name_foto'];
                         $block  = explode(',', $row['block']);
-                        $ahora  = date('Y/m/d H:i:s a');
+                        $ahora  = date('Y-m-d H:i:s');
 
-                        if(!in_array(isset($_SESSION['usuario']), $block)){
-                            $status = $row['online'];
+                        if(!in_array($_SESSION['id_user'], $block)){
+                            $status = 'connect';
+                            if($ahora >= $row['limite']){
+                                $status = 'disconnect';
+                            }
                     ?>
                     <li id="<?php if(isset($row['id_users'])){ echo $row['id_users'];}?>">
                         <div class="imgSmall">
                             <img src="../../Views/app/Img/ImgUsers/thumb_<? echo $foto?>" alt="Error"/>
                         </div>
-                        <a href="#" id="<?php if(isset($row['id_users'])){ echo $_SESSION['usuario'].':'.$row['id_users'];}?>" class="conectado"><?php if(isset($row['users'])){ echo $row['users'];}?></a>
+                        <a href="#" id="<?php if(isset($row['id_users'])){ echo $_SESSION['id_user'].':'.$row['id_users'];}?>" class="conectado"><?php if(isset($row['users'])){ echo $row['users'];}?></a>
                         <span id="<?php if(isset($row['id_users'])){ echo $row['id_users'];}?>" >
                             <?php
                                 if($status == 0){
@@ -143,3 +196,4 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
     header('location: index.php');
 }
 ?>
+
