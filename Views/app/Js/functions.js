@@ -44,7 +44,7 @@ jQuery(function(){
                     }
                 });
                 [].reverse.call(jQuery('#janela_'+id_conversation+' .message li')).appendTo(jQuery('#janela_'+id_conversation+' .message ul'));
-                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 320}, '500');
+                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 700}, '500');
             }
         });
     }
@@ -187,7 +187,7 @@ jQuery(function(){
                                 }
                             }
                         });
-                        jQuery('.message').animate({scrollTop: 320}, '500');
+                        jQuery('.message').animate({scrollTop: 700}, '500');
                         //console.log(clickiado);
                     }
                     clickiado = [];

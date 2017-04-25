@@ -1,25 +1,21 @@
-<?php include '../Include/header.php';?>
-<section class="jumbotron">
-    <div class="container">
-        <h2 class="titulo text-capitalize">
-            <?php
-                if(isset($user['foto_user']) == null || isset($user['foto_user']) == ''){
-                    echo '<img src="data:image/*;base64,'.base64_encode($user['foto_user']).'" alt="Error" class="thumb pull-left">';
-                }else{
-                    echo '<img src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error" class="thumb pull-left">';
-                }
-                if(isset($user['users'])){echo $user['users'];}
-            ?>
-        </h2>
-        <p class="text-left">Acercate más! <span>Te mostrare algo.</span></p>
-    </div>
-    <div class="clearfix"></div>
-</section>
+<?php
+    include '../Include/header.php';
+
+    $sesion = $consult->session();
+
+    if(isset($_GET['aggcateg'])){
+        $categorie  = htmlentities(addslashes($_POST['categorie']));
+        $aggcateg   = $connect->prepare("INSERT INTO categorias (nombre) VALUES (:nombre)");
+        $aggcateg->bindParam(':nombre',$categorie);
+        $aggcateg->execute();
+        header('location: index.php');
+    }
+?>
 
 <section class="main container">
     <div class="form">
         <form action="" method="post" name="search_form" id="search_form">
-            <input type="text" name="searchForm" id="searchForm" placeholder="Buscar...">
+            <input type="text" name="searchForm" id="searchForm" placeholder="Busca temas o categorias!" title="Buscador de posts">
         </form>
         <div id="result"></div>
     </div>
@@ -28,57 +24,109 @@
         <div class="row">
             <div class="col-md-12">
                 <!--BARRA DE PROGRESO-->
-                <div class="progress">
-                    <div class="bar"></div >
-                    <div class="percent">0%</div>
+                <div class="progresss">
+                    <div class="barr"></div >
+                    <div class="percenta">0%</div>
                 </div>
                 <!--FIN BARRA DE PROGRESO-->
-                <div class="col-md-8">
-                    <form role="form" id="formularioPhoto" method="post" action="../ControllersRoot/registerPost.php">
+                <div class="col-md-10">
+                    <form role="form" id="formularioPost" method="post" action="../Controlador/regPost.php">
+                        <h1 class="text-center post-title">Publica un articulo!</h1>
                         <div id="container">
                             <ul class="photos thumb pull-right">
                                 <li>
-                                    <center>Imagen Post
-                                        <input type="file" id="imgPost" name="file[]" required>
-                                        <div id="photo-1" class="link"></div>
-                                        <div id="cerrar-photo-1" class="cerrar-photo"></div>
-                                    </center>
+                                    <input type="file" id="imgPost" name="file[]" required>
+                                    <div id="photo-1" class="link"></div>
+                                    <div id="cerrar-photo-1" class="cerrar-photo"></div>
                                 </li>
                             </ul>
                         </div>
                         <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Categoria: </span>
-                            <input type="text" class="form-control" name="categoria" id="categoria" placeholder="Categoria Here..." required>
-                        </div>
+                        <center>
+                            <div class="btn-group">
+                                <select aria-label="Categoria" class="btn btn-primary dropdown-toggle text-capitalize" data-toggle="dropdown" name="categoria" id="categoria" required>
+                                    <?php
+                                        $consult    = new Consultations();
+                                        $post       = $consult->viewCategorias();
+
+                                        echo '<opgroup>';
+                                         echo '<option style="background: #e5eacc;color:#1e1e1e" value="0" selected>-- Select Categoria --</option>';
+                                            foreach ($post as $viewPost){
+                                                echo '<option style="background: #e5eacc;color:#1e1e1e" value="'.$viewPost['id'].'">'.$viewPost['nombre'].'</option>';
+                                            }
+                                        echo '</opgroup>';
+                                    ?>
+                                </select>
+                                <br>
+                                <?php
+                                    if($sesion[0]['rango'] >= 2){
+                                ?>
+                                        <center><a data-toggle="modal" data-target="#modal-aggcateg" class="btn btn-primary">Agg categoria</a></center>
+                                <?
+                                    }
+                                ?>
+                            </div>
+                        </center>
                         <br>
                         <div class="input-group">
-                            <span class="input-group-addon">Tema: </span>
-                            <input type="text" class="form-control" name="tema" id="tema" placeholder="Title Here..." required>
+                            <span class="input-group-addon">Titulo: </span>
+                            <input type="text" class="form-control" name="tema" id="tema" title="Ej: Hackeando los sistemas." placeholder="Ej: Hackeando los sistemas." required/>
                         </div>
                         <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Autor: </span>
-                            <input type="text" class="form-control" name="autor" id="autor" placeholder="Example: informatic-Death" required>
+                        <div class="hidden">
+                            <input type="hidden" name="autor" id="autor" value="<?php if(isset($sesion[0]['users'])){echo $sesion[0]['users'];}?>"  required>
+                            <input type="hidden" name="id_autor" id="id_autor" value="<?php if(isset($sesion[0]['id_users'])){echo $sesion[0]['id_users'];}?>"  required>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Articulo: </span>
-                            <label for="textarea">
-                                <textarea id="articulo" class="form-control" name="articulo" required></textarea>
-                            </label>
+                            <textarea id="articulo" class="form-control articulo" name="articulo" placeholder="Escribe tú post." required></textarea>
                         </div>
                         <br>
                         <center>
                             <div class="boton">
-                                <input type="hidden" id="subir" name="subir" value="Subir">
-                                <input type="submit" id="uploadbtn" class="uploadbtn btn btn-primary btn-sm" value="Enviar">
+                                <input type="hidden" id="subirtwo" name="subirtwo" value="Subirtwo">
+                                <button type="submit" id="uploadbtn" class="btn btn-sm btn-primary btn-sm">Enviar</button>
                             </div>
                         </center>
                         <br>
                     </form>
+                    <!-- Modal agg Categoria -->
+                    <div class="modal fade modal-ext" id="modal-aggcateg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <!--Content-->
+                            <div class="modal-content modal-md">
+                                <!--Header-->
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h3 class="w-100 text-center"><i class="fa fa-book"></i>Agregar categoria</h3>
+                                </div>
+                                <!--Body-->
+                                <div class="modal-body">
+                                    <form method="post" action="?aggcateg">
+                                        <div class="md-form">
+                                            <i class="fa fa-bookmark prefix"></i>
+                                            <input type="text" id="form2" name="categorie" class="form-control">
+                                            <label for="form2">Categoria</label>
+                                        </div>
+                                        <div class="text-center">
+                                            <center>  <button type="submit" class="btn btn-sm btn-primary btn-sm" name="entrar" >Agregar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn-sm ml-auto" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                            <!--/.Content-->
+                        </div>
+                    </div>
+                    <!-- Fin modal agg categorie-->
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="msj"></div>
                     <div id="resultado"></div>
                     <div id="responseError"></div>
@@ -94,15 +142,19 @@
         ?>]
     </h1>
     <div class="objEight">
-        <?php viewPost();?>
-    </div>
+        <div class="row">
+            <section class="posts col-md-9">
+                <?php viewPost();?>
+            </section>
+        </div>
+    </div>        
 </section>
 
 <section class="main container">
     <div class="row">
         <aside class="col-md-3 hidden-xs hidden-sm users_online">
-            <h4 class="text-center">Usuarios!</h4>
-            <div class="list-group">
+            <h4 class="text-center" style="color: #000;">Usuarios!</h4>
+            <div style="width: 100%; height: 312px;overflow: scroll;" class="list-group">
                 <?php
                     foreach($allUsersOnline as $usersOn){
                         for ($i = 1; $i <= $usersCount; $i++){
@@ -111,10 +163,14 @@
                     <a href="#Users" data-target="#<?php if(isset($usersOn)){echo $usersOn['id_users'];} ?>" data-toggle="modal" class="list-group-item">
                         <?php
                             echo $usersOn['users'];
-                            echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/ImgUsers/thumb_'.$usersOn['name_foto'].'" alt="ErrorConnect">';
+                            if(null == $usersOn['name_foto']){
+                                echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/user.png" alt="ErrorConnect">';
+                            }else{
+                                echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/ImgUsers/thumb_'.$usersOn['name_foto'].'" alt="ErrorConnect">';
+                            }
                         ?>
                     </a>
-<!--                        MODAL DE USUARIOS ONLINE-->
+                        <!-- MODAL DE USUARIOS ONLINE-->
                         <div class="container">
                             <div class="row">
                                 <div class="modal fade" id="<?php if(isset($usersOn)){echo $usersOn['id_users'];} ?>">
@@ -122,7 +178,6 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&cross;</button>
-<!--                                                <h3 class="text-center">DETALLES DEL USUARIO --><?php //echo strtoupper($usersOn['users']);?><!--</h3>-->
                                             </div>
                                             <div aria-autocomplete="none" class="modal-body">
                                                 <div>
@@ -156,7 +211,7 @@
 <!--                        FIN MODAL USUARIOS ONLINE-->
                  <? } ?>
             </div>
-            <h4 class="text-center">Espéra los cursos gratís!...</h4>
+            <h4 class="text-center" style="color: #000;">Espéra los cursos gratís!...</h4>
             <div class="list-group">
                 <a href="#view" class="list-group-item viewOne">Diseño Web</a>
                 <div class="objOne">
@@ -201,12 +256,15 @@
                     <p class="text-justify">Te enseñare a crear Bases de Datos & a manejar el lenguaje de consultas SQL. Desde cero.</p>
                 </div>
             </div>
-            <h4 class="text-center">Noticia Reciente</h4>
+            <br>
+            <h4 class="text-center" style="color: #000;">Noticia Reciente</h4>
             <a href="#notice" class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo 'Autor: '.isset($rows['autor'])?></h4>
-                <p class="list-group-item-text"><?php echo 'Tema: '.isset($rows['tema'])?></p>
+                <h4 style="font-size: 18px;" class="list-group-item-text text-md-left"><?php if(isset($rows['autor'])) {echo 'Autor:<br> '.$rows['autor'];}?></h4>
+                <br>
+                <h5 style="font-size: 18px;" class="list-group-item-text text-md-left"><?php if(isset($rows['autor'])) {echo 'Tema:<br> '.ucwords($rows['tema']);}?></h5>
             </a>
-            <h4 class="text-center">Videos</h4>
+            <br>
+            <h4 class="text-center" style="color: #000;">Videos</h4>
             <div class="list-group list-video">
 
             </div>
@@ -214,12 +272,6 @@
         <section class="posts col-md-9">
             <div class="row">
                 <h1 class="well post-h1 post text-center text-danger">Conversations...!</h1>
-                <p class="flaticon-document"> Comentariós:
-                    [<?php
-                        if(isset($maxMesj)){
-                            echo $maxMesj;
-                        }
-                    ?>]</p>
                 <form id="formChat" role="form" method="post">
                     <div class="form-group">
                         <div class="row">
@@ -230,18 +282,19 @@
                     </div>
             </div>
                     <div class="hidden">
-                        <input type="hidden" id="idUser" name="idUser" value="<?php if(isset($user['id_users'])){echo $user['id_users'];};?>" required>
-                        <input type="hidden" id="userConvers" name="userConvers" value="<?php if(isset($user['users'])){echo $user['users'];}?>" required>
+                        <input type="hidden" id="idUser" name="idUser" value="<?php if(isset($sesion[0]['id_users'])){echo $sesion[0]['id_users'];};?>" required>
+                        <input type="hidden" id="userConvers" name="userConvers" value="<?php if(isset($sesion[0]['users'])){echo $sesion[0]['users'];}?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="message" class="text-center">Message:</label>
+                        <label for="message" class="text-center" style="color: #000;">Message:</label>
                         <textarea name="message" id="message" placeholder="Enter message..." class="form-control textarea" role="textbox" required></textarea>
                     </div>
-                    <center><input type="submit" class="btn btn-primary" id="send" value="Enviar"></center>
+                    <center>
+                        <button type="submit" class="btn btn-sm btn-primary btn-sm" id="send">Enviar</button>
+                    </center>
             <br><br>
                 </form>
         </section>
     </div>
 </section>
-
 <?php require_once '../Include/footer.php'?>

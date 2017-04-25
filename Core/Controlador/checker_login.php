@@ -39,10 +39,6 @@
                         header('location: ../Acceso/index.php');
                     }
                 }
-
-//                $queryTwo   = "UPDATE users set online = '1' WHERE id_users = '".$_SESSION['usuario']."';";
-//                $stmTwo     = $connect->prepare($queryTwo);
-//                $stmTwo->execute();
             }else{
                 header('location: ../../index.php');
             }

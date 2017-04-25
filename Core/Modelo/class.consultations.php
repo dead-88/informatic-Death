@@ -27,6 +27,23 @@
 
         }
 
+        public function insertPostUser($categoria,$tema,$article,$img,$alt,$nameIMg,$date,$autor,$id_autor){
+            $model = new Conection();
+            $connect = $model->get_conection();
+            $query = "INSERT INTO post(id_categoria,tema,article,img,alt,name_img,date,autor,id_autor)VALUES (:id_categoria,:tema,:article,:img,:alt,:name_img,:date,:autor,:id_autor)";
+            $stm = $connect->prepare($query);
+            $stm->bindParam(':id_categoria',$categoria);
+            $stm->bindParam(':tema',$tema);
+            $stm->bindParam(':article',$article);
+            $stm->bindParam(':img',$img);
+            $stm->bindParam(':alt',$alt);
+            $stm->bindParam(':name_img',$nameIMg);
+            $stm->bindParam(':date',$date);
+            $stm->bindParam(':autor',$autor);
+            $stm->bindParam(':id_autor',$id_autor);
+            $stm->execute();
+        }
+
         public function insertPost($categoria,$tema,$article,$img,$alt,$nameIMg,$date,$autor){
             $model = new Conection();
             $connect = $model->get_conection();
@@ -47,7 +64,7 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT * FROM post";
+            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id";
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch(PDO::FETCH_ASSOC)){
@@ -56,14 +73,14 @@
             return $rows;
         }
 
-        public function viewAdmin(){
+        public function viewCategorias(){
             $rows = null;
-            $modelo = new Conection();
-            $connect = $modelo->get_conection();
-            $query = "SELECT id_admin,user_admin,email FROM admin";
+            $model = new Conection();
+            $connect = $model->get_conection();
+            $query = "SELECT * FROM categorias";
             $stm = $connect->prepare($query);
             $stm->execute();
-            while ($result = $stm->fetch()){
+            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[] = $result;
             }
             return $rows;
@@ -83,11 +100,12 @@
         }
 
         public function viewUsersOnline(){
-            $rows = null;
-            $modelo = new Conection();
-            $connect = $modelo->get_conection();
-            $query = "SELECT id_users,rango,users,email,date_registry,date_update,foto_user,name_foto,alt_foto,online,limite,block FROM users WHERE online = '1'";
-            $stm = $connect->prepare($query);
+            $rows       = null;
+            $ahora      = date('Y-m-d H:i:s');
+            $modelo     = new Conection();
+            $connect    = $modelo->get_conection();
+            $query      = "SELECT id_users,rango,users,email,date_registry,date_update,foto_user,name_foto,alt_foto,online,limite,block FROM users";
+            $stm        = $connect->prepare($query);
             $stm->execute();
             while ($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[] = $result;
@@ -116,19 +134,6 @@
             $query      = $connect->prepare("SELECT conversation.id_conversations,conversation.id_users,conversation.date_message,conversation.user_name,conversation.message,users.users,users.foto_user,users.online,users.limite,users.rango,users.block FROM conversation,users WHERE conversation.user_name = users.users ORDER BY conversation.id_conversations");
             $query->execute();
             while($result = $query->fetch(PDO::FETCH_ASSOC)){
-                $rows[]=$result;
-            }
-            return $rows;
-        }
-
-        public function viewConversationsAdmin(){
-            $rows = null;
-            $model = new Conection();
-            $connect = $model->get_conection();
-            $query = "SELECT conversation.id_conversations,conversation.date_message,conversation.user_name,admin.user_admin,conversation.message FROM conversation,admin WHERE conversation.user_name = admin.user_admin ORDER BY conversation.id_conversations";
-            $stm = $connect->prepare($query);
-            $stm->execute();
-            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
                 $rows[]=$result;
             }
             return $rows;
@@ -180,7 +185,9 @@
         }
 
         public function link($msj){
-            $msj = preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/i','<a target="_blank" class="targets" href="\0">\0</a>',$msj);$msj = preg_replace('/\b(www?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/i','<a target="_blank" class="targets" href="\0">\0</a>',$msj);
+            /**$msj = preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/i','<a target="_blank" class="targets" href="\0">\0</a>',$msj);**/
+            $msj = preg_replace("/((http|https|www)[^\s]+)/", '<a target=\"_blank\" class="targets" href="$1">$0</a>',$msj);
+            $msj = preg_replace("/href=\"www/", 'href="http://www',$msj);
             return $msj;
         }
 
@@ -191,5 +198,17 @@
                 $str .= ($x % 2) != 0 ? sha1($string[$x]) : $x;
             }
             return sha1($str);
+        }
+
+        public function session(){
+            $session    = null;
+            $connection = new Conection();
+            $connect    = $connection->get_conection();
+            $query      = $connect->prepare("SELECT * FROM users WHERE id_users = :idu");
+            $query->execute(array(":idu"=>$_SESSION['id_user']));
+            while($user = $query->fetch(PDO::FETCH_ASSOC)){
+                $session[] = $user;
+            }
+            return $session;
         }
     }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-04-2017 a las 23:45:00
+-- Tiempo de generación: 18-04-2017 a las 06:35:40
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.23
 
@@ -23,21 +23,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `admin`
+-- Estructura de tabla para la tabla `categorias`
 --
 
-CREATE TABLE `admin` (
-  `id_admin` int(11) NOT NULL,
-  `user_admin` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
-  `password` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+CREATE TABLE `categorias` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `admin`
---
-
-INSERT INTO `admin` (`id_admin`, `user_admin`, `password`) VALUES
-(1, 'admin', '7c4a8d09ca3762af61e59520943dc26494f8941b');
 
 -- --------------------------------------------------------
 
@@ -57,7 +49,7 @@ CREATE TABLE `contador` (
 --
 
 INSERT INTO `contador` (`id`, `ip`, `num_votos`, `fecha`) VALUES
-(1, '127.0.0.1', '1', '2017-03-26 19:54:29');
+(1, '127.0.0.1', '1', '2017-04-17 23:33:30');
 
 -- --------------------------------------------------------
 
@@ -71,6 +63,18 @@ CREATE TABLE `conversation` (
   `user_name` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `message` mediumtext COLLATE utf8_spanish2_ci NOT NULL,
   `date_message` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL,
+  `id_posts` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -110,14 +114,16 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `post` (
   `id_blog` int(11) NOT NULL,
-  `categoria` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_categoria` int(11) NOT NULL,
   `tema` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `article` mediumtext COLLATE utf8_spanish2_ci NOT NULL,
   `img` longblob NOT NULL,
   `alt` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
-  `nameimg` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
+  `name_img` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `date` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
-  `autor` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+  `autor` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_autor` int(11) NOT NULL,
+  `likes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -143,14 +149,21 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id_users`, `rango`, `users`, `password`, `email`, `date_registry`, `date_update`, `online`, `limite`, `block`, `foto_user`, `name_foto`, `alt_foto`) VALUES
+(1, 0, 'death_*88', 'bc6d9ffb22d2d5ec284f5f29be7ba38ec3bd5d05', 'death@live.es', '2017/04/17 11:35:24 pm', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', '', '');
+
+--
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `admin`
+-- Indices de la tabla `categorias`
 --
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `contador`
@@ -163,6 +176,12 @@ ALTER TABLE `contador`
 --
 ALTER TABLE `conversation`
   ADD PRIMARY KEY (`id_conversations`);
+
+--
+-- Indices de la tabla `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `logs`
@@ -193,10 +212,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `admin`
+-- AUTO_INCREMENT de la tabla `categorias`
 --
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `categorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `contador`
 --
@@ -207,6 +226,11 @@ ALTER TABLE `contador`
 --
 ALTER TABLE `conversation`
   MODIFY `id_conversations` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `logs`
 --
@@ -226,7 +250,7 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

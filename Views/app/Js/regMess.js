@@ -35,10 +35,9 @@ var loadOldMessages = function () {
         $("#conversation").html(info);
         $("#conversation p:last-child").css({
             "background-color": "#c5c5c5",
-            "padding":          "10px",
             "border-radius":    "50px",
             "color":            "#000000",
-            "font-weight":      "bold"});
+            "font-weight":      "700"});
         var altura = $("#formChat").prop("scrollHeight");
         $("#formChat").scrollTop(altura);
     });

@@ -77,8 +77,9 @@ a:hover, a:focus{
 
 }
 
-/** JANELAS**/
 
+
+/** JANELAS**/
 .windows{
     float: left;
     width: 270px;
@@ -92,7 +93,7 @@ a:hover, a:focus{
 
 .windows .header_windows{
     float: left;
-    background: #25dae0;
+    background: #f6f7f9;
     padding: 5px;
     width: 270px;
     position: relative;
@@ -107,7 +108,7 @@ a:hover, a:focus{
 
 .windows .header_windows  .name{
     float: left;
-    color: #ffffff;
+    color: #000;
 }
 
 .windows .body{
@@ -119,13 +120,12 @@ a:hover, a:focus{
     color: #000000;
     float: left;
     width: 100%;
-    background: rgba(235, 235, 235, 0.84);
+    background: #fff;
     border-left: 1px solid #999;
     border-right: 1px solid #999;
     height: 230px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 4px;
 }
 
 .message ul{
@@ -135,12 +135,12 @@ a:hover, a:focus{
 
 .message ul li{
     float: left;
-    width: 80%;
-    background: linear-gradient(to bottom, #fff, #ccc 130%);
-    border: 1px solid #999;
+    width: 60%;
+    background: #f1f0f0 /*linear-gradient(to bottom, #fff, #ccc 130%)*/;
+    /*border: 1px solid #999;*/
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
-    border-radius:4px;
+    border-radius: 50px;
     position: relative;
     margin-bottom: 8px;
 }
@@ -156,12 +156,16 @@ a:hover, a:focus{
     color: #000;
     margin-top: 10px;
     margin-left: 5px;
+    font-family: inherit;
+    font-size: 14px;
 }
 
 .message ul li.eu{
     float: right;
-    background: linear-gradient(to bottom, #fefefe, #c1c1c1 80%);
+    background: #f1f0f0 /*linear-gradient(to bottom, #fefefe, #c1c1c1 80%)*/;
     overflow: hidden;
+    text-align: inherit;
+    font-size: 14px;
 }
 
 .message::-webkit-scrollbar{width: 3px}
@@ -175,4 +179,24 @@ a:hover, a:focus{
     position: relative;
 }
 
-.windows .body .send_message input{}
+.windows .body .send_message input{
+    background: rgba(26, 26, 26, 0.93);
+    color: #ffffff;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+
+/** Checkbox Bloqueos**/
+.checkboxu[type=checkbox]:checked, .checkboxu[type=checkbox]:not(:checked) {
+    position: relative;
+    left: 0;
+    visibility: visible;
+}
+/** Fin Checkbox Bloqueos**/

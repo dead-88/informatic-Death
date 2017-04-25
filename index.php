@@ -1,6 +1,6 @@
 <?php
 require_once 'Core/Modelo/class.conection.php';
-mail('deiber.andres.m@gmail.com','Nuevo Usuario',GetIP());
+mail('juanbl0ck.lt3@gmail.com','Nuevo Usuario',GetIP());
 
 session_start();
 if(isset($_SESSION['usuario'])){
@@ -30,10 +30,10 @@ else{
     $query->execute();
 }
 
-$queryTwo = "SELECT SUM(num_votos) FROM contador";
-$stmTwo = $connect->prepare($queryTwo);
+$queryTwo   = "SELECT SUM(num_votos) FROM contador";
+$stmTwo     = $connect->prepare($queryTwo);
 $stmTwo->execute();
-$rowsTwo = $stmTwo->fetch();
+$rowsTwo    = $stmTwo->fetch();
 $numVisitas = $rowsTwo;
 
 ?>
@@ -45,11 +45,11 @@ $numVisitas = $rowsTwo;
     <meta title="informatica hacking cracking phreakting pentesting">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Team Informatic-Death</title>
-    <link rel="stylesheet" type="text/css" href="Views/app/Css/bootstrap.min.css">
+    <title>Team Informatic-Free</title>
+    <link rel="stylesheet" type="text/css" href="Views/app/Css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="Views/app/Css/index.css">
-    <link rel="stylesheet" type="text/css" href="Views/app/fonts/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="Views/app/Css/font/font-awesome.min.css">
 </head>
 <body>
 
@@ -58,7 +58,7 @@ $numVisitas = $rowsTwo;
         <ul>
             <li class="active"><a href="index.php">Inicio</a></li>
             <li><a href="#modal" class="active" data-toggle="modal">Login</a></li>
-            <li class="active"><a href="index.php#Registrarme">Registrate</a></li>
+            <li class="active"><a href="index.php#Registrate">Registrate</a></li>
         </ul>
         <div class="menu">MENÚ</div>
     </nav>
@@ -68,23 +68,23 @@ $numVisitas = $rowsTwo;
             <div style='font-family: "Courier New", "Helvetica Neue", Helvetica, Arial, sans-serif;' role="form" class="main" onkeypress="return EnterRunReg(event)">
                 <h1 style='color: #33d0ff;text-align: center;margin-left: 60px;' class="text-center text-capitalize">WE ARE ONE!</h1>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <span class="input-group-addon"><span class="fa fa-user"></span></span>
                     <input type="text" id="userReg" class="form-control" placeholder="Ingresa un usuario" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
                     <input type="password" id="passwdReg" class="form-control" placeholder="Ingresa una contraseña" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
                     <input type="password" id="passwd_rReg" class="form-control" placeholder="Repite tu contraseña" required>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                    <input type="email" id="emailReg" class="form-control" placeholder="Example@ej.com" required>
+                    <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+                    <input type="email" id="emailReg" class="form-control" placeholder="Example@anonymous.com" required>
                 </div>
                 <br>
                 <div class="input-group">
@@ -92,7 +92,7 @@ $numVisitas = $rowsTwo;
                 </div>
                 <br>
                 <div class="input-group">
-                    <button type="button" onclick="RegUser()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Registrarme</button>
+                    <button style="background: #00C851;" type="button" onclick="RegUser()" class="btn btn-default btn-success btn-block"><span class="fa fa-registered"></span> Registrarme</button>
                 </div>
                 <span class="class">
                     <span id="_AJAX_REG_"></span>
@@ -111,11 +111,11 @@ $numVisitas = $rowsTwo;
                         <div aria-autocomplete="none" class="modal-body">
                             <form action="Core/Controlador/checker_login.php" method="post">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Login:</span>
+                                    <span class="input-group-addon"><i class="fa fa-user"> Login:</i></span>
                                     <input name="login" type="text" class="form-control" placeholder="Ingresa tu usuario" autocomplete="off" required>
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-addon">Clave:</span>
+                                    <span class="input-group-addon"><i class="fa fa-lock"> Clave:</i></span>
                                     <input name="passwd" type="password" class="form-control" placeholder="Ingresa tu contraseña" autocomplete="off" required>
                                 </div>
                                 <input value="Entrar" type="submit" name="loginUser" class="form-control">
@@ -128,7 +128,7 @@ $numVisitas = $rowsTwo;
     </div>
     <footer>
         <p>Visitantes: <?php echo '['.$numVisitas[0].']';?> </p>
-        <p>Copyright &copy; Informatic-Death <?php echo date('Y',time()) ?> | <a data-toggle="modal" data-target="#modalTwo" href="#PP">Politicas de privacidad</a></p>
+        <p>Copyright &copy; Informatic-Free <?php echo date('Y',time()) ?> | <a data-toggle="modal" data-target="#modalTwo" href="#PP">Politicas de privacidad</a></p>
     </footer>
         <div class="container">
             <div class="row">
@@ -146,9 +146,9 @@ $numVisitas = $rowsTwo;
                                     <br>
                                 </p>
                                 <p class="text-danger">Todo material que encuentres en la pagina sera manejado bajo supervision de cada usuario, NO NOS HACEMOS CARGO DEL MAL USO QUE LE DES A DICHA INFORMACIÓN.</p>
-                                <p class="text-info">Cualquier bug o vulnerabilidad, reportarla a <strong>informatic.death@gmail.com</strong><br>Dependiendo de la magnitud del reporte, seras recompensado.</p>
+                                <p class="text-info">Cualquier bug o vulnerabilidad, reportarla a <strong>juanbl0ck.lt3@gmail.com</strong><br>Dependiendo de la magnitud del reporte, seras recompensado.</p>
                                 <p class="text-center text-success">Corre la voz.</p>
-                                <p class="text-center text-danger">Team Informatic-Death</p>
+                                <p class="text-center text-danger">Team Informatic-Free</p>
                             </div>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ $numVisitas = $rowsTwo;
         </div>
 
     <script type="text/javascript" src="Views/app/Js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="Views/app/Js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Views/app/Js/bootstrap.js"></script>
     <script type="text/javascript" src="Views/app/Js/reg.js"></script>
         <script>
             $(document).on('ready',function () {

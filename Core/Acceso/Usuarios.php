@@ -25,7 +25,6 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
         include '../Include/header.php';
 ?>
 
-<br><br><br>
 <section class="main container">
     <div class="row">
         <section class="col-md-3">
@@ -36,14 +35,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
         $fecha = $fecha1->diff($fecha5);
 ?>
 
-        <h1 class="text-center text-success">Perfíl</h1>
-        <?php
-        if($result['online'] == 1){ ?>
-            <center><img src="../../Views/app/Img/connect.png"></center>
-        <?php }else{ ?>
-            <center><img src="../../Views/app/Img/disconnect.png"></center>
-        <?php } ?>
-
+        <h1 class="text-center post-title">Perfíl</h1>
         <br><center>
         <?php
         if(null == $result['foto_user']){
@@ -57,20 +49,18 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
         <p>
             <strong>Registrado El</strong><br><?php echo $result['date_registry'] ?><br>
             <br><strong>Tiempo Transcurrido:</strong>
-            <?php
-                if($fecha->y != 0){
-            ?>
-                <br><strong>Años <br> </strong>[{<?php echo  $fecha->y ?>}]
-                <?php }else if($fecha->m != 0){ ?>
-                <br><strong>Meses <br> </strong>[{<?php echo $fecha->m ?>}]
-                <?php }else if($fecha->d != 0){ ?>
-                <br><strong>Días <br> </strong>[{<?php echo  $fecha->d ?>}]
-                <?php }else if($fecha->h != 0){ ?>
-                <br><strong>Horas <br> </strong>[{<?php echo $fecha->h ?>}]
-                <?php }else if($fecha->i != 0){ ?>
-                <br><strong>Minutos <br> </strong>[{<?php echo  $fecha->i ?>}]
-                <?php } ?>
 
+                <?php if($fecha->y != 0){ ?>
+                <br><strong>Años<br></strong>[{<?php  echo $fecha->y ?>}]
+                <?php } if($fecha->m != 0){ ?>
+                <br><strong>Meses<br></strong>[{<?php echo $fecha->m ?>}]
+                <?php } if($fecha->d != 0){ ?>
+                <br><strong>Días<br></strong>[{<?php  echo $fecha->d ?>}]
+                <?php } if($fecha->h != 0){ ?>
+                <br><strong>Horas<br></strong>[{<?php echo $fecha->h ?>}]
+                <?php } if($fecha->i != 0){ ?>
+                <br><strong>Minutos<br></strong>[{<?php echo $fecha->i ?>}]
+                <?php } ?>
         </p>
 
         <p><strong>Messages Sent:</strong> <?php echo $idMsjs[0]?></p>
@@ -85,30 +75,33 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
             </div>
         </section>
         <section class="col-md-9">
-            <span class="user_online" id="<?php if(isset($user['id_users'])){echo $user['id_users'];}?>"></span>
+            <span class="user_online" id="<?php if(isset($user[0]['id_users'])){echo $user[0]['id_users'];}?>"></span>
             <?php
                 if(isset($_POST['select']) && $_POST['select'] == 'block'){
                     $bloquear = $_POST['block'];
-                    if($user['block'] == ''){
-                        $bloquear   = implode(',', $bloquear);
-                    }else{
-                        $blockMas   = implode(',', $bloquear);
-                        $bloquear   = $user['block'].','.$blockMas;
-                    }
-                    $updateBlock    = $connect->prepare("UPDATE `users` SET `block` = ? WHERE `id_users` = ?");
-                    if($updateBlock->execute(array($bloquear, $_SESSION['id_user']))){
-                        echo '<h2>Usuarios bloqueados</h2>';
+                    if(isset($bloquear)){
+                        if($user[0]['block'] == ''){
+                            $bloquear   = implode(',', $bloquear);
+                        }else{
+                            $blockMas   = implode(',', $bloquear);
+                            $bloquear   = $user[0]['block'].','.$blockMas;
+                        }
+                        $updateBlock    = $connect->prepare("UPDATE `users` SET `block` = ? WHERE `id_users` = ?");
+                        if($updateBlock->execute(array($bloquear, $_SESSION['id_user']))){
+                            echo '<h2>Usuarios bloqueados</h2>';
+                        }
                     }
                 }
 
                 if(isset($_POST['select']) && $_POST['select'] == 'desblock'){
-                    $blockArray = explode(',', $user['block']);
+                    $blockArray = explode(',', $user[0]['block']);
                     $desblock   = $_POST['desblock'];
-
-                    foreach($desblock as $indice => $val){
-                        if(in_array($val, $blockArray)){
-                            $indiceLans = array_search($val, $blockArray);
-                            unset($blockArray[$indiceLans]);
+                    if(isset($desblock)){
+                        foreach($desblock as $indice => $val){
+                            if(in_array($val, $blockArray)){
+                                $indiceLans = array_search($val, $blockArray);
+                                unset($blockArray[$indiceLans]);
+                            }
                         }
                     }
                     $newBlock = implode(',', $blockArray);
@@ -118,26 +111,26 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                     }
                 }
             ?>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" style="float: left;width: 300px">
                 <?php
-                    $bloqueados = $user['block'];
-                    $persBlock  = $connect->prepare("SELECT * FROM `users` WHERE `id_users` IN($bloqueados)");
+                    $bloqueados = $user[0]['block'];
+                    $persBlock  = $connect->prepare("SELECT * FROM `users` WHERE `id_users` IN('$bloqueados')");
                     $persBlock->execute();
                     while($block = $persBlock->fetch()){
-                        echo '<input type="checkbox" name="desblock[]" value="'.$block['id_users'].'"/>'.utf8_encode($block['users']).'<br/>';
+                        echo '<span><input class="checkboxu" type="checkbox" name="desblock[]" value="'.$block['id_users'].'"/>'.utf8_encode($block['users']).'</span><br/>';
                     }
                 ?>
                 <input type="hidden" name="select" value="desblock"/>
-                <input type="submit" value="Desblock"/>
+                <input type="submit" value="Desbloquear"/>
             </form>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" style="float: left;">
                 <?php
                     $arrayBlock = explode(',', $bloqueados);
                     $usersDesbl = $connect->prepare("SELECT * FROM `users` WHERE `id_users` != ?");
                     $usersDesbl->execute(array($_SESSION['id_user']));
                     while($desblo = $usersDesbl->fetch()){
                         if(!in_array($desblo['id_users'], $arrayBlock)){
-                            echo '<input type="checkbox" name="block[]" value="'.$desblo['id_users'].'"/>'.utf8_encode($desblo['users']).'<br/>';
+                            echo '<span><input class="checkboxu" type="checkbox" name="block[]" value="'.$desblo['id_users'].'"/>'.utf8_encode($desblo['users']).'</span><br/>';
                         }
                     }
                 ?>

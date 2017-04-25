@@ -44,7 +44,7 @@ $(document).ready(function () {
     var bar     = $('.bar'),
         percent = $('.percent'),
         status  = $('.msj');
-    $('#formularioPhoto').ajaxForm({
+    $('#formularioPost').ajaxForm({
         beforeSend: function() {
             status.empty();
             var percentVal = '0%';

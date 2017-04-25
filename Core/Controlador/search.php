@@ -13,10 +13,10 @@
     }
 
     $tema   = "%".$search."%";
-    $query  = "SELECT * FROM post WHERE tema LIKE :tema OR categoria LIKE :categoria ORDER BY id_blog";
+    $query  = "SELECT * FROM post,categorias WHERE (tema LIKE :tema OR nombre LIKE :nombre) AND id_categoria = id ORDER BY id_blog";
     $stm    = $connect->prepare($query);
     $stm->bindParam(':tema', $tema);
-    $stm->bindParam(':categoria', $tema);
+    $stm->bindParam(':nombre', $tema);
     $stm->execute();
     $count  = $stm->rowCount();
     $row    = $stm->fetch(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@
                      <section class="posts col-md-9"> 
                         <article class="post clearfix">';
             echo '
-                        <h1 style="text-transform: capitalize; padding-left: 10px; border-left: #ff0000 3px solid;background-color: #0f0f0f;" class="post-fecha">'.$row['categoria'].'</h1>';
+                        <h1 style="text-transform: capitalize; padding-left: 10px; border-left: #ff0000 3px solid;background-color: #0f0f0f;" class="post-fecha">'.$row['nombre'].'</h1>';
 
             if($row['img'] == null){
                 echo '<a href="#Img" class="thumb pull-right">

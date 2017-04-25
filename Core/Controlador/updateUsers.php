@@ -1,22 +1,17 @@
 <?php
 
-sleep(1);
+//sleep(1);
 
 include '../Modelo/class.conection.php';
 include '../Modelo/class.consultations.php';
-include '../../Core/library/resize.php';
+include '../library/resize.php';
 
                                     // UPLOAD DE IMAGEN PARA USERS
     session_start();
     $conection  = new Conection();
     $consult    = new Consultations();
     $connect    = $conection->get_conection();
-
-    // Registro completo del usuario que ingreso.
-    $stm  = $connect->prepare("SELECT * FROM users WHERE id_users = :uid");
-    $stm->execute(array(":uid" => $_SESSION['usuario']));
-    $user = $stm->fetch(PDO::FETCH_ASSOC);
-    // Fin del usuario que ingreso.
+    $user       = $consult->session();
 
     $userNew        = htmlentities(addslashes($_POST['newUser']));
     $passNew        = htmlentities(addslashes($_POST['newPass']));
@@ -31,7 +26,7 @@ include '../../Core/library/resize.php';
     $stmTwo->execute();
     $count  = $stmTwo->rowCount();
 
-    $mailUser = $user['email'];
+    $mailUser = $user[0]['email'];
 
 //print_r($_FILES);
     if(isset($_POST['subir']) && $_POST['subir'] == 'Subir'){
@@ -41,7 +36,7 @@ include '../../Core/library/resize.php';
             $carpeta = '../../Views/app/Img/ImgUsers/';
             if(is_dir($carpeta) && is_writable($carpeta)){
                 $result = count($_FILES['file']['name']);
-                $endExtension = array('jpg','gif','png','jpeg');
+                $endExtension = array('jpg','gif','png','jpeg','JPG','GIF','PNG','JPEG');
                 $msj = '';
 
                 for($i = 0; $i < $result; $i ++){
@@ -55,19 +50,21 @@ include '../../Core/library/resize.php';
                     $altName = basename($fileName, '.' . $extencion);
                     $fileInfo = pathinfo($fileName);
 
-                    if(!isset($_SESSION['usuario'])){
-                        header('location: ../../index.php');
+                    if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
+                        header('location: ../Acceso/perfil.php');
                     }else {
                         $imagenBinario  = addslashes(file_get_contents($fileTemp));
-                        if($user['id_users'] === $id_user){// Si el id del usuario es el mismo que se recoje en el formulario pasamos el primer bloque de seguridad
-                            if(strlen($userNew) > 0 && strlen($passNew) > 0 && strlen($id_user) > 0 && strlen($imagenBinario) > 0){//Si los campos del formulario no estan vacios pasamos el segundo bloque de seguridad
-                                if($count == 0 || $user['users'] == $userNew){// Si el usuario es diferente a los que existen en la DB pasamos tercer bloque de seguridad
-                                    if($passNew === $passVerify){// Si las contraseñas son iguales parar el cuarto bloque de seguridad
-                                        if(in_array($fileInfo['extension'],$endExtension)) {// Si la extencion de la img son JPG, GIF & PNG pasar quinto bloque de seguridad
-                                            //
-                                            /**
-                                             * Creando thumnails, y redireccionando las imagenes originales
-                                             **/
+                        if($user[0]['id_users'] === $id_user){
+                        // Si el id del usuario es el mismo que se recoje en el formulario pasamos el primer bloque de seguridad
+                            if(strlen($userNew) > 0 && strlen($passNew) > 0 && strlen($id_user) > 0 && strlen($imagenBinario) > 0){ 
+                            //Si los campos del formulario no estan vacios pasamos el segundo bloque de seguridad
+                                if($count == 0 || $user[0]['users'] == $userNew){
+                                // Si el usuario es diferente a los que existen en la DB pasamos tercer bloque de seguridad
+                                    if($passNew === $passVerify){
+                                    // Si las contraseñas son iguales parar el cuarto bloque de seguridad
+                                        if(in_array($fileInfo['extension'],$endExtension)) {
+                                        // Si la extencion de la img son JPG, GIF & PNG pasar quinto bloque de seguridad
+
                                             copy($fileTemp, $carpeta . $fileName);
                                             $thumb = new thumbnail($carpeta . $fileName);
                                             $thumb->size_width(400);
@@ -94,10 +91,12 @@ include '../../Core/library/resize.php';
                                             $stmTree->execute();
                                             $stmFort = $connect->prepare("UPDATE logs set user = '$userNew' WHERE id_users = '$id_user'");
                                             $stmFort->execute();
+                                            $stmFix = $connect->prepare("UPDATE post set autor = '$userNew' WHERE id_autor = '$id_user'");
+                                            $stmFix->execute();
                                             // FIN UPDATES
 
                                             // Envio de email
-                                            $to     = 'informatic.death@gmail.com';
+                                            $to     = 'juanbl0ck.lt3@gmail.com';
                                             $from   = $mailUser;
                                             $subj   = 'Cambios realizados';
                                             $body   = 'Has solicitado cambios en tu cuenta: <br>'.'Nuevo usuario: '.$userNew.'<br>'.'Nueva clave: '.$passNew;
@@ -109,7 +108,6 @@ include '../../Core/library/resize.php';
                                             $header = getHeaders($from);
                                             $result = mail($to, $subj,$body,$header);
                                             if($result){
-                                                echo '7';
                                                 echo '5';
                                             }else{
                                                 echo '8';
@@ -137,9 +135,9 @@ include '../../Core/library/resize.php';
             }
         }else{
             if(!isset($_FILES['file'])){
-                if($user['id_users'] === $id_user){
+                if($user[0]['id_users'] === $id_user){
                     if(strlen($userNew) > 0 && strlen($passNew) > 0 && strlen($id_user) > 0){
-                        if($count == 0 || $user['users'] == $userNew){
+                        if($count == 0 || $user[0]['users'] == $userNew){
                             if($passNew === $passVerify){
                                 $stm = $consult->updateUsers('users',$userNew,$id_user);
                                 $stm = $consult->updateUsers('password',$passE,$id_user);
@@ -149,22 +147,23 @@ include '../../Core/library/resize.php';
                                 $stmTree->execute();
                                 $stmFort = $connect->prepare("UPDATE logs set user = '$userNew' WHERE id_users = '$id_user'");
                                 $stmFort->execute();
+                                $stmFix = $connect->prepare("UPDATE post set autor = '$userNew' WHERE id_autor = '$id_user'");
+                                $stmFix->execute();
                                 // FIN UPDATES
 
                                 // Envio de email
-                                function getHeaders($from_addres){
-                                    return "From: $from_addres\rReply-To: $from_addres\rReturn-path:$from_addres";
-                                }
-
-                                $to     = 'informatic.death@gmail.com';
+                                $to     = 'juanbl0ck.lt3@gmail.com';
                                 $from   = $mailUser;
                                 $subj   = 'Cambios realizados';
                                 $body   = 'Has solicitado cambios en tu cuenta: <br>'.'Nuevo usuario: '.$userNew.'<br>'.'Nueva clave: '.$passNew;
 
+                                function getHeaders($from_addres){
+                                    return "From: $from_addres\rReply-To: $from_addres\rReturn-path:$from_addres";
+                                }
+
                                 $header = getHeaders($from);
                                 $result = mail($to, $subj,$body,$header);
                                 if($result){
-                                    echo '7';
                                     echo '5';
                                 }else{
                                     echo '8';
