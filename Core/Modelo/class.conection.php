@@ -15,7 +15,7 @@ date_default_timezone_set('America/Bogota');
                 $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
                 return $this->connect;
             }catch (Exception $e) {
-                echo "Error al conectar a la Data Base " . $e->getMessage();
+                die("Error al conectar a la Data Base " . $e->getMessage());
             }finally{
                 $this->connect = null;
             }

@@ -1,10 +1,10 @@
 function RegUser() {
     var connect, form, result, user, pass, email, tyc, pass_dos;
-    user = document.getElementById('userReg').value;
-    pass = document.getElementById('passwdReg').value;
-    pass_dos = document.getElementById('passwd_rReg').value;
-    email = document.getElementById('emailReg').value;
-    tyc = document.getElementById('tyc_regReg').checked ? (true) : (false);
+    user        = document.getElementById('userReg').value;
+    pass        = document.getElementById('passwdReg').value;
+    pass_dos    = document.getElementById('passwd_rReg').value;
+    email       = document.getElementById('emailReg').value;
+    tyc         = document.getElementById('tyc_regReg').checked ? (true) : (false);
 
     if(true == tyc) {
         if(user.length > 1 && pass.length > 1 && pass_dos.length > 1 && email.length > 1) {

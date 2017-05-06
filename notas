@@ -1,0 +1,12 @@
+Innovasion:
+
+1- Agregar clave de cifrado point to point para los usuarios que se comunican entre si.
+2- Cifrar los id de los usuarios para que no se sepa de que usuario fue enviado el mensaje ni a que usuario fue enviado dicho mensaje
+
+
+Arreglar:
+
+1- Arreglar los formularios de boqueo desbloqueo, para que pasen por metodo ajax.
+2- Poner los likes que han dado a cada post con ajax.
+3- Hacer paginacion a los post verticalmente con ajax.
+4- arreglar los saltos de linea de no hagarra el wordwrap.

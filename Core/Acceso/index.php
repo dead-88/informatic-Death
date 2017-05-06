@@ -45,12 +45,12 @@
                         <center>
                             <div class="btn-group">
                                 <select aria-label="Categoria" class="btn btn-primary dropdown-toggle text-capitalize" data-toggle="dropdown" name="categoria" id="categoria" required>
+                                <option value="1" style="background: #e5eacc;color:#1e1e1e" value="0" selected>-- Select Categoria --</option>
                                     <?php
                                         $consult    = new Consultations();
                                         $post       = $consult->viewCategorias();
 
                                         echo '<opgroup>';
-                                         echo '<option style="background: #e5eacc;color:#1e1e1e" value="0" selected>-- Select Categoria --</option>';
                                             foreach ($post as $viewPost){
                                                 echo '<option style="background: #e5eacc;color:#1e1e1e" value="'.$viewPost['id'].'">'.$viewPost['nombre'].'</option>';
                                             }
@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                         </div>
-<!--                        FIN MODAL USUARIOS ONLINE-->
+                        <!--FIN MODAL USUARIOS ONLINE-->
                  <? } ?>
             </div>
             <h4 class="text-center" style="color: #000;">Espéra los cursos gratís!...</h4>
@@ -286,7 +286,7 @@
                         <input type="hidden" id="userConvers" name="userConvers" value="<?php if(isset($sesion[0]['users'])){echo $sesion[0]['users'];}?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="message" class="text-center" style="color: #000;">Message:</label>
+                        <label for="message" class="text-center" style="color: #fff;">Message:</label>
                         <textarea name="message" id="message" placeholder="Enter message..." class="form-control textarea" role="textbox" required></textarea>
                     </div>
                     <center>

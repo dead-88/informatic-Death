@@ -18,41 +18,19 @@
 
 <script>
     $(document).ready(function () {
-        // Cuando el usuario de click en Me gusta
-        $('.like').click(function () {
-            var postsid = $(this).attr('id');
-            //alert('Me gusta ON ' + postsid);
-            $.ajax({
-                type    : 'POST',
-                url     : 'index.php',
-                data    : {
-                    'like' : 1,
-                    'postsid' : postsid
-                },
-                async   : false,
-                success : function () {
-
-                }
-            });
+        $("#status a").click(function(){
+            var idblog = $(this).data('id');
+            
+            if($(this).html() == 'Like'){
+               $.post("index.php", {like:1, postsid: idblog});
+               $(this).html('Unlike');
+            }else if($(this).html() == 'Unlike'){
+                $.post("index.php", {unlike:1, postsid: idblog});
+                $(this).html('Like');
+            }
+            //console.log($(this).html());
+            return false;
         });
-        //Cuando el usuario de click de No me gusta
-        $('.unlike').click(function () {
-            var postsid = $(this).attr('id');
-            //alert('Me gusta ON ' + postsid);
-            $.ajax({
-                type    : 'POST',
-                url     : 'index.php',
-                data    : {
-                    'unlike' : 1,
-                    'postsid' : postsid
-                },
-                async   : false,
-                success : function () {
-
-                }
-            });
-        });
-
     });
 </script>
 

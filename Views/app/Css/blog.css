@@ -13,8 +13,9 @@ a:hover {
 }
 
 body, html {
-    background: #e9ebee /*url("../Img/YbgWPZ.jpg")*/;
+    background: #000 /*url("../Img/YbgWPZ.jpg")*/;
     background-attachment: fixed;
+    color: #000;
 }
 
 /*--- HEADER --- */
@@ -130,7 +131,7 @@ body, html {
 /*--- POST --- */
 .main {
     /*background-image: url("../Img/4.jpg");*/
-    background: #f3f3f3;
+    background: #000;
     box-shadow: 2px 3px 10px #c5c5c5;
     border-radius: 5px;
     color: #FFFFFF;
@@ -185,13 +186,13 @@ body, html {
     color: #000;
     text-align: center;
     outline: none;
-    background-color: #fff;
+    background-color: #1e1e1e;
     border: none;
     padding: 5px;
 }
 
 #result{
-    color: #000;
+    color: #fffff9;
 }
 
 .link {
@@ -267,6 +268,7 @@ body, html {
 
 
 
+
 /*FORMULARIO INSERT POST*/
 #formularioPost {
     background-color: #fff;
@@ -295,7 +297,7 @@ body, html {
     outline: none;
 }
 
-.articulo{
+#articulo{
     padding: 10px;
     background: #fff;
     color: #000;
@@ -454,7 +456,7 @@ body, html {
 
 /* Load post */
 .posts{
-    background: #fff;
+    background-color: rgba(199, 197, 197, 0.1);
 }
 
 .posttwoa {
@@ -507,9 +509,20 @@ body, html {
 .post-content {
     overflow: auto;
     padding: 10px;
-    color: #000;
+    color: #fff;
     font-family: inherit;
 }
+
+.like a{
+    color: #fff;
+}
+
+.unlike a{
+    color: #fff;
+}
+/** END LOAD POST**/
+
+
 
 .paginate > ul > li > a {
     cursor: pointer;
@@ -612,9 +625,9 @@ footer > li > a {
         width: 100%;
     }
 
-    .articulo{
+    #articulo{
         padding: 10px;
-        background: #1e1e1e;
+        background: #fff;
         color: #fff;
         margin: 0; height: 203px;
         width: 231px;
@@ -660,16 +673,22 @@ footer > li > a {
         font-size: 28px;
     }
 
-    .articulo{
+    #articulo{
         padding: 10px;
-        background: #1e1e1e;
+        background: #fff;
         color: #fff;
         margin: 0; height: 203px;
-        width: 231px;
-        max-width: 230px;
-        min-width: 230px;
+        width: 190px;
+        max-width: 190px;
+        min-width: 190px;
         max-height: 210px;
         min-height: 205px;
+    }
+
+    #formularioPost {
+        padding: 20px;
+        margin: 0 auto;
+        width: 300px;
     }
 }
 /*FIN MEDIA QUERI*/

@@ -1,5 +1,5 @@
 $(function () {
-    $("#search_form").submit(function (e) {
+    $("#search_form").submit(function(e){
         e.preventDefault();
     });
     $("#searchForm").keyup(function () {

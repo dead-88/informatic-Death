@@ -64,7 +64,7 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id";
+            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id ORDER BY post.id_blog DESC";
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch(PDO::FETCH_ASSOC)){
@@ -185,8 +185,7 @@
         }
 
         public function link($msj){
-            /**$msj = preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/i','<a target="_blank" class="targets" href="\0">\0</a>',$msj);**/
-            $msj = preg_replace("/((http|https|www)[^\s]+)/", '<a target=\"_blank\" class="targets" href="$1">$0</a>',$msj);
+            $msj = preg_replace("/((http|https|www)[^\s]+)/", '<a target="_blank" class="targets" href="$1">$0</a>',$msj);
             $msj = preg_replace("/href=\"www/", 'href="http://www',$msj);
             return $msj;
         }

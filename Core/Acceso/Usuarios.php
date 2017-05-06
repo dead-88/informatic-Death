@@ -11,7 +11,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
     $connect    = $connection->get_conection();
     $results    = $consult->viewUsersById($id_users);
 
-    //Ver todos los mensajes que ah enviado, el usuario.
+    //Ver todos los mensajes que a enviado el usuario en la pagina principal.
     $usersIdMsj = $results[0]['users'];
     $idMessage  = $connect->prepare("SELECT COUNT(message) FROM conversation WHERE user_name = '$usersIdMsj'");
     $idMessage->execute();
@@ -121,7 +121,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                     }
                 ?>
                 <input type="hidden" name="select" value="desblock"/>
-                <input type="submit" value="Desbloquear"/>
+                <button type="submit" value="Desbloquear" class="btn btn-sm btn-primary btn-sm">Desbloquear</button>
             </form>
             <form action="" method="post" enctype="multipart/form-data" style="float: left;">
                 <?php
@@ -135,7 +135,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                     }
                 ?>
                 <input type="hidden" name="select" value="block"/>
-                <input type="submit" value="Bloquear"/>
+                <button type="submit" value="Bloquear" class="btn btn-sm btn-primary btn-sm">Bloquear</button>
             </form>
             <aside id="users_online">
                 <ul>
@@ -180,8 +180,17 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
         </section>
     </div>
 </section>
+<footer>
+    <div class="color-footer col-xs-12">
+        <p>Copyright &COPY; <?php echo date("Y"); ?> Created By Death_*88 & BL0CK_LT3 <strong>Team Informatic-Free</strong></p>
+    </div>
+</footer>
+<script type="text/javascript" src="../../Views/app/Js/jquery.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/bootstrap.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/functions.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/visto_play.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/mdb.min.js"></script>
 <?php
-        include '../Include/footer.php';
     }else{
         header('location: index.php');
     }
@@ -189,4 +198,3 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
     header('location: index.php');
 }
 ?>
-

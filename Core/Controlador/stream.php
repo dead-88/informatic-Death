@@ -117,10 +117,11 @@ if(isset($_GET)){
                 }
             }
             $msg = str_replace($emotions, $imgs, htmlentities(addslashes($row['message'])));
-            $linkHttp = $consult->link($msg);
-            $newMsj[] = array(
+            $linkHttp       = $consult->link($msg);
+            $newlinkHttp    = wordwrap($linkHttp, 10, "\n", true);
+            $newMsj[]       = array(
                 'id'        => $row['id'],
-                'message'   => utf8_encode($linkHttp),
+                'message'   => utf8_encode($newlinkHttp."\n"),
                 'name_foto' => $fotoUser,
                 'id_de'     => $row['id_de'],
                 'id_para'   => $row['id_para'],

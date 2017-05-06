@@ -44,7 +44,7 @@ jQuery(function(){
                     }
                 });
                 [].reverse.call(jQuery('#janela_'+id_conversation+' .message li')).appendTo(jQuery('#janela_'+id_conversation+' .message ul'));
-                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 700}, '500');
+                jQuery('#janela_'+id_conversation+' .message').animate({scrollTop: 1500}, '500');
             }
         });
     }
@@ -71,7 +71,7 @@ jQuery(function(){
                             if(userOnline == msg.id_de){
                                 jQuery('#janela_'+msg.janela_de+' .message ul').prepend('<li id="'+msg.id+'" class="eu"><p>'+msg.message+'</p></li>');
                             }else{
-                                jQuery('#janela_'+msg.janela_de+' .message ul').prepend('<li id="'+msg.id+'"><div class="imgSmall"><img src="fotos/'+msg.name_foto+'" /></div><p>'+msg.message+'</p></li>');
+                                jQuery('#janela_'+msg.janela_de+' .message ul').prepend('<li id="'+msg.id+'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+msg.name_foto+'" /></div><p>'+msg.message+'</p></li>');
                             }
                         }
                     });
@@ -138,7 +138,7 @@ jQuery(function(){
             });
         }
     });
-    jQuery('body').on('click', '.message', function () {
+    jQuery('body').on('click', '.send_message', function(){
         var janela      = jQuery(this).parent().parent();
         var janelaId    = janela.attr('id');
         var idConversa  = janelaId.split('_');
@@ -148,7 +148,9 @@ jQuery(function(){
             type    : "POST",
             data    : {leer: 'si', online: userOnline, user: idConversa},
             url     : "../Controlador/leer.php",
-            success : function (result) {}
+            success : function (result) {
+                //console.log(result);
+            }
         });
     });
 
@@ -187,7 +189,7 @@ jQuery(function(){
                                 }
                             }
                         });
-                        jQuery('.message').animate({scrollTop: 700}, '500');
+                        jQuery('.message').animate({scrollTop: 1500}, '500');
                         //console.log(clickiado);
                     }
                     clickiado = [];

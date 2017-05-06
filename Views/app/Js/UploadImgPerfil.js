@@ -69,13 +69,18 @@ $(document).ready(function () {
             }else if(data.responseText == 5){
                 status.html("");
                 status.append('<div class="alert alert-dismissible alert-success"><h4><strong>Actualización completa</strong></h4><p> Revisa tú E-Mail.</p></div>');
-                location.reload();
+                setTimeout(function () {
+                        location.reload();
+                },2000);
             }else if(data.responseText == 6){
                 status.html("");
                 status.append('<div class="alert alert-dismissible alert-danger"><h4>ERROR!</h4><p><strong> Las contraseñas no coinciden.</strong></p></div>');
             }else if(data.responseText == 8){
                 status.html("");
                 status.append('<div class="alert alert-dismissible alert-danger"><h4><strong>ERROR!</strong></h4><p> Las credenciales se han cambiado, pero no se pudo enviar la información a tú correo.</p></div>');
+                setTimeout(function () {
+                        location.reload();
+                },3000);
             }
         }
     });
