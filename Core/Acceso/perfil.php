@@ -25,7 +25,7 @@
 
                 ?>
                 <form autocomplete="off" action="../Controlador/updateUsers.php" method="post" enctype="multipart/form-data" class="content" id="formularioPhotoPerfil">
-                    <h3 class="text-center" style="color: #000;">Configuración del perfíl</h3>
+                    <h3 class="text-center" style="color: #fff;">Configuración de perfil</h3>
                     <article class="post clearfix">
 
                         <p class="hidden">
@@ -83,15 +83,14 @@
                                     <input type="hidden" id="subir" name="subir" value="Subir">
                                     <button type="submit" id="uploadbtn" class="btn btn-sm btn-primary btn-sm">Actualizar</button>
                                 </div>
-                                <br><br>
+                                <br>
                                 <div class="msj"></div>
                                 <div id="resultado"></div>
                             </center>
-                            <br>
                             <!--BARRA DE PROGRESO-->
-                            <div class="progress">
+                            <div class="progresss">
                                 <div class="bar"></div >
-                                <div class="percent">0%</div>
+                                <div class="percenta">0%</div>
                             </div>
                             <!--FIN BARRA DE PROGRESO-->
                         </div>

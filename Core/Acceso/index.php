@@ -15,7 +15,7 @@
 <section class="main container">
     <div class="form">
         <form action="" method="post" name="search_form" id="search_form">
-            <input type="text" name="searchForm" id="searchForm" placeholder="Busca temas o categorias!" title="Buscador de posts">
+            <input type="text" name="searchForm" id="searchForm" placeholder="Buscar..." title="Buscador de posts">
         </form>
         <div id="result"></div>
     </div>

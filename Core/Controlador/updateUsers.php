@@ -1,6 +1,6 @@
 <?php
 
-//sleep(1);
+sleep(1);
 
 include '../Modelo/class.conection.php';
 include '../Modelo/class.consultations.php';

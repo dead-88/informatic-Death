@@ -183,7 +183,7 @@ body, html {
 
 .form form input {
     width: 100%;
-    color: #000;
+    color: #fff;
     text-align: center;
     outline: none;
     background-color: #1e1e1e;
@@ -342,7 +342,7 @@ body, html {
     display: inline-block;
     top: 3px;
     left: 48%;
-    color: #000;
+    color: #fff;
 }
 /*FIN BARRA PROGRESO*/
 
@@ -428,7 +428,7 @@ body, html {
 .textarea {
     background-color: rgba(000, 255, 255, 0.03);
     border: none;
-    color: #000;
+    color: #fff;
     height: 80px;
     max-width: 100%;
     min-width: 100%;

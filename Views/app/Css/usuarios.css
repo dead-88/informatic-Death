@@ -61,8 +61,8 @@ a:hover, a:focus{
     width: 10px;
 }
 
-.status.disconnect{background-image: url("../Img/disconnect.png");top: 0;margin-top: 5px;background-position: center;background-repeat: no-repeat;}
-.status.connect{background-image: url("../Img/connect.png");top: 0;margin-top: 5px;background-position: center;background-repeat: no-repeat;}
+.status.disconnect{background-image: url("../Img/disconnect.png");top: 10px;margin-top: 5px;background-position: center;background-repeat: no-repeat;}
+.status.connect{background-image: url("../Img/connect.png");top: 10px;margin-top: 5px;background-position: center;background-repeat: no-repeat;}
 
 
 /** ASIDE DE CHATS**/

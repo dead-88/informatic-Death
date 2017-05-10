@@ -6,7 +6,7 @@ Innovasion:
 
 Arreglar:
 
-1- Arreglar los formularios de boqueo desbloqueo, para que pasen por metodo ajax.
+1- Arreglar los formularios de boqueo desbloqueo, para que pasen por metodo ajax.(SOLUCIONADO)
 2- Poner los likes que han dado a cada post con ajax.
 3- Hacer paginacion a los post verticalmente con ajax.
-4- arreglar los saltos de linea de no hagarra el wordwrap.
+4- Mostrar articulos por categorias con ajax.

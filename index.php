@@ -3,7 +3,7 @@ require_once 'Core/Modelo/class.conection.php';
 mail('juanbl0ck.lt3@gmail.com','Nuevo Usuario',GetIP());
 
 session_start();
-if(isset($_SESSION['usuario'])){
+if(isset($_SESSION['usuario'],$_SESSION['id_user'])){
     header('location: Core/Acceso/index.php');
 }
 
@@ -106,7 +106,7 @@ $numVisitas = $rowsTwo;
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&cross;</button>
-                            <h3 class="text-center">The Key...</h3>
+                            <h3 class="text-center">Enter The Key...</h3>
                         </div>
                         <div aria-autocomplete="none" class="modal-body">
                             <form action="Core/Controlador/checker_login.php" method="post">

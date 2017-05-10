@@ -13,7 +13,11 @@
 <script type="text/javascript" src="../../Views/app/Js/functions.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/visto_play.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/regPost.js"></script>
+<?php 
+    if($sesion[0]['rango'] >= 2){
+?>
 <script type="text/javascript" src="../../Views/app/Js/ajax.js"></script>
+<?php } ?>
 <script type="text/javascript" src="../../Views/app/Js/mdb.min.js"></script>
 
 <script>
