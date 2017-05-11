@@ -31,7 +31,7 @@
                 <!--FIN BARRA DE PROGRESO-->
                 <div class="col-md-10">
                     <form role="form" id="formularioPost" method="post" action="../Controlador/regPost.php">
-                        <h1 class="text-center post-title">Publica un articulo!</h1>
+                        <h1 class="text-center post-title">Enseñanos tú metodo!</h1>
                         <div id="container">
                             <ul class="photos thumb pull-right">
                                 <li>
@@ -51,8 +51,10 @@
                                         $post       = $consult->viewCategorias();
 
                                         echo '<opgroup>';
-                                            foreach ($post as $viewPost){
+                                            if($post){
+                                                foreach ($post as $viewPost){
                                                 echo '<option style="background: #e5eacc;color:#1e1e1e" value="'.$viewPost['id'].'">'.$viewPost['nombre'].'</option>';
+                                                }
                                             }
                                         echo '</opgroup>';
                                     ?>
@@ -70,7 +72,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Titulo: </span>
-                            <input type="text" class="form-control" name="tema" id="tema" title="Ej: Hackeando los sistemas." placeholder="Ej: Hackeando los sistemas." required/>
+                            <input type="text" class="" name="tema" id="tema" title="Ej: Hackeando los sistemas." placeholder="Ej: Hackeando los sistemas." required/>
                         </div>
                         <br>
                         <div class="hidden">
@@ -164,9 +166,9 @@
                         <?php
                             echo $usersOn['users'];
                             if(null == $usersOn['name_foto']){
-                                echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/user.png" alt="ErrorConnect">';
+                                echo '<img style="width: 30px; heigth: 30px;min-height: 30px;max-height30px;" class="pull-right img-circle" src="../../Views/app/Img/user.png" alt="ErrorConnect">';
                             }else{
-                                echo '<img width="30px" class="pull-right img-circle" src="../../Views/app/Img/ImgUsers/thumb_'.$usersOn['name_foto'].'" alt="ErrorConnect">';
+                                echo '<img style="width: 30px; heigth: 30px;min-height: 30px;max-height30px;" class="pull-right img-circle" src="../../Views/app/Img/ImgUsers/thumb_'.$usersOn['name_foto'].'" alt="ErrorConnect">';
                             }
                         ?>
                     </a>
@@ -188,9 +190,9 @@
                                                         <div class="avatar">
                                                             <?php
                                                                 if(null == $usersOn['foto_user']){
-                                                                    echo '<img class="img-circle" src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error">';
+                                                                    echo '<img src="../../Views/app/Img/Informatic_Death_122051.jpg" alt="Error">';
                                                                 }else{
-                                                                    echo '<img class="img-circle" src="data:image/*;base64,'.base64_encode($usersOn['foto_user']).'" alt="Error">';
+                                                                    echo '<img src="data:image/*;base64,'.base64_encode($usersOn['foto_user']).'" alt="Error">';
                                                                 }
                                                             ?>
                                                         </div>
