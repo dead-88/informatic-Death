@@ -41,8 +41,8 @@ $(document).ready(function () {
     // JQUERY UPLOAD
     // BARRA DE PROGRESO UPLOAD
 
-    var bar     = $('.bar'),
-        percent = $('.percent'),
+    var bar     = $('.barr'),
+        percent = $('.percenta'),
         status  = $('.msj');
     $('#formularioPost').ajaxForm({
         beforeSend: function() {
@@ -59,16 +59,16 @@ $(document).ready(function () {
             //console.log(data.responseText);
             if(data.responseText == 2){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-danger"><p><strong>ERROR!</strong> Imagen vacia.</p></div>');
+                status.append('<br/><div class="alert alert-dismissible alert-danger"><p><strong>!ERROR!</strong> Seleccione una imagen.</p></div>');
             }else if(data.responseText == 3){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-warning"><p><strong>ERROR!</strong>La carpeta no tiene Permisos</p></div>');
+                status.append('<br/><div class="alert alert-dismissible alert-warning"><p><strong>ERROR!</strong>La carpeta no tiene Permisos</p></div>');
             }else if(data.responseText == 4){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-info"><p>Extensiones permitidas JPG, GIF, PNG</p></div>');
+                status.append('<br/><div class="alert alert-dismissible alert-info"><p>Extensiones permitidas JPG, GIF, PNG</p></div>');
             }else if(data.responseText == 5){
                 status.html("");
-                status.append('<div class="alert alert-dismissible alert-success"><strong>Carga completa!</strong></div>');
+                status.append('<br/><div class="alert alert-dismissible alert-success"><strong>Carga completa!</strong></div>');
                 location.reload();
             }
         }

@@ -1,8 +1,9 @@
 <?php
 require_once 'Core/Modelo/class.conection.php';
-mail('juanbl0ck.lt3@gmail.com','Nuevo Usuario',GetIP());
+// mail('juanbl0ck.lt3@gmail.com','Nuevo Usuario',GetIP());
 
 session_start();
+
 if(isset($_SESSION['usuario'],$_SESSION['id_user'])){
     header('location: Core/Acceso/index.php');
 }
@@ -41,11 +42,11 @@ $numVisitas = $rowsTwo;
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="Views/app/Img/Informatic_Death_122051.jpg" style="icon: auto;align-self: baseline;">
+    <link rel="icon" href="Views/app/Img/security-hack.jpg" style="icon: auto;align-self: baseline;">
     <meta title="informatica hacking cracking phreakting pentesting">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Team Informatic-Free</title>
+    <title>Team Security-Hack</title>
     <link rel="stylesheet" type="text/css" href="Views/app/Css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="Views/app/Css/index.css">
@@ -134,7 +135,7 @@ $numVisitas = $rowsTwo;
             <div class="row">
                 <div class="modal fade" id="modalTwo">
                     <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal-content" style="background: #1e1e1e;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&cross;</button>
                                 <h3 class="text-center">Terminós & Condiciónes</h3>

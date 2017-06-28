@@ -16,11 +16,12 @@
     $user       = $consult->session();
 
     if(isset($_SESSION['usuario'],$_SESSION['id_user'])){
-        if($user[0]['users'] === $userConv && $user[0]['id_users'] == $idUser){
+        if($user[0]['users'] === $userConv && $user[0]['id_users'] === $idUser){
             if(strlen($userConv) > 0 && strlen($message) > 0 && strlen($idUser) > 0){
                 $result = $consult->insertMessage($idUser, $userConv, $message, $date);
             }else{
-                echo "Error campos vacios";
+                $msj = "¡ERROR! Campos vacios.";
             }
+            echo $msj;
         }
     }

@@ -19,7 +19,7 @@ jQuery(function(){
         var id_user     = Number(splitdatos[1]);
 
         var janela  = '<div class="windows" id="janela_'+id_user+'" style="'+ style +'">';
-            janela  += '<div class="header_windows"><a href="#" class="close">x</a><span class="name">' + name +'</span><span id="'+ id_user +'" class="'+ status +'"></span></div>';
+            janela  += '<div class="header_windows"><a href="#close" class="closet">x</a><span class="name">' + name +'</span><span id="'+ id_user +'" class="'+ status +'"></span></div>';
             janela  += '<div class="body"><div class="message"><ul></ul></div>';
             janela  += '<div class="send_message" id="'+ id +'"><input type="text" name="message" class="msg" id="'+ id +'"/></div></div></div>';
 
@@ -51,13 +51,13 @@ jQuery(function(){
 
     var aviso = 0;
     jQuery('body').on('mouseover', '.message', function(){
-        var esta        = jQuery(this);
+        // var esta        = jQuery(this);
         var altura      = jQuery(this).scrollTop();
         var janela      = jQuery(this).parent().parent().attr('id');
-        var idConvers  = janela.split('_');
-        idConvers      = Number(idConvers[1]);
-
+        var idConvers   = janela.split('_');
+        idConvers       = Number(idConvers[1]);
         var primera     = Number(jQuery(this).find('li:eq(0)').attr('id'));
+
         if(altura == 0 && aviso == 0){
             aviso = 1;
             jQuery.ajax({
@@ -102,14 +102,14 @@ jQuery(function(){
         var next = jQuery(this).next();
         next.toggle(100);
     });
-    jQuery('body').on('click', '.close', function () {
+    jQuery('body').on('click', '.closet', function () {
         var parent      = jQuery(this).parent().parent();
         var idParent    = parent.attr('id');
         var splitParent = idParent.split('_');
         var idJanelaFech= Number(splitParent[1]);
 
         var contagem    = Number(jQuery('.windows').length)-1;
-        var indice      = Number(jQuery('.close').index(this));
+        var indice      = Number(jQuery('.closet').index(this));
         var restAfrente = contagem - indice;
 
         for(var i = 1; i <= restAfrente; i++ ){
@@ -124,18 +124,23 @@ jQuery(function(){
             var id      = jQuery(this).attr('id');
             var split   = id.split(':');
             var para    = Number(split[1]);
-            jQuery.ajax({
-                type    : "POST",
-                data    : {message: text, de: userOnline, para: para},
-                url     : "../Controlador/regMsj.php",
-                success : function (result) {
-                    if(result == 'ok'){
-                        jQuery('.msg').val('');
-                    }else{
-                        alert("Campo vació");
+            //console.log(text);
+            if(text.length > 0){
+                jQuery.ajax({
+                    type    : "POST",
+                    data    : {message: text, de: userOnline, para: para},
+                    url     : "../Controlador/regMsj.php",
+                    success : function (result) {
+                        if(result == 'ok'){
+                            jQuery('.msg').val('');
+                        }else{
+                            jQuery('.msg').val('');
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                alert("!ERROR¡ Campos vacios");
+            }
         }
     });
     jQuery('body').on('click', '.send_message', function(){
@@ -196,7 +201,7 @@ jQuery(function(){
                     jQuery('#users_online ul').html('');
                     jQuery.each(result.users, function(i, user){
                         var incluir = '<li id="'+user.id+'"><div class="imgSmall"><img src="../../Views/app/Img/ImgUsers/thumb_'+user.name_foto+'" border="0"/></div>';
-                        incluir += '<a href="#" id="'+userOnline+':'+user.id+'" class="conectado">'+user.user+'</a>';
+                        incluir += '<a href="#users" id="'+userOnline+':'+user.id+'" class="conectado">'+user.user+'</a>';
                         incluir += '<span id="'+user.id+'" class="status '+user.status+'"></span></li>';
                         jQuery('span#'+user.id).attr('class', 'status '+user.status);
                         jQuery('#users_online ul').append(incluir);

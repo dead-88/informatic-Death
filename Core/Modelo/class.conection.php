@@ -1,7 +1,6 @@
 <?php
 
-date_default_timezone_set('America/Bogota');
-
+    date_default_timezone_set('America/Bogota');
     class Conection{
         private $host   = '127.0.0.1';
         private $dbnm   = 'global_death';
@@ -9,6 +8,7 @@ date_default_timezone_set('America/Bogota');
         private $user   = 'root';
         private $pass   = '';
         private $connect= null;
+        
         public function get_conection(){
             try{
                 $this->connect = new PDO("mysql:host=$this->host;dbname=$this->dbnm;charset=$this->utf", $this->user, $this->pass);

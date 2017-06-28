@@ -3,10 +3,10 @@ require_once '../Modelo/class.conection.php';
 require_once '../Modelo/class.consultations.php';
 require_once '../Controlador/loadArticles.php';
 
-session_start();
 $consult    = new Consultations();
 $conection  = new Conection();
 $connect    = $conection->get_conection();
+session_start();
 
 if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
     header('location: ../../index.php');
@@ -18,9 +18,10 @@ if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
 
     $conversations  = $consult->viewConversations();
     $rowspost       = $consult->viewPost();
+    $countpost       = $consult->viewCountPost();
     $allUsersOnline = $consult->viewUsersOnline();
     $usersCount     = count($allUsersOnline);
-    $idPost         = count($rowspost);
+    $idPost         = count($countpost);
 
     if(isset($conversations)){
         foreach($conversations as $conversation){}
@@ -29,6 +30,10 @@ if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
     if(isset($rowspost)){
         foreach($rowspost as $rows){}
     }
+
+    if(isset($countpost)){
+        foreach($countpost as $countposts){}
+    }
 }
 ?>
 <!doctype html>
@@ -36,8 +41,8 @@ if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="icon" href="../../Views/app/Img/Informatic_Death_122051.jpg" style="icon: auto;align-self: baseline;">
-    <title>Team Informatic-Free</title>
+    <link rel="icon" href="../../Views/app/Img/security-hack.jpg" style="icon: auto;align-self: baseline;">
+    <title>Team Security-Hack</title>
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/font/flaticon.css" media="screen" title="informatic-Free" charset="utf-8">
@@ -46,6 +51,7 @@ if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/compiled.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/mdb.css">
     <link rel="stylesheet" type="text/css" href="../../Views/app/Css/blog.css">
+    <link rel="stylesheet" type="text/css" href="../../Views/app/Css/stylenew.css">
 </head>
 <script>
     var time;
@@ -66,9 +72,9 @@ if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
     <?php 
 
         if(isset($user[0]['foto_user']) == null || $user[0]['foto_user'] == ""){
-            echo '<img src="../../Views/app/Img/aggUser.png" alt="Error" class="hide-xs pull-left img-responsive avatar">';
+            echo '<a href="index.php"><img src="../../Views/app/Img/userPerf.png" alt="Error" class="hide-xs pull-left img-responsive avatar"></a>';
         }else{
-            echo '<img src="data:image/*;base64,'.base64_encode($user[0]['foto_user']).'" alt="Error" class="hide-xs pull-left img-responsive avatar">';
+            echo '<a href="index.php"><img src="data:image/*;base64,'.base64_encode($user[0]['foto_user']).'" alt="Error" class="hide-xs pull-left img-responsive avatar"></a>';
         }
 
      ?>

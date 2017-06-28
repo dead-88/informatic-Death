@@ -3,6 +3,13 @@
 require_once '../Modelo/class.conection.php';
 require_once '../Modelo/class.consultations.php';
 
+session_start();
+$consult    = new Consultations();
+$sesion     = $consult->session();
+
+$id_autor   = $sesion[0]['id_users'];
+$autor      = $sesion[0]['users'];
+
 //print_r($_FILES);
 require_once '../library/resize.php';
 if(isset($_POST['subirtwo']) && $_POST['subirtwo'] == 'Subirtwo'){
@@ -13,27 +20,28 @@ if(isset($_POST['subirtwo']) && $_POST['subirtwo'] == 'Subirtwo'){
 
         $carpeta = '../../Views/app/Img/imgPost/';
         if(is_dir($carpeta) && is_writable($carpeta)){
-            $result = count($_FILES['file']['name']);
-            $endExtension = array('jpg','gif','png','jpeg');
-            $msj = '';
+            $result         = count($_FILES['file']['name']);
+            $endExtension   = array('jpg','gif','png','jpeg');
+            $msj            = '';
 
             for($i = 0; $i < $result; $i ++){
-                $fileName = $_FILES['file']['name'][$i];
-                $fileTemp = $_FILES['file']['tmp_name'][$i];
+                $fileName       = $_FILES['file']['name'][$i];
+                $fileTemp       = $_FILES['file']['tmp_name'][$i];
 
-                $string = substr(md5(uniqid(rand())),0,12);
-                $nameNewFile = $string . '.jpg';
-                $thumbName = 'thumb_' . $nameNewFile;
-                $extencion = pathinfo($fileName,PATHINFO_EXTENSION);
-                $altName = basename($fileName, '.' . $extencion);
-                $fileInfo = pathinfo($fileName);
+                $string         = substr(md5(uniqid(rand())),0,12);
+                $nameNewFile    = $string . '.jpg';
+                $thumbName      = 'thumb_' . $nameNewFile;
+                $extencion      = pathinfo($fileName,PATHINFO_EXTENSION);
+                $altName        = basename($fileName, '.' . $extencion);
+                $fileInfo       = pathinfo($fileName);
                 if(in_array($fileInfo['extension'],$endExtension)){
                     copy($fileTemp,$carpeta . $fileName);
                     $thumb = new thumbnail($carpeta . $fileName);
-                    $thumb->size_width(100);
-                    $thumb->size_height(100);
-                    $thumb->jpeg_quality(88);
+                    $thumb->size_width(1024);
+                    $thumb->size_height(1024);
+                    $thumb->jpeg_quality(1024);
                     $thumb->save($carpeta.$thumbName);
+
                     //Dimension imagen original
                     $thumb = new thumbnail($carpeta . $fileName);
                     $thumb->size_width(400);
@@ -44,8 +52,6 @@ if(isset($_POST['subirtwo']) && $_POST['subirtwo'] == 'Subirtwo'){
 
                     $categoria      = htmlentities(addslashes($_POST['categoria']));
                     $tema           = htmlentities(addslashes($_POST['tema']));
-                    $autor          = htmlentities(addslashes($_POST['autor']));
-                    $id_autor       = htmlentities(addslashes($_POST['id_autor']));
                     $articulo       = nl2br(htmlentities(addslashes($_POST['articulo'])));
                     $imagenBinario  = file_get_contents($fileTemp);
                     $date           = date('Y/m/d h:i:s a');

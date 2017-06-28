@@ -116,9 +116,11 @@ if(isset($_GET)){
                     $fotoUser = ($usr['name_foto'] == '') ? 'default.jpg' : $usr['name_foto'];
                 }
             }
-            $msg = str_replace($emotions, $imgs, htmlentities(addslashes($row['message'])));
+            $messageRow     = htmlentities(addslashes($row['message']));
+
+            $msg            = str_replace($emotions, $imgs, $messageRow);
             $linkHttp       = $consult->link($msg);
-            $newlinkHttp    = wordwrap($linkHttp, 10, "\n", true);
+            $newlinkHttp    = wordwrap($linkHttp, 15, "\n", true);
             $newMsj[]       = array(
                 'id'        => $row['id'],
                 'message'   => utf8_encode($newlinkHttp."\n"),

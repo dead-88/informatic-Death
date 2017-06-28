@@ -35,20 +35,20 @@ include '../library/resize.php';
 //            echo 'seguimos';
             $carpeta = '../../Views/app/Img/ImgUsers/';
             if(is_dir($carpeta) && is_writable($carpeta)){
-                $result = count($_FILES['file']['name']);
-                $endExtension = array('jpg','gif','png','jpeg','JPG','GIF','PNG','JPEG');
-                $msj = '';
+                $result         = count($_FILES['file']['name']);
+                $endExtension   = array('jpg','gif','png','jpeg','JPG','GIF','PNG','JPEG');
+                $msj            = '';
 
                 for($i = 0; $i < $result; $i ++){
-                    $fileName = $_FILES['file']['name'][$i];
-                    $fileTemp = $_FILES['file']['tmp_name'][$i];
+                    $fileName       = $_FILES['file']['name'][$i];
+                    $fileTemp       = $_FILES['file']['tmp_name'][$i];
 
-                    $string = substr(md5(uniqid(rand())),0,12);
-                    $nameNewFile = $string . '.jpg';
-                    $thumbName = 'thumb_' . $nameNewFile;
-                    $extencion = pathinfo($fileName,PATHINFO_EXTENSION);
-                    $altName = basename($fileName, '.' . $extencion);
-                    $fileInfo = pathinfo($fileName);
+                    $string         = substr(md5(uniqid(rand())),0,12);
+                    $nameNewFile    = $string . '.jpg';
+                    $thumbName      = 'thumb_' . $nameNewFile;
+                    $extencion      = pathinfo($fileName,PATHINFO_EXTENSION);
+                    $altName        = basename($fileName, '.' . $extencion);
+                    $fileInfo       = pathinfo($fileName);
 
                     if(!isset($_SESSION['usuario'], $_SESSION['id_user'])){
                         header('location: ../Acceso/perfil.php');

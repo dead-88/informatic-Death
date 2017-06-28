@@ -64,7 +64,20 @@
             $rows = null;
             $model = new Conection();
             $connect = $model->get_conection();
-            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id ORDER BY post.id_blog DESC";
+            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id ORDER BY post.id_blog DESC LIMIT 0,10";
+            $stm = $connect->prepare($query);
+            $stm->execute();
+            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
+                $rows[] = $result;
+            }
+            return $rows;
+        }
+
+        public function viewCountPost(){
+            $rows = null;
+            $model = new Conection();
+            $connect = $model->get_conection();
+            $query = "SELECT * FROM post,categorias WHERE post.id_categoria = categorias.id;";
             $stm = $connect->prepare($query);
             $stm->execute();
             while($result = $stm->fetch(PDO::FETCH_ASSOC)){
@@ -80,7 +93,7 @@
             $query = "SELECT * FROM categorias";
             $stm = $connect->prepare($query);
             $stm->execute();
-            while($result = $stm->fetch(PDO::FETCH_ASSOC)){
+            while($result = $stm->fetch()){
                 $rows[] = $result;
             }
             return $rows;

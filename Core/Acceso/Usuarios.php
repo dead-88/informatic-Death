@@ -27,7 +27,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
 
 <section class="main container">
     <div class="row">
-        <section class="col-md-3">
+        <section class="col-md-4">
             <div class="vistaUsers">
                 <?php
                     $fecha1 = new DateTime($result['date_registry']);
@@ -41,7 +41,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                     <?php
                     if(null == $result['foto_user']){
                     ?>
-                        <img src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="imgPhoto">
+                        <img src="../../Views/app/Img/security-hack.jpg" alt="Error" class="imgPhoto">
                     <?php }else{ ?>
                         <img style="width: 100px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;box-shadow: 1px 5px 10px #ffffff, 3px 15px 15px #000" src="data:image/*;base64,<?php echo base64_encode($result['foto_user']) ?>">
                     <?php } ?>
@@ -84,8 +84,10 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                 <?php } ?>
             </div>
         </section>
-        <section class="col-md-2">
-            <div class="vistaUsers">
+        <section class="col-md-4">
+        <a href="#viewUnlock" id="unlock1" class="btn btn-info btn-sm">Desbloquear usuarios</a>
+        <a href="#viewlock" id="lock1" class="btn btn-info btn-sm">Bloquear usuarios</a>
+            <div class="vistaUsers unlock1" style="display: none;">
                 <?php
                     $bloqueados = $user[0]['block'];
                     if($bloqueados != 0){
@@ -111,7 +113,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                 <?php } ?>
             </div>
             <br>
-            <div class="vistaUsers">
+            <div class="vistaUsers lock1" style="display: none;">
                 <form id="lock" name="lock" method="post" enctype="multipart/form-data">
                 <div id="_LOCK_"></div>
                     <?php
@@ -132,7 +134,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                 </form>
             </div>
         </section>
-        <section class="col-md-">
+        <section class="col-md-4">
             <span class="user_online" id="<?php if(isset($user[0]['id_users'])){echo $user[0]['id_users'];}?>"></span>
             <aside id="users_online">
                 <ul>
@@ -171,16 +173,18 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
                     </ul>
             </aside>
         </section>
-        <section class="col-md-12">
-            <aside id="chats">
+    </div>
+</section>
+<section class="col-md-12">
+    <div class="row">
+        <aside id="chats">
 
-            </aside>
-        </section>
+        </aside>
     </div>
 </section>
 <footer>
     <div class="color-footer col-xs-12">
-        <p>Copyright &COPY; <?php echo date("Y"); ?> Created By Death_*88 & BL0CK_LT3 <strong>Team Informatic-Free</strong></p>
+        <p class="text-center">Copyright &COPY; <?php echo date("Y"); ?> Created By Death_*88 & BL0CK_LT3 <strong>Team Security-Hack</strong></p>
     </div>
 </footer>
 <script type="text/javascript" src="../../Views/app/Js/jquery.js"></script>
@@ -188,6 +192,7 @@ if(isset($_GET['id_users']) && !empty($_GET['id_users'])){
 <script type="text/javascript" src="../../Views/app/Js/functions.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/visto_play.js"></script>
 <script type="text/javascript" src="../../Views/app/Js/mdb.min.js"></script>
+<script type="text/javascript" src="../../Views/app/Js/disenos.js"></script>
 <script type="text/javascript">
 
 function lockUsers(){

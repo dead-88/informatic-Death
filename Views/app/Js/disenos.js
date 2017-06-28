@@ -38,4 +38,14 @@ $(document).on('ready',function () {
     $(".viewEight").click(function () {
         elementEight.slideToggle("slow");
     });
+
+    var element10 = $(".unlock1");
+    $("#unlock1").click(function () {
+        element10.slideToggle("slow");
+    });
+
+    var element11 = $(".lock1");
+    $("#lock1").click(function () {
+        element11.slideToggle("slow");
+    });
 });

@@ -19,12 +19,15 @@
     $insertSalida->bindParam(':id',$id_user);
     $insertSalida->execute();
 
-    session_unset();
+    session_unset($_SESSION['usuario']);
+    session_unset($_SESSION['id_user']);
     session_destroy();
     header('location: ../../index.php');
-
+  
     // seleccionar el ultimo id del usuario que ingreso en la tabla logs, para registar su salida.
-//    $stms = $connect->prepare("SELECT id,user FROM logs WHERE id = (SELECT max(id) from logs)");
-//    $stms->execute();
-//    $userId = $stms->fetch(PDO::FETCH_ASSOC);
+   /*stms = $connect->prepare("SELECT id,id_users FROM logs WHERE id_users = (SELECT max(id_users) from logs)");
+   $stms->execute();
+   $userId  = $stms->fetch(PDO::FETCH_ASSOC);
+   $iduser  = $userId['id_users'];
+   var_dump($userId);*/
     // Fin seleccion

@@ -63,17 +63,17 @@
                                 <ul>
                                     <li>
                                         <label for="pass">Password</label>
-                                        <input type="password" placeholder="Ingresa la nueva clave" name="newPass" required>
+                                        <input type="password" placeholder="Ingresa la nueva clave" name="newPass"  required>
                                         <span>Enter you password to update here.</span>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li>
                                         <label for="passver">Checker You Password</label>
-                                        <input type="password" placeholder="Ingresa la nueva clave" name="newPassTwo" required>
+                                        <input type="password" placeholder="Ingresa la nueva clave" name="newPassTwo"  required>
                                         <span>Verify your password to update here.</span>
                                     </li>
-                                    <li style="color:#000;">"Tenga en cuenta que cada 24 horas podras actualizar tú información personal, Graciás."</li>
+                                    <li style="color:#c1c1c1;">"Tenga en cuenta que cada 24 horas podras actualizar tú información personal, Graciás."</li>
                                 </ul>
                               </div>';
                             ?>
@@ -98,7 +98,7 @@
                 </form>
                 <?php }else{ ?>
                         <br>
-                        <h3 class="text-center post-h1 post-title">No puedes actualizar más, espera 24 horas.</h3>
+                        <h3 class="text-center post-h1 post-title">Puedes actualizar nuevamente en un plazo de 24 horas.</h3>
                         <?php
                             echo '<h3 class="text-center post-h1 post-title">Llevas '.$fechaUpdate->i.' Minutos & '.$fechaUpdate->h.' Horas.</h3>';
                         ?>
@@ -113,15 +113,9 @@
                     $fecha = $fecha1->diff($fecha5);
 
                     echo '<h1 class="text-center post-title">Perfíl</h1>';
-
-//                    if($user[0]['online'] == 1){
-//                        echo '<center><img src="../../Views/app/Img/connect.png"></center>';
-//                    }else{
-//                        echo '<center><img src="../../Views/app/Img/disconnect.png"></center>';
-//                    }
                         echo '<br><center>';
                             if($user[0]['foto_user'] == null){
-                                echo '<img src="../../Views/app/Img/803701665_122051.jpg" alt="Error" class="imgPhoto">';
+                                echo '<img src="../../Views/app/Img/security-hack.jpg" alt="Error" class="imgPhoto">';
                             }else{
                                 echo '<img style="width: 100px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;box-shadow: 1px 5px 10px #ffffff, 3px 15px 15px #000" src="data:image/*;base64,'.base64_encode($user[0]['foto_user']).'">';
                             }
@@ -163,7 +157,7 @@
     </section>
     <footer>
     <div class="color-footer col-xs-12">
-        <p>Copyright &COPY; <?php echo date("Y"); ?> Created By Death_*88 & BL0CK_LT3 <strong>Team Informatic-Free</strong></p>
+        <p>Copyright &COPY; <?php echo date("Y"); ?> Created By Death_*88 & BL0CK_LT3 <strong>Team Security-Hack</strong></p>
     </div>
 </footer>
 <script type="text/javascript" src="../../Views/app/Js/jquery.js"></script>

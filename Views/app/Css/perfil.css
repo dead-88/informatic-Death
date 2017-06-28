@@ -91,7 +91,7 @@ ul{
 }
 
 .text-date ol li > span{
-    background-color: #f3f3f3;
+    background-color: #c1c1c1;
     display: block;
     padding: 3px;
     margin: 0 -9px -9px -9px;
@@ -103,8 +103,8 @@ ul{
 }
 
 .text-date ol li > input{
-    color: #000;
-    background-color: #fefefe;
+    color: #fefefe;
+    background-color: #2e2e2e;
     text-align: center;
     width: 100%;
     display: block;
@@ -148,8 +148,8 @@ ul{
 }
 
 .form-style ul li input[type="text"],input[type="password"],input[type="email"]{
-    color: #000;
-    background-color: #fefefe;
+    color: #fefefe;
+    background-color: #2e2e2e;
     text-align: center;
     width: 100%;
     display: block;
@@ -167,7 +167,7 @@ ul{
 }
 
 .form-style ul li > span{
-    background-color: #f3f3f3;
+    background-color: #c1c1c1;
     display: block;
     padding: 3px;
     margin: 0 -9px -9px -9px;

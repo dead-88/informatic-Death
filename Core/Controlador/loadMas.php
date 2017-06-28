@@ -57,7 +57,9 @@ if(isset($_POST['loadMas'])){
             '<img class="img-rounded" src="../../Views/app/Img/Emoticons/loltongue.png" width="18"/>',          //SacarLengüa
             '<img class="img-rounded" src="../../Views/app/Img/Emoticons/dontsee.png" width="18"/>'             //Desepcion
         );
-        $msg            = str_replace($emotions, $imgs, htmlentities(addslashes($row['message'])));
+        $messageRow     = htmlentities(addslashes($row['message']));
+
+        $msg            = str_replace($emotions, $imgs, $messageRow);
         $linkHttp       = $consultas->link($msg);
         $messages[]     = array(
             'id'        => $row['id'],

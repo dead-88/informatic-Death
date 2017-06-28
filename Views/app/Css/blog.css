@@ -19,6 +19,7 @@ body, html {
 }
 
 /*--- HEADER --- */
+
 .ltk-header {
     background: #000;
     margin-top: 0;
@@ -100,13 +101,14 @@ body, html {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     color: #0c0c0c;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     overflow: auto;
     padding: 20px;
     position: relative;
     -moz-box-shadow: 4px 5px 10px #000;
     -webkit-box-shadow: 4px 5px 10px #000;
     width: 230px;
+    float: left;
 }
 
 .vistaUsers > p {
@@ -198,7 +200,7 @@ body, html {
 .link {
     width: 150px;
     height: 150px;
-    background: rgb(255, 255, 255) url("../Img/default.jpg");
+    background: url("../Img/icon.png");
     background-size: cover;
     background-position: center;
     -webkit-border-radius: 8px;
@@ -566,6 +568,15 @@ footer > li > a {
 
 /*--- MEDIA QUERIE --- */
 @media screen and (max-width: 768px) {
+
+    .navbar-default .navbar-nav > li > a{
+        color: #fff;
+    }
+    
+    .ltk-navbar-primary{
+        background: linear-gradient(#0d0e0e,#85ece8);
+    }
+
     .post .thumb {
         width: 100%;
         margin-bottom: 20px;
@@ -628,7 +639,7 @@ footer > li > a {
 
     #articulo{
         padding: 10px;
-        background: #fff;
+        background: #211f1f;
         color: #fff;
         margin: 0; height: 203px;
         width: 231px;
@@ -641,6 +652,10 @@ footer > li > a {
 }
 
 @media screen and (max-width: 469px) {
+    .ltk-navbar-primary{
+        background: linear-gradient(#0d0e0e,#85ece8);
+    }
+
     .jumbotron {
         background-image: url("../Img/Anonymous-hackers.jpg");
         background-attachment: fixed;
@@ -676,7 +691,7 @@ footer > li > a {
 
     #articulo{
         padding: 10px;
-        background: #fff;
+        background: #211f1f;
         color: #fff;
         margin: 0; height: 203px;
         width: 190px;
